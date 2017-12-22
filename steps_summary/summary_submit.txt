@@ -1,0 +1,98 @@
+##################################################################
+{'avg_m07': 29689, 'DOW': 19425, 'Day': 26396, 'WOY': 12498, 'avg_m06': 32075}
+Eval All, Number of rows in test is 1679408
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 629897
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-31 00:00:00
+Eval P2, Number of rows in test is 1049511
+Eval P2, Forecast Period From: 2017-08-01 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5708709192845459
+Eval P1  Weighted NWRMSLE =  0.5633143201224797
+Eval P2  Weighted NWRMSLE =  0.57535797053532
+Bias = -0.0563933
+WMAPE = 0.5025
+2017-12-15 12:07:30,447 __main__ 193 [INFO][<module>] Submit Result 
+SUM = 1.48972e+07
+MEAN = 4.417975425720215
+
+##################################################################
+## MA,529
+zyp@ubuntu:~/kaggle/FavoritaGrocery/script$ python lb_ma529.py 
+SUM = 1.1024e+07
+MEAN = 3.2655794620513916
+
+##################################################################
+## LightGBM, 529
+Validation mse: 0.413871704054
+Making submission...
+SUM = 9730362.196332818
+MEAN = 2.8869503416540923
+##################################################################
+## LightGBM, 515
+Validation mse: 0.362370926407
+Making submission...
+SUM = 9956975.344102774
+MEAN = 2.9541853418706663
+
+
+##################################################################
+### 0.698, XGB_V03, use exp1m instead  of exp. 
+{'avg_m07': 29689, 'DOW': 19425, 'Day': 26396, 'WOY': 12498, 'avg_m06': 32075}
+Eval All, Number of rows in test is 1679408
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 629897
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-31 00:00:00
+Eval P2, Number of rows in test is 1049511
+Eval P2, Forecast Period From: 2017-08-01 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5317206024677078
+Eval P1  Weighted NWRMSLE =  0.5205398033666536
+Eval P2  Weighted NWRMSLE =  0.5383187030290991
+Bias = -0.17895
+WMAPE = 0.522533
+2017-12-17 22:13:33,533 __main__ 207 [INFO][<module>] Submit Result 
+SUM = 1.25458e+07
+MEAN = 3.721482515335083
+2017-12-17 22:14:13,560 __main__ 230 [INFO][<module>] end 
+
+
+##################################################################
+### 0.698, Same result as with "No Log" 
+### Log1p on the features m07 and m06
+{'avg_m06': 9918, 'WOY': 5910, 'DOW': 5848, 'Day': 8449, 'avg_m07': 9414, 'Month': 1165}
+Eval All, Number of rows in test is 1679408
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 629897
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-31 00:00:00
+Eval P2, Number of rows in test is 1049511
+Eval P2, Forecast Period From: 2017-08-01 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5231487915993938
+Eval P1  Weighted NWRMSLE =  0.5070661971417113
+Eval P2  Weighted NWRMSLE =  0.5325668086484939
+Bias = -0.199999
+WMAPE = 0.513271
+2017-12-18 18:54:22,634 __main__ 218 [INFO][<module>] Submit Result 
+SUM = 1.2132e+07
+MEAN = 3.5989983081817627
+2017-12-18 18:54:36,087 __main__ 241 [INFO][<module>] end
+##################################################################
+### 0.703. 
+### train by 3 years of data, sample 20%. 
+
+{'avg_m06': 11027, 'Month': 2170, 'WOY': 5914, 'DOW': 7022, 'Day': 6470, 'avg_m07': 14218}
+Eval All, Number of rows in test is 1679408
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 629897
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-31 00:00:00
+Eval P2, Number of rows in test is 1049511
+Eval P2, Forecast Period From: 2017-08-01 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5220073477095
+Eval P1  Weighted NWRMSLE =  0.505282121792765
+Eval P2  Weighted NWRMSLE =  0.5317916407387031
+Bias = -0.168446
+WMAPE = 0.533465
+2017-12-18 19:59:38,242 __main__ 223 [INFO][<module>] Submit Result 
+SUM = 1.2685e+07
+MEAN = 3.7624614238739014
+2017-12-18 19:59:49,765 __main__ 244 [INFO][<module>] end 
+
+

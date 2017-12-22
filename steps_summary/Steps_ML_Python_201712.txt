@@ -1,0 +1,183 @@
+#################################################
+### Step on linux Ubuntu 
+#################################################
+
+
+sudo apt update
+
+
+## Install google chrome 
+/Download
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+## encounter any errors simply use
+sudo apt-get -f install
+
+
+#### Enable SSH Connection 
+## https://www.maketecheasier.com/setup-enable-ssh-ubuntu/
+sudo apt-get install openssh-server
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.factory-defaults
+sudo chmod a-w /etc/ssh/sshd_config.factory-defaults
+## sudo gedit /etc/ssh/sshd_config
+sudo systemctl restart ssh.
+
+## enable workspace
+All setting -> appearnce -> Behavir table to enable workspace
+ctrl + alt + up/down arrow to switch workspace 
+
+
+### Git bitbusket
+git clone https://PZ11@bitbucket.org/PZ11/safedriver.git
+password: DPz1
+
+
+
+############ Install rodeo, that is similar to rstudio in python
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 33D40BC6
+sudo add-apt-repository "deb http://rodeo-deb.yhat.com/ rodeo main"
+
+#### install rodeo and run it
+sudo apt-get update
+sudo apt-get -y install rodeo
+
+## When start rodeo, specify python path like below
+/home/zyp/anaconda3/bin/python
+
+## install packages below 
+pip install Jupyter
+pip install ggplot
+
+
+########################################################################
+######## Emacs
+## https://realpython.com/blog/python/emacs-the-best-python-editor/
+
+which emacs ? check if emacs is installed and in your path.
+emacs --version ? print version.
+man emacs ? read about basic command flags.
+# search for emacs binary
+apt-cache search emacs | grep emacs
+#Typicall you install by
+sudo apt-get install emacs
+
+
+######## Install elpy package for python
+## https://github.com/jorgenschaefer/elpy
+
+## Install required package
+pip install jedi flake8 importmagic autopep8
+
+## create file: ~/.emacs, enter below:
+(require 'package)
+(add-to-list 'package-archives
+             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+(package-initialize)
+
+## restart emacs, Then run 'M-x list-packages'
+## find elpy, click "install" button on the bottom of the screen. 
+## add (elpy-enable) in .emacs file 
+
+zyp@zyp-MS-7850:~$ cat .emacs
+(require 'package)
+(add-to-list 'package-archives
+             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+(package-initialize)
+(elpy-enable)
+
+############### Learn emac in python
+##https://realpython.com/blog/python/emacs-the-best-python-editor/
+
+
+
+############### Emacs command, PZ
+After c-z, need return to emacs enter: fg
+quit: c-g
+save: c-x c-s
+exit: c-x c-c
+undo: c-/ or 'c-x u'
+cut(kill): c_w
+copy(Kill-ring-save):m_w
+paste(Yank):c_y
+    (Yank next):m_y
+single window: c-x 1
+to the end of the file: alt + shift + . (m->)
+to the beginning of the file: alt + shit + , (m-<)
+List all buffer: c-x b, then use upper/lower arrow to select buffer
+
+########################################################################
+################## Steps on Youtube from tkm2261 ##############################
+########################################################################
+
+sudo apt update
+
+## Install all other packages 
+## https://github.com/tkm2261/analytics_ansible/blob/master/roles/common/tasks/main.yml
+	  apt: name={{ item }} state=latest update_cache=yes
+	  become: yes
+	  with_items:
+	     - git
+	     - vim
+	     - emacs
+	     - build-essential
+	     - mosh
+	     - tmux
+	     - supervisor
+	     - htop
+  
+sudo apt install git emacs build-essential tmux htop
+
+### Install Anaconda
+## Copy link from anacoda webpage below 
+zyp@ubuntu:~/kaggle/SafeDriver/script$ wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
+
+zyp@zyp-MS-7850:~/Downloads$ sh ./Anaconda3-5.0.1-Linux-x86_64.sh
+
+## Open as python3.6. otherwise default is python 2.7
+source .bashrc
+python
+
+### 7Z file
+sudo apt-get install p7zip-full
+zyp@zyp-MS-7850:~/kaggle/safedriver/input$ 7z x sample_submission.7z
+
+### Try git 
+zyp@zyp-MS-7850:~/kaggle/safedriver/safedriver$ git config --global user.email pz201311@gmail.com
+zyp@zyp-MS-7850:~/kaggle/safedriver/safedriver$ git config --global user.name pz11 
+zyp@zyp-MS-7850:~/kaggle/safedriver/safedriver$ git commit load_data.py 
+
+###### Git command by TKM
+git status
+git add * 
+git rm -r --cached *
+## Add .gitignore file
+zyp@zyp-MS-7850:~/kaggle/safedriver/tkm_pz$ cat .gitignore
+*~
+input/
+*csv
+## Add all python file 
+git add *py
+git commit -m "first commit"
+## push to bitbuster master copy
+git push origin master
+## Ask to enter password: DCMPzhang01
+
+## Get latest copy 
+git pull origin master 
+
+## On Gitbub, change connection to SSH instead of https, that I don't need enter password every time
+zyp@ubuntu:~/kaggle/FavoritaGrocery/script$ git remote set-url origin git@github.com:PZ11/favoritegrocery.git
+zyp@ubuntu:~/kaggle/FavoritaGrocery/script$ git remote -v
+
+## On bitbucket, it is different 
+zyp@ubuntu:~/kaggle/FavoritaGrocery/script$ 
+git remote set-url origin https://PZ11:DCMPzhang01@bitbucket.org/PZ11/favoritagrocery.git
+
+
+
+########################################################################
+########################################################################
+########################################################################
+
+
