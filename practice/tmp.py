@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import mean_squared_error
 import lightgbm as lgb
+import xgboost as xgb
 import sys
 
 import math
@@ -20,7 +21,7 @@ from logging import StreamHandler, DEBUG, Formatter, FileHandler, getLogger
 logger = getLogger(__name__)
 pd.options.mode.chained_assignment = None  # default='warn'
 
-DIR = './logs/'
+DIR = '../logs/'
 
 log_fmt = Formatter('%(asctime)s %(name)s %(lineno)d [%(levelname)s][%(funcName)s] %(message)s ')
 handler = StreamHandler()
@@ -198,21 +199,21 @@ X_val, y_val = prepare_dataset(date(2017, 7, 26))
 X_test = prepare_dataset(date(2017, 8, 16), is_train=False)
 
 #------------------------------------------------------------------------------------------#
-logger.info('Training and predicting models...')
 
-params = {
-    'num_leaves': 31,
-    'objective': 'regression',
-    'min_data_in_leaf': 300,
-    'learning_rate': 0.1,
-    'feature_fraction': 0.8,
-    'bagging_fraction': 0.8,
-    'bagging_freq': 2,
-    'metric': 'l2',
-    'num_threads': 4
-}
+logger.info('XGB, Training and predicting models...')
 
-MAX_ROUNDS = 500
+
+params = {"objective": "reg:linear",
+          "booster" : "gbtree",
+          "eta": 0.3,
+          "max_depth": 10,
+          "subsample": 0.9,
+          "colsample_bytree": 0.7,
+          "silent": 1,
+          "seed": 1301
+          }
+num_boost_round = 300
+
 val_pred = []
 test_pred = []
 cate_vars = []
@@ -220,30 +221,27 @@ for i in range(16):
     print("=" * 50)
     print("Step %d" % (i+1))
     print("=" * 50)
-    dtrain = lgb.Dataset(
-        X_train, label=y_train[:, i],
-        categorical_feature=cate_vars,
-        weight=pd.concat([items["perishable"]] * 6) * 0.25 + 1
-    )
-    dval = lgb.Dataset(
-        X_val, label=y_val[:, i], reference=dtrain,
-        weight=items["perishable"] * 0.25 + 1,
-        categorical_feature=cate_vars)
-    bst = lgb.train(
-        params, dtrain, num_boost_round=MAX_ROUNDS,
-        valid_sets=[dtrain, dval], early_stopping_rounds=50, verbose_eval=100
-    )
-    print("\n".join(("%s: %.2f" % x) for x in sorted(
-        zip(X_train.columns, bst.feature_importance("gain")),
-        key=lambda x: x[1], reverse=True
-    )))
-    val_pred.append(bst.predict(
-        X_val, num_iteration=bst.best_iteration or MAX_ROUNDS))
-    test_pred.append(bst.predict(
-        X_test, num_iteration=bst.best_iteration or MAX_ROUNDS))
 
-print("Validation mse:", mean_squared_error(
-    y_val, np.array(val_pred).transpose()))
+    print("Train a XGBoost model")
+    X_xgbtrain = X_train
+    y_xgbtrain = y_train[:, i]
+    X_xgbvalid = X_val
+    y_xgbvalid = y_val[:, i]
+    
+    dtrain = xgb.DMatrix(X_xgbtrain, y_xgbtrain)
+    dvalid = xgb.DMatrix(X_xgbvalid, y_xgbvalid)
+
+    watchlist = [(dtrain, 'train'), (dvalid, 'eval')]
+    bst = xgb.train(params, dtrain, num_boost_round, evals=watchlist, \
+                      early_stopping_rounds=20, verbose_eval=True)
+
+    #importance = bst.get_fscore(fmap='xgb.fmap')
+    #print(importance)
+
+    val_pred.append(bst.predict(xgb.DMatrix(X_val)))
+    test_pred.append(bst.predict(xgb.DMatrix(X_test)))
+
+#print("Validation mse:", mean_squared_error(y_val, np.array(val_pred).transpose()))
 
 del X_train, y_train
 #------------------------------------------------------------------------------------------#
@@ -270,13 +268,11 @@ test_e = pd.merge(valid, pred, on=['item_nbr','store_nbr', 'level_2'])
 #test_e = pd.merge(valid_m, items, on='item_nbr',how='inner')
 test_e["date"] = test_e.level_2
 
-del valid, pred
-del X_val, y_val
+#del valid, pred
+#del X_val, y_val
 
-#df = pd.DataFrame(test_e["pred_sales"], test_e["date"], test_e['unit_sales'], test_e['item_nbr'],test_e['store_nbr'])
-#del test_e
-#eval_test(test_e)
-test_e.to_pickle('./data/515_val.p')
+
+test_e.to_pickle('./data/T008_xgb_val.p')
 
 #------------------------------------------------------------------------------------------#
 # Submit
@@ -291,8 +287,13 @@ df_preds.index.set_names(["store_nbr", "item_nbr", "date"], inplace=True)
 
 submission = df_test[["id"]].join(df_preds, how="left").fillna(0)
 submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
-submission.to_csv('../submit/lgb_515.csv', float_format='%.4f', index=None)
+submission.to_csv('../submit/T008_xgb_moreWK.csv', float_format='%.4f', index=None)
 
 ####### PZ, Check overral result
 print("SUM =",  submission.unit_sales.sum())
 print("MEAN =",  submission.unit_sales.mean())
+
+print(mean_squared_error(y_val, np.array(val_pred).transpose()))
+print(submission.unit_sales.sum())
+print(submission.unit_sales.mean())
+

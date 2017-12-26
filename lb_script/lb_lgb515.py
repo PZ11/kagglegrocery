@@ -152,7 +152,7 @@ df_preds.index.set_names(["store_nbr", "item_nbr", "date"], inplace=True)
 
 submission = df_test[["id"]].join(df_preds, how="left").fillna(0)
 submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
-submission.to_csv('lgb.csv', float_format='%.4f', index=None)
+submission.to_csv('../submit/lgb_515.csv', float_format='%.4f', index=None)
 
 ####### PZ, Check overral result
 print("SUM =",  submission.unit_sales.sum())

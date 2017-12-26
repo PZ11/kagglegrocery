@@ -10,6 +10,7 @@ import numpy as np
 from sklearn.metrics import mean_squared_error
 import lightgbm as lgb
 import sys
+import random
 
 import math
 import sklearn.metrics as skl_metrics
@@ -146,39 +147,7 @@ def prepare_dataset(t2017, is_train=True):
     return X
 
 
-def eval_test(test_e):
 
-    test_e['weights'] = 1
-    test_e.loc[(test_e.perishable == 1), ('weights')] = 1.25
-
-    result = NWRMSLE(test_e.unit_sales.astype(np.float64),test_e.pred_sales.astype(np.float64), test_e.weights)
-
-    print("Eval All, Number of rows in test is", test_e.shape[0])
-    print("Eval all, Forecast Period From:", min(test_e.date)," To: ", max(test_e.date))
-
-    #### check result on first 6 days.
-    test_p1 = test_e.loc[(test_e.date < '2017-08-01'), ]
-    result_p1 = NWRMSLE(test_p1.unit_sales.astype(np.float32),test_p1.pred_sales.astype(np.float32), test_p1.weights)
-
-    print("Eval P1, Number of rows in test is", test_p1.shape[0])
-    print("Eval P1, Forecast Period From:", min(test_p1.date)," To: ", max(test_p1.date))
-
-    #### check result on last 10 days.
-    test_p2 = test_e.loc[(test_e.date >= '2017-08-01'), ]
-    result_p2 = NWRMSLE(test_p2.unit_sales.astype(np.float32),test_p2.pred_sales.astype(np.float32), test_p2.weights)
-
-    print("Eval P2, Number of rows in test is", test_p2.shape[0])
-    print("Eval P2, Forecast Period From:", min(test_p2.date)," To: ", max(test_p2.date))
-
-    print("Eval All Weighted NWRMSLE = ",result)
-    print("Eval P1  Weighted NWRMSLE = ",result_p1)
-    print("Eval P2  Weighted NWRMSLE = ",result_p2)
-
-    
-    test_e['error'] =  abs(test_e.pred_sales - test_e.unit_sales)
-    print("Bias =",  (test_e.pred_sales.sum() - test_e.unit_sales.sum()) /  test_e.unit_sales.sum())
-    print("WMAPE =",  abs(test_e.error.sum() - test_e.unit_sales.sum()) /  test_e.unit_sales.sum())
-    
 #------------------------------------------------------------------------------------------#
 logger.info('Preparing datasetn...')
 
@@ -196,6 +165,19 @@ y_train = np.concatenate(y_l, axis=0)
 del X_l, y_l
 X_val, y_val = prepare_dataset(date(2017, 7, 26))
 X_test = prepare_dataset(date(2017, 8, 16), is_train=False)
+
+#### Apply 10% Random
+X_train_f = X_train
+y_train_f = y_train
+X_val_f = X_val
+y_val_f = y_val
+random.seed(9001)
+msk = np.random.rand(len(X_train)) < 0.1
+X_train = X_train_f[msk]
+y_train = y_train_f[msk]
+msk_val = np.random.rand(len(X_val)) < 0.1
+X_val = X_val_f[msk_val]
+y_val = y_val_f[msk_val]
 
 #------------------------------------------------------------------------------------------#
 logger.info('Training and predicting models...')
@@ -223,11 +205,11 @@ for i in range(16):
     dtrain = lgb.Dataset(
         X_train, label=y_train[:, i],
         categorical_feature=cate_vars,
-        weight=pd.concat([items["perishable"]] * 6) * 0.25 + 1
+#        weight=pd.concat([items["perishable"]] * 6) * 0.25 + 1
     )
     dval = lgb.Dataset(
         X_val, label=y_val[:, i], reference=dtrain,
-        weight=items["perishable"] * 0.25 + 1,
+#        weight=items["perishable"] * 0.25 + 1,
         categorical_feature=cate_vars)
     bst = lgb.train(
         params, dtrain, num_boost_round=MAX_ROUNDS,
@@ -238,12 +220,12 @@ for i in range(16):
         key=lambda x: x[1], reverse=True
     )))
     val_pred.append(bst.predict(
-        X_val, num_iteration=bst.best_iteration or MAX_ROUNDS))
+        X_val_f, num_iteration=bst.best_iteration or MAX_ROUNDS))
     test_pred.append(bst.predict(
         X_test, num_iteration=bst.best_iteration or MAX_ROUNDS))
 
 print("Validation mse:", mean_squared_error(
-    y_val, np.array(val_pred).transpose()))
+    y_val_f, np.array(val_pred).transpose()))
 
 del X_train, y_train
 #------------------------------------------------------------------------------------------#
@@ -252,7 +234,7 @@ del X_train, y_train
 logger.info('validate accuracy ...')
 
 valid = pd.DataFrame(
-    np.expm1(y_val), index=df_2017.index,
+    np.expm1(y_val_f), index=df_2017.index,
     columns=pd.date_range("2017-07-26", periods=16)
 ).stack().to_frame("unit_sales")
 
@@ -265,18 +247,13 @@ valid = valid.reset_index()
 pred = pred.reset_index()
 
 test_e = pd.merge(valid, pred, on=['item_nbr','store_nbr', 'level_2'])
-#items = items.reset_index()
-
-#test_e = pd.merge(valid_m, items, on='item_nbr',how='inner')
 test_e["date"] = test_e.level_2
+test_e.to_pickle('./data/t004_515_val_10P.p')
 
 del valid, pred
 del X_val, y_val
 
-#df = pd.DataFrame(test_e["pred_sales"], test_e["date"], test_e['unit_sales'], test_e['item_nbr'],test_e['store_nbr'])
-#del test_e
-#eval_test(test_e)
-test_e.to_pickle('./data/515_val.p')
+
 
 #------------------------------------------------------------------------------------------#
 # Submit

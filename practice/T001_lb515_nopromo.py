@@ -20,7 +20,7 @@ from logging import StreamHandler, DEBUG, Formatter, FileHandler, getLogger
 logger = getLogger(__name__)
 pd.options.mode.chained_assignment = None  # default='warn'
 
-DIR = './logs/'
+DIR = '../logs/'
 
 log_fmt = Formatter('%(asctime)s %(name)s %(lineno)d [%(levelname)s][%(funcName)s] %(message)s ')
 handler = StreamHandler()
@@ -127,17 +127,17 @@ def prepare_dataset(t2017, is_train=True):
         "mean_14_2017": get_timespan(df_2017, t2017, 14, 14).mean(axis=1).values,
         "mean_30_2017": get_timespan(df_2017, t2017, 30, 30).mean(axis=1).values,
         "mean_60_2017": get_timespan(df_2017, t2017, 60, 60).mean(axis=1).values,
-        "mean_140_2017": get_timespan(df_2017, t2017, 140, 140).mean(axis=1).values,
-        "promo_14_2017": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
-        "promo_60_2017": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
-        "promo_140_2017": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values
+        "mean_140_2017": get_timespan(df_2017, t2017, 140, 140).mean(axis=1).values
+#        "promo_14_2017": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
+#        "promo_60_2017": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
+#        "promo_140_2017": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values
     })
     for i in range(7):
         X['mean_4_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
         X['mean_20_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 140-i, 20, freq='7D').mean(axis=1).values
-    for i in range(16):
-        X["promo_{}".format(i)] = promo_2017[
-            t2017 + timedelta(days=i)].values.astype(np.uint8)
+#    for i in range(16):
+#        X["promo_{}".format(i)] = promo_2017[
+#            t2017 + timedelta(days=i)].values.astype(np.uint8)
     if is_train:
         y = df_2017[
             pd.date_range(t2017, periods=16)

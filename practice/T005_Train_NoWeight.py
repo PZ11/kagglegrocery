@@ -20,7 +20,7 @@ from logging import StreamHandler, DEBUG, Formatter, FileHandler, getLogger
 logger = getLogger(__name__)
 pd.options.mode.chained_assignment = None  # default='warn'
 
-DIR = './logs/'
+DIR = '../logs/'
 
 log_fmt = Formatter('%(asctime)s %(name)s %(lineno)d [%(levelname)s][%(funcName)s] %(message)s ')
 handler = StreamHandler()
@@ -223,11 +223,11 @@ for i in range(16):
     dtrain = lgb.Dataset(
         X_train, label=y_train[:, i],
         categorical_feature=cate_vars,
-        weight=pd.concat([items["perishable"]] * 6) * 0.25 + 1
+#        weight=pd.concat([items["perishable"]] * 6) * 0.25 + 1
     )
     dval = lgb.Dataset(
         X_val, label=y_val[:, i], reference=dtrain,
-        weight=items["perishable"] * 0.25 + 1,
+#        weight=items["perishable"] * 0.25 + 1,
         categorical_feature=cate_vars)
     bst = lgb.train(
         params, dtrain, num_boost_round=MAX_ROUNDS,
@@ -270,13 +270,11 @@ test_e = pd.merge(valid, pred, on=['item_nbr','store_nbr', 'level_2'])
 #test_e = pd.merge(valid_m, items, on='item_nbr',how='inner')
 test_e["date"] = test_e.level_2
 
-del valid, pred
-del X_val, y_val
+#del valid, pred
+#del X_val, y_val
 
-#df = pd.DataFrame(test_e["pred_sales"], test_e["date"], test_e['unit_sales'], test_e['item_nbr'],test_e['store_nbr'])
-#del test_e
-#eval_test(test_e)
-test_e.to_pickle('./data/515_val.p')
+
+test_e.to_pickle('./data/T005_lgb_val_NoWeight.p')
 
 #------------------------------------------------------------------------------------------#
 # Submit
@@ -291,8 +289,12 @@ df_preds.index.set_names(["store_nbr", "item_nbr", "date"], inplace=True)
 
 submission = df_test[["id"]].join(df_preds, how="left").fillna(0)
 submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
-submission.to_csv('../submit/lgb_515.csv', float_format='%.4f', index=None)
+submission.to_csv('../submit/T005_lgb_NoWeght.csv', float_format='%.4f', index=None)
 
 ####### PZ, Check overral result
 print("SUM =",  submission.unit_sales.sum())
 print("MEAN =",  submission.unit_sales.mean())
+
+print(mean_squared_error(y_val, np.array(val_pred).transpose()))
+print(submission.unit_sales.sum())
+print(submission.unit_sales.mean())
