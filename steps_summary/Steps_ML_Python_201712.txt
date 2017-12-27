@@ -96,15 +96,22 @@ After c-z, need return to emacs enter: fg
 quit: c-g
 save: c-x c-s
 exit: c-x c-c
+
 undo: c-/ or 'c-x u'
+
 cut(kill): c_w
 copy(Kill-ring-save):m_w
 paste(Yank):c_y
     (Yank next):m_y
+
 single window: c-x 1
+
 to the end of the file: alt + shift + . (m->)
 to the beginning of the file: alt + shit + , (m-<)
+
 List all buffer: c-x b, then use upper/lower arrow to select buffer
+
+Mark: c-@ (Ctrl+shift+2)
 
 ########################################################################
 ################## Steps on Youtube from tkm2261 ##############################
