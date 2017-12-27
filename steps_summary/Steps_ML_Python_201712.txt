@@ -177,7 +177,22 @@ git remote set-url origin https://PZ11:DCMPzhang01@bitbucket.org/PZ11/favoritagr
 
 
 ########################################################################
+##############New Repository: kagglegrocery ############################
 ########################################################################
-########################################################################
+
+
+zyp@ubuntu:~/kaggle$ git clone https://PZ11@bitbucket.org/PZ11/kagglegrocery.git
+Password for 'https://PZ11@bitbucket.org': DCMPzhang01
+
+zyp@ubuntu:~/kaggle$ cp -r tmp/* kagglegrocery/
+
+zyp@ubuntu:~/kaggle$ cd kagglegrocery/
+
+zyp@ubuntu:~/kaggle/kagglegrocery$ ls
+jupyter  lb_script  others  pz_script  steps_summary  submit  tmp
+
+zyp@ubuntu:~/kaggle/kagglegrocery$ git add *
+
+
 
 

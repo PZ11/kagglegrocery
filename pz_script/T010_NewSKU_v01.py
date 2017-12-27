@@ -66,7 +66,8 @@ pos_idx = (df_fcst_new['unit_sales'] == 0) & ( df_fcst_new['avg_item_sales'] > 0
 df_fcst_new_pos = df_fcst_new.loc[pos_idx]
 
 ### Assign new value 
-df_fcst_new_pos['unit_sales'] = df_fcst_new_pos['avg_item_sales']
+#df_fcst_new_pos['unit_sales'] = df_fcst_new_pos['avg_item_sales']
+df_fcst_new.loc[pos_idx,'unit_sales'] = df_fcst_new_pos['avg_item_sales']
 
 print('sum of old forecast', df_fcst.unit_sales.sum())
 print('sum of new forecast', df_fcst_new.unit_sales.sum())
