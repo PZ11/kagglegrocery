@@ -193,6 +193,20 @@ jupyter  lb_script  others  pz_script  steps_summary  submit  tmp
 
 zyp@ubuntu:~/kaggle/kagglegrocery$ git add *
 
+#### Add gitignore 
+zyp@ubuntu:~/kaggle/kagglegrocery$ cat .gitignore
+*#
+*~
+*csv
+*gz
+input/
+logs/
+jupyter/logs/
+jupyter/.ipynb_checkpoints/
+practice/data/
+practice/logs
+pz_script/data/
+pz_script/result_tmp
 
 
 
