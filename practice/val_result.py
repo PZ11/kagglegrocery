@@ -72,7 +72,7 @@ def eval_test(test_e):
 #------------------------------------------------------------------------------------------#
 
 #col = ['order_id', 'user_id', 'product_id', 'order_number', 'order_number_rev']
-val = pd.read_pickle('./data/T006_lgb_val.p')
+val = pd.read_pickle('../data/T020_val_t016.p')
 
 print("Validation mse:", mean_squared_error(
     np.log1p(val.unit_sales),np.log1p(val.pred_sales)))
