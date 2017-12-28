@@ -1,0 +1,12 @@
+*#
+*~
+*csv
+*gz
+input/
+logs/
+jupyter/logs/
+jupyter/.ipynb_checkpoints/
+practice/data/
+practice/logs
+pz_script/data/
+pz_script/result_tmp
