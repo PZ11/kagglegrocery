@@ -137,8 +137,8 @@ def prepare_dataset(t2017, is_train=True):
 
        # "mean_ly_wk1_2017": get_timespan(df_2017, t2017, 364, 7).mean(axis=1).values,
        # "mean_ly_wk2_2017": get_timespan(df_2017, t2017, 364, 14).mean(axis=1).values,        
-        "mean_ly_wk3_2017": get_timespan(df_2017, t2017, 364, 16).mean(axis=1).values,
-        "mean_ly_wk3_2017": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
+        "mean_ly_n16d_2017": get_timespan(df_2017, t2017, 364, 16).mean(axis=1).values,
+        "mean_ly_p3w_2017": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
 
         "promo_14_2017": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
         "promo_60_2017": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
