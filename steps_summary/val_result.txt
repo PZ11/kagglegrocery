@@ -61,7 +61,30 @@ SUM = 13703127.886999827
 MEAN = 5.112649571306982
 
 ###############################################################
-## 
+##  T20. Val Result 
+zyp@zyp-MS-7850:~/kaggle/kagglegrocery/practice$ python val_result.py 
+Validation mse: 0.351755322173
+Eval All, Number of rows in test is 2743904
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 1028964
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-31 00:00:00
+Eval P2, Number of rows in test is 1714940
+Eval P2, Forecast Period From: 2017-08-01 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5926796942548169
+Eval P1  Weighted NWRMSLE =  0.572407084190555
+Eval P2  Weighted NWRMSLE =  0.6045170321745916
+Bias = -0.2647491793418372
+WMAPE = 0.4753768159452929
+SUM = 13703127.886999782
+MEAN = 4.994025988882914
+0.351755322173
+0.5926796942548169
+0.572407084190555
+0.6045170321745916
+-0.2647491793418372
+0.4753768159452929
+10075236.024500346
+3.6718617067143553
 
 
 ###############################################################
