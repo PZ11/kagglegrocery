@@ -1,0 +1,1418 @@
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ python T022_T9WK_MoreLY.py 
+2017-12-28 16:07:59,840 __main__ 38 [INFO]    [<module>] start 
+2017-12-28 16:11:07,250 __main__ 88 [INFO]    [<module>] Load data successful 
+2017-12-28 16:12:54,777 __main__ 167 [INFO]    [<module>] Preparing traing dataset... 
+2017-12-28 16:13:10,826 __main__ 186 [INFO]    [<module>] Training and predicting models... 
+==================================================
+Step 1
+==================================================
+/home/zyp/anaconda3/lib/python3.6/site-packages/lightgbm/basic.py:1030: UserWarning: Using categorical_feature in Dataset.
+  warnings.warn('Using categorical_feature in Dataset.')
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.291333
+[200]	training's l2: 0.288138
+[300]	training's l2: 0.286017
+[400]	training's l2: 0.28421
+[500]	training's l2: 0.28273
+[LightGBM] [Info] Finished loading 500 models
+mean_7_2017: 2483976.46
+mean_14_2017: 2158653.09
+mean_21_2017: 229160.65
+promo_0: 151985.39
+day_1_2017: 151021.07
+mean_3_2017: 107789.89
+mean_20_dow0_2017: 99067.58
+mean_4_dow0_2017: 82409.21
+mean_42_2017: 43987.69
+promo_14_2017: 43889.28
+mean_60_2017: 19061.72
+mean_30_2017: 15040.18
+promo_7: 13543.73
+promo_60_2017: 9777.70
+mean_364_2017: 7935.40
+mean_ly3w_dow0_2017: 6981.04
+mean_ly8w_dow0_2017: 6501.34
+promo_140_2017: 6382.96
+promo_14: 5758.07
+mean_4_dow2_2017: 5521.98
+mean_20_dow4_2017: 5444.53
+mean_91_2017: 4877.93
+mean_4_dow5_2017: 4644.10
+mean_182_2017: 3969.50
+mean_4_dow6_2017: 3952.36
+mean_20_dow2_2017: 3512.70
+promo_15: 2630.31
+promo_9: 2543.86
+mean_4_dow1_2017: 2490.59
+promo_11: 2431.39
+mean_4_dow4_2017: 2249.94
+mean_20_dow3_2017: 2244.25
+mean_4_dow3_2017: 1937.48
+mean_20_dow6_2017: 1895.30
+promo_13: 1824.19
+mean_140_2017: 1631.83
+mean_ly8w_dow4_2017: 1622.89
+mean_20_dow1_2017: 1545.08
+promo_3: 1394.16
+mean_20_dow5_2017: 1391.95
+promo_2: 1378.20
+mean_ly8w_dow3_2017: 1304.58
+mean_ly_n16d_2017: 1287.65
+promo_4: 1255.30
+mean_ly_p3w_2017: 1192.92
+mean_ly3w_dow3_2017: 1158.73
+promo_1: 1142.52
+mean_ly3w_dow1_2017: 1073.78
+mean_ly3w_dow6_2017: 1050.54
+mean_ly8w_dow2_2017: 970.16
+mean_ly8w_dow6_2017: 906.68
+mean_ly8w_dow1_2017: 895.45
+mean_ly3w_dow4_2017: 870.64
+mean_ly3w_dow5_2017: 852.62
+mean_ly3w_dow2_2017: 828.00
+mean_ly8w_dow5_2017: 773.21
+promo_12: 575.90
+promo_6: 542.07
+promo_10: 514.80
+promo_5: 484.31
+promo_8: 77.21
+==================================================
+Step 2
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.316286
+[200]	training's l2: 0.313079
+[300]	training's l2: 0.31084
+[400]	training's l2: 0.308955
+[500]	training's l2: 0.307165
+[LightGBM] [Info] Finished loading 500 models
+mean_14_2017: 2278613.25
+mean_7_2017: 1633540.01
+mean_30_2017: 143251.74
+mean_42_2017: 129010.59
+mean_21_2017: 109029.02
+promo_1: 104146.76
+mean_20_dow1_2017: 96712.01
+day_1_2017: 59671.21
+promo_14_2017: 38243.08
+mean_60_2017: 32109.29
+mean_3_2017: 29839.80
+mean_4_dow1_2017: 25498.96
+mean_364_2017: 8329.01
+mean_91_2017: 7241.21
+promo_0: 7196.74
+mean_4_dow2_2017: 6604.72
+promo_60_2017: 6362.75
+mean_182_2017: 5992.01
+mean_20_dow2_2017: 5976.17
+mean_ly3w_dow1_2017: 5816.87
+mean_ly8w_dow1_2017: 5785.83
+mean_20_dow4_2017: 5376.86
+promo_3: 4897.64
+promo_140_2017: 4682.96
+mean_4_dow0_2017: 3567.50
+promo_5: 3075.89
+promo_4: 3066.69
+mean_4_dow4_2017: 2739.14
+mean_4_dow6_2017: 2704.71
+mean_ly8w_dow4_2017: 2667.21
+promo_2: 2551.51
+mean_4_dow5_2017: 2505.71
+mean_20_dow6_2017: 2258.70
+mean_20_dow0_2017: 2156.27
+mean_4_dow3_2017: 2125.58
+mean_140_2017: 2093.28
+mean_ly3w_dow0_2017: 2017.41
+mean_20_dow5_2017: 2001.16
+mean_ly_n16d_2017: 1943.53
+mean_20_dow3_2017: 1703.99
+mean_ly_p3w_2017: 1603.53
+mean_ly8w_dow0_2017: 1582.60
+mean_ly8w_dow2_2017: 1501.05
+promo_7: 1462.51
+mean_ly3w_dow4_2017: 1342.41
+mean_ly3w_dow2_2017: 1280.92
+mean_ly3w_dow6_2017: 1207.96
+mean_ly8w_dow6_2017: 1070.68
+mean_ly3w_dow5_2017: 1054.83
+mean_ly8w_dow5_2017: 960.29
+mean_ly3w_dow3_2017: 941.81
+promo_6: 868.80
+promo_14: 797.92
+mean_ly8w_dow3_2017: 768.59
+promo_13: 546.84
+promo_15: 539.40
+promo_11: 487.81
+promo_8: 392.24
+promo_9: 368.20
+promo_12: 264.32
+promo_10: 175.07
+==================================================
+Step 3
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.320009
+[200]	training's l2: 0.315815
+[300]	training's l2: 0.313133
+[400]	training's l2: 0.31097
+[500]	training's l2: 0.30912
+[LightGBM] [Info] Finished loading 500 models
+mean_14_2017: 2649504.99
+mean_7_2017: 1222431.96
+mean_21_2017: 517779.91
+mean_4_dow2_2017: 321570.15
+mean_20_dow2_2017: 287848.53
+mean_30_2017: 199628.62
+promo_2: 152425.28
+promo_14_2017: 42050.10
+mean_42_2017: 26392.82
+mean_3_2017: 22234.55
+day_1_2017: 20674.40
+mean_60_2017: 16260.90
+promo_60_2017: 11560.94
+promo_140_2017: 10644.27
+mean_ly8w_dow2_2017: 9236.29
+mean_ly3w_dow2_2017: 8493.26
+promo_9: 8440.08
+mean_364_2017: 8281.79
+promo_3: 7346.75
+promo_0: 6827.93
+mean_20_dow4_2017: 6129.70
+promo_5: 4801.19
+promo_7: 4467.90
+mean_20_dow5_2017: 4457.92
+mean_91_2017: 4456.75
+mean_4_dow0_2017: 4258.34
+promo_4: 4228.50
+mean_ly8w_dow4_2017: 4210.29
+mean_4_dow1_2017: 4208.38
+mean_4_dow3_2017: 3310.64
+mean_4_dow4_2017: 3173.47
+mean_ly_n16d_2017: 2956.01
+mean_20_dow1_2017: 2951.61
+promo_1: 2498.17
+mean_4_dow6_2017: 2479.44
+promo_11: 2451.15
+mean_20_dow3_2017: 2419.26
+mean_20_dow6_2017: 2245.14
+mean_ly_p3w_2017: 2075.30
+mean_20_dow0_2017: 2015.16
+mean_4_dow5_2017: 1980.46
+promo_10: 1897.09
+promo_6: 1742.40
+promo_14: 1724.19
+mean_ly8w_dow5_2017: 1669.63
+mean_ly3w_dow0_2017: 1557.65
+mean_ly3w_dow1_2017: 1447.72
+mean_ly3w_dow3_2017: 1316.68
+mean_140_2017: 1272.55
+mean_ly8w_dow6_2017: 1260.60
+mean_ly3w_dow5_2017: 1258.06
+mean_ly3w_dow6_2017: 1217.83
+mean_182_2017: 1209.56
+mean_ly3w_dow4_2017: 1194.68
+mean_ly8w_dow0_2017: 1108.80
+mean_ly8w_dow1_2017: 1079.26
+promo_13: 986.56
+mean_ly8w_dow3_2017: 972.10
+promo_15: 964.10
+promo_8: 847.90
+promo_12: 379.38
+==================================================
+Step 4
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.340284
+[200]	training's l2: 0.33589
+[300]	training's l2: 0.333262
+[400]	training's l2: 0.331008
+[500]	training's l2: 0.329039
+[LightGBM] [Info] Finished loading 500 models
+mean_14_2017: 3178551.86
+mean_7_2017: 1277705.17
+mean_21_2017: 605651.22
+mean_4_dow3_2017: 343206.42
+mean_30_2017: 266471.74
+mean_20_dow3_2017: 204917.73
+promo_3: 114122.96
+mean_3_2017: 92185.01
+mean_42_2017: 88993.77
+mean_60_2017: 53889.01
+promo_14_2017: 34373.52
+mean_4_dow4_2017: 15217.39
+mean_ly3w_dow3_2017: 14718.47
+day_1_2017: 11144.03
+promo_5: 9493.43
+mean_364_2017: 9293.71
+promo_60_2017: 7913.93
+mean_ly8w_dow3_2017: 7255.95
+promo_7: 6832.61
+promo_140_2017: 6740.28
+mean_91_2017: 6417.29
+promo_4: 6331.92
+promo_2: 6314.65
+mean_182_2017: 5427.92
+mean_4_dow2_2017: 5390.58
+promo_0: 4817.55
+mean_20_dow5_2017: 4585.05
+mean_ly_p3w_2017: 4561.34
+mean_140_2017: 3577.48
+mean_4_dow0_2017: 3572.00
+mean_ly_n16d_2017: 3457.01
+promo_6: 3248.87
+mean_20_dow0_2017: 3056.37
+mean_20_dow6_2017: 2969.86
+mean_ly8w_dow5_2017: 2704.42
+mean_20_dow4_2017: 2672.18
+mean_4_dow1_2017: 2552.61
+promo_1: 2537.94
+mean_20_dow2_2017: 2522.58
+mean_4_dow6_2017: 2498.73
+mean_4_dow5_2017: 2157.19
+mean_ly3w_dow4_2017: 2001.76
+mean_ly8w_dow6_2017: 1780.80
+mean_ly8w_dow2_2017: 1569.01
+mean_20_dow1_2017: 1507.05
+mean_ly8w_dow0_2017: 1382.79
+promo_14: 1291.88
+mean_ly3w_dow5_2017: 1280.09
+mean_ly3w_dow6_2017: 1269.74
+mean_ly3w_dow2_2017: 1252.57
+promo_8: 1223.47
+mean_ly3w_dow1_2017: 1003.53
+mean_ly8w_dow1_2017: 982.05
+mean_ly3w_dow0_2017: 926.66
+mean_ly8w_dow4_2017: 895.13
+promo_9: 832.56
+promo_15: 689.32
+promo_10: 512.12
+promo_13: 494.62
+promo_11: 246.57
+promo_12: 190.50
+==================================================
+Step 5
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.349193
+[200]	training's l2: 0.344591
+[300]	training's l2: 0.341685
+[400]	training's l2: 0.339213
+[500]	training's l2: 0.337013
+[LightGBM] [Info] Finished loading 500 models
+mean_14_2017: 2677553.59
+mean_4_dow4_2017: 1302214.97
+mean_7_2017: 917481.91
+mean_21_2017: 670648.76
+mean_3_2017: 505968.20
+mean_20_dow4_2017: 325608.23
+promo_4: 112824.73
+mean_30_2017: 72766.61
+mean_60_2017: 52817.98
+promo_14_2017: 33135.66
+mean_ly8w_dow4_2017: 24960.02
+mean_ly3w_dow4_2017: 17525.39
+mean_4_dow3_2017: 17393.30
+promo_5: 12991.36
+promo_7: 12412.35
+mean_42_2017: 10031.63
+promo_3: 9014.84
+promo_60_2017: 8182.60
+mean_364_2017: 8096.63
+day_1_2017: 7793.99
+promo_140_2017: 6925.21
+mean_ly_p3w_2017: 6641.98
+promo_6: 6062.76
+promo_0: 5654.94
+promo_2: 4912.34
+mean_91_2017: 4527.27
+mean_182_2017: 4491.09
+promo_1: 4073.45
+mean_4_dow0_2017: 3785.59
+mean_20_dow0_2017: 3772.89
+mean_20_dow1_2017: 3745.49
+mean_20_dow2_2017: 3686.00
+mean_ly8w_dow2_2017: 3265.52
+mean_ly_n16d_2017: 3168.70
+mean_ly8w_dow0_2017: 2972.82
+promo_11: 2923.21
+mean_4_dow5_2017: 2810.76
+mean_4_dow6_2017: 2435.22
+mean_4_dow2_2017: 2421.81
+mean_20_dow6_2017: 2419.10
+mean_20_dow5_2017: 2239.30
+mean_20_dow3_2017: 2149.28
+promo_14: 2139.28
+mean_ly8w_dow6_2017: 2118.98
+mean_4_dow1_2017: 2109.79
+mean_140_2017: 1822.69
+mean_ly8w_dow5_2017: 1720.15
+promo_10: 1402.14
+promo_9: 1371.09
+mean_ly8w_dow3_2017: 1225.90
+mean_ly8w_dow1_2017: 1215.18
+promo_12: 1171.44
+mean_ly3w_dow6_2017: 1159.93
+mean_ly3w_dow3_2017: 1124.72
+mean_ly3w_dow2_2017: 1089.41
+promo_8: 1044.71
+mean_ly3w_dow0_2017: 1017.27
+mean_ly3w_dow1_2017: 1013.40
+mean_ly3w_dow5_2017: 995.92
+promo_15: 867.77
+promo_13: 860.90
+==================================================
+Step 6
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.345618
+[200]	training's l2: 0.341844
+[300]	training's l2: 0.339129
+[400]	training's l2: 0.337021
+[500]	training's l2: 0.335033
+[LightGBM] [Info] Finished loading 500 models
+mean_14_2017: 2301104.33
+mean_30_2017: 777180.03
+mean_7_2017: 676408.50
+mean_21_2017: 595355.64
+mean_3_2017: 392376.35
+mean_60_2017: 163545.20
+mean_4_dow5_2017: 141066.76
+promo_5: 116390.68
+mean_20_dow5_2017: 100545.58
+promo_14_2017: 32585.16
+mean_42_2017: 25910.65
+promo_3: 14836.41
+mean_4_dow6_2017: 14554.21
+promo_6: 13580.82
+mean_ly8w_dow5_2017: 13378.53
+promo_7: 12514.80
+mean_364_2017: 10545.91
+day_1_2017: 9540.41
+mean_91_2017: 7904.96
+mean_ly3w_dow5_2017: 7850.23
+promo_60_2017: 7793.22
+mean_20_dow6_2017: 5282.26
+promo_4: 4506.33
+promo_0: 4501.21
+promo_140_2017: 4225.38
+mean_4_dow2_2017: 3652.99
+mean_20_dow3_2017: 3589.60
+mean_4_dow0_2017: 3568.90
+mean_20_dow2_2017: 3073.34
+mean_20_dow0_2017: 3002.70
+mean_4_dow4_2017: 2997.49
+mean_ly_n16d_2017: 2970.85
+mean_140_2017: 2900.11
+mean_4_dow1_2017: 2827.69
+mean_ly_p3w_2017: 2551.75
+promo_9: 2479.35
+mean_4_dow3_2017: 2450.76
+promo_2: 2409.12
+promo_1: 2363.48
+mean_20_dow4_2017: 2136.02
+mean_ly8w_dow3_2017: 2009.21
+promo_8: 1943.95
+mean_ly8w_dow0_2017: 1896.68
+mean_ly8w_dow6_2017: 1886.22
+mean_ly3w_dow6_2017: 1811.17
+mean_182_2017: 1799.03
+promo_14: 1728.05
+mean_20_dow1_2017: 1627.98
+mean_ly8w_dow4_2017: 1561.93
+mean_ly8w_dow2_2017: 1443.63
+mean_ly3w_dow1_2017: 1430.89
+mean_ly3w_dow0_2017: 1410.28
+promo_13: 1397.11
+mean_ly3w_dow4_2017: 1387.32
+promo_10: 1296.33
+promo_11: 1268.09
+mean_ly3w_dow2_2017: 1260.07
+promo_12: 1245.26
+mean_ly8w_dow1_2017: 1201.44
+mean_ly3w_dow3_2017: 1120.56
+promo_15: 714.42
+==================================================
+Step 7
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.342948
+[200]	training's l2: 0.33898
+[300]	training's l2: 0.336302
+[400]	training's l2: 0.334059
+[500]	training's l2: 0.33209
+[LightGBM] [Info] Finished loading 500 models
+mean_14_2017: 1618209.84
+mean_30_2017: 1079400.29
+mean_7_2017: 788778.99
+mean_21_2017: 565022.64
+mean_3_2017: 277513.20
+mean_4_dow6_2017: 238261.77
+promo_6: 189456.15
+mean_20_dow6_2017: 185449.95
+mean_60_2017: 96700.16
+promo_14_2017: 34219.35
+day_1_2017: 22872.78
+mean_4_dow5_2017: 12118.42
+promo_3: 11823.04
+promo_7: 11728.33
+mean_ly3w_dow6_2017: 10928.40
+mean_42_2017: 10420.75
+mean_20_dow5_2017: 9698.20
+mean_364_2017: 9534.22
+promo_60_2017: 8598.15
+mean_ly8w_dow6_2017: 7665.27
+mean_91_2017: 7598.99
+promo_140_2017: 6867.41
+promo_5: 5276.77
+promo_0: 4968.28
+mean_182_2017: 4856.20
+promo_13: 4496.42
+mean_4_dow0_2017: 4493.35
+mean_4_dow1_2017: 4370.11
+mean_140_2017: 4208.84
+promo_4: 3852.21
+mean_ly3w_dow5_2017: 3515.56
+mean_20_dow3_2017: 3217.83
+promo_9: 3153.74
+mean_4_dow2_2017: 3072.38
+mean_ly_n16d_2017: 3068.38
+mean_20_dow0_2017: 2953.41
+mean_20_dow1_2017: 2837.70
+mean_20_dow4_2017: 2730.44
+mean_ly8w_dow5_2017: 2562.76
+mean_ly_p3w_2017: 2553.19
+mean_4_dow4_2017: 2543.89
+mean_ly8w_dow0_2017: 2450.69
+mean_4_dow3_2017: 2436.92
+promo_14: 2417.91
+mean_20_dow2_2017: 2305.34
+promo_1: 2293.36
+promo_2: 2047.47
+mean_ly8w_dow3_2017: 1884.91
+promo_15: 1841.31
+promo_8: 1822.50
+mean_ly8w_dow4_2017: 1715.99
+mean_ly8w_dow1_2017: 1580.30
+mean_ly8w_dow2_2017: 1462.45
+mean_ly3w_dow4_2017: 1322.51
+mean_ly3w_dow0_2017: 1231.34
+mean_ly3w_dow3_2017: 1218.05
+promo_11: 1141.41
+mean_ly3w_dow2_2017: 1115.52
+mean_ly3w_dow1_2017: 1107.18
+promo_12: 997.53
+promo_10: 947.15
+==================================================
+Step 8
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.328524
+[200]	training's l2: 0.324047
+[300]	training's l2: 0.32143
+[400]	training's l2: 0.319194
+[500]	training's l2: 0.317281
+[LightGBM] [Info] Finished loading 500 models
+mean_14_2017: 1719107.94
+mean_30_2017: 1151365.65
+mean_7_2017: 974627.86
+mean_21_2017: 595418.18
+promo_7: 257543.93
+mean_20_dow0_2017: 213006.54
+mean_42_2017: 170019.15
+mean_4_dow0_2017: 106491.74
+mean_60_2017: 45945.22
+mean_3_2017: 37605.89
+promo_0: 34713.83
+promo_14_2017: 26801.98
+day_1_2017: 21325.98
+promo_14: 17454.05
+mean_364_2017: 17232.38
+promo_60_2017: 14380.76
+mean_ly8w_dow0_2017: 11296.69
+promo_140_2017: 11111.67
+mean_91_2017: 9477.54
+mean_4_dow5_2017: 8226.58
+mean_182_2017: 7202.51
+mean_ly3w_dow0_2017: 6975.05
+promo_3: 6834.85
+promo_6: 6682.87
+mean_20_dow4_2017: 4495.60
+mean_20_dow2_2017: 4205.17
+promo_5: 4086.81
+mean_ly_n16d_2017: 4002.95
+promo_9: 3424.89
+mean_4_dow6_2017: 3391.16
+mean_140_2017: 3129.77
+mean_4_dow2_2017: 3050.83
+mean_20_dow3_2017: 3050.17
+mean_ly8w_dow4_2017: 2958.82
+mean_ly_p3w_2017: 2922.13
+mean_4_dow1_2017: 2851.62
+mean_ly3w_dow2_2017: 2473.10
+mean_4_dow3_2017: 2394.37
+mean_20_dow6_2017: 2355.11
+promo_15: 2299.26
+promo_2: 2218.96
+mean_4_dow4_2017: 2180.49
+mean_ly8w_dow6_2017: 2110.73
+mean_20_dow5_2017: 2072.86
+promo_8: 1795.49
+mean_20_dow1_2017: 1753.68
+mean_ly8w_dow5_2017: 1665.27
+mean_ly3w_dow5_2017: 1651.23
+promo_11: 1643.87
+promo_4: 1613.46
+promo_1: 1572.06
+mean_ly3w_dow6_2017: 1434.70
+mean_ly8w_dow3_2017: 1416.87
+mean_ly8w_dow2_2017: 1414.70
+promo_13: 1382.83
+mean_ly3w_dow3_2017: 1248.64
+mean_ly3w_dow4_2017: 1191.07
+mean_ly3w_dow1_2017: 1118.79
+mean_ly8w_dow1_2017: 1095.59
+promo_10: 1026.07
+promo_12: 894.63
+==================================================
+Step 9
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.337114
+[200]	training's l2: 0.333388
+[300]	training's l2: 0.330849
+[400]	training's l2: 0.328583
+[500]	training's l2: 0.326693
+[LightGBM] [Info] Finished loading 500 models
+mean_21_2017: 944391.47
+mean_30_2017: 810004.40
+mean_14_2017: 807168.46
+mean_7_2017: 734541.78
+mean_42_2017: 547530.02
+mean_60_2017: 186102.98
+promo_8: 173335.11
+mean_20_dow1_2017: 148979.96
+mean_4_dow1_2017: 36430.42
+promo_14_2017: 29533.20
+day_1_2017: 26339.62
+mean_3_2017: 15756.90
+mean_364_2017: 15449.02
+mean_91_2017: 11763.12
+promo_60_2017: 11064.11
+promo_7: 10331.03
+promo_10: 9899.89
+mean_20_dow2_2017: 9008.81
+promo_12: 8523.53
+promo_140_2017: 7383.61
+mean_182_2017: 6587.85
+mean_ly8w_dow1_2017: 5944.27
+mean_ly3w_dow1_2017: 5244.43
+mean_20_dow4_2017: 4980.96
+promo_11: 4752.58
+promo_9: 4407.62
+mean_4_dow0_2017: 3896.70
+mean_4_dow2_2017: 3461.02
+mean_20_dow0_2017: 3397.47
+mean_4_dow5_2017: 3216.99
+mean_ly8w_dow4_2017: 3198.11
+mean_4_dow6_2017: 3125.30
+mean_ly3w_dow2_2017: 3003.22
+mean_ly_p3w_2017: 2856.05
+mean_4_dow4_2017: 2773.52
+promo_0: 2723.71
+mean_ly_n16d_2017: 2709.90
+mean_140_2017: 2679.34
+promo_14: 2640.62
+mean_ly3w_dow6_2017: 2559.30
+mean_ly8w_dow5_2017: 2502.74
+promo_13: 2499.97
+mean_20_dow6_2017: 2467.94
+mean_20_dow5_2017: 2380.34
+mean_4_dow3_2017: 2350.22
+promo_3: 2104.51
+mean_20_dow3_2017: 1966.67
+mean_ly8w_dow0_2017: 1951.01
+promo_4: 1919.13
+mean_ly8w_dow2_2017: 1769.23
+mean_ly8w_dow3_2017: 1668.56
+mean_ly8w_dow6_2017: 1413.64
+promo_6: 1401.03
+promo_2: 1369.89
+mean_ly3w_dow0_2017: 1250.89
+promo_1: 1237.90
+mean_ly3w_dow3_2017: 1154.37
+mean_ly3w_dow5_2017: 1138.29
+mean_ly3w_dow4_2017: 1115.66
+promo_15: 1059.83
+promo_5: 875.42
+==================================================
+Step 10
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.340232
+[200]	training's l2: 0.335887
+[300]	training's l2: 0.332876
+[400]	training's l2: 0.330677
+[500]	training's l2: 0.328477
+[LightGBM] [Info] Finished loading 500 models
+mean_21_2017: 1420984.93
+mean_7_2017: 854489.20
+mean_30_2017: 724707.18
+mean_14_2017: 718659.68
+mean_20_dow2_2017: 522047.04
+mean_42_2017: 358039.31
+mean_4_dow2_2017: 336124.51
+promo_9: 202481.02
+promo_14_2017: 37847.38
+mean_60_2017: 25697.98
+promo_2: 16147.30
+mean_364_2017: 14980.04
+promo_140_2017: 14806.75
+mean_3_2017: 14461.29
+day_1_2017: 13157.40
+mean_ly8w_dow2_2017: 12864.23
+promo_8: 12747.43
+promo_60_2017: 12097.44
+promo_7: 11462.55
+mean_ly3w_dow2_2017: 9913.51
+promo_10: 8812.78
+promo_14: 7556.89
+mean_20_dow4_2017: 7130.10
+mean_91_2017: 6568.04
+promo_12: 6531.51
+mean_20_dow1_2017: 5638.27
+mean_4_dow1_2017: 4876.54
+promo_11: 4323.24
+mean_20_dow5_2017: 4256.43
+mean_4_dow0_2017: 4174.05
+mean_ly8w_dow4_2017: 4144.98
+mean_ly_p3w_2017: 3853.55
+mean_4_dow3_2017: 3268.40
+promo_13: 3222.89
+mean_ly_n16d_2017: 3106.56
+mean_20_dow6_2017: 2974.86
+mean_20_dow0_2017: 2916.52
+mean_4_dow5_2017: 2757.95
+mean_ly8w_dow5_2017: 2723.64
+mean_4_dow4_2017: 2649.79
+mean_4_dow6_2017: 2601.42
+mean_20_dow3_2017: 2600.78
+promo_0: 2333.90
+mean_ly8w_dow6_2017: 2201.03
+promo_1: 2003.57
+mean_182_2017: 1767.03
+mean_ly8w_dow0_2017: 1656.83
+mean_ly3w_dow3_2017: 1514.20
+promo_6: 1465.23
+mean_ly3w_dow5_2017: 1421.52
+mean_ly3w_dow1_2017: 1414.08
+mean_ly8w_dow1_2017: 1369.75
+mean_ly3w_dow6_2017: 1337.35
+promo_4: 1327.46
+mean_140_2017: 1315.98
+promo_15: 1286.70
+mean_ly3w_dow0_2017: 1224.00
+mean_ly8w_dow3_2017: 1145.77
+mean_ly3w_dow4_2017: 1070.45
+promo_3: 851.01
+promo_5: 383.75
+==================================================
+Step 11
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.363152
+[200]	training's l2: 0.358278
+[300]	training's l2: 0.355039
+[400]	training's l2: 0.352502
+[500]	training's l2: 0.350413
+[LightGBM] [Info] Finished loading 500 models
+mean_21_2017: 2252190.18
+mean_30_2017: 905318.14
+mean_7_2017: 898261.85
+mean_14_2017: 427202.89
+mean_4_dow3_2017: 411329.49
+mean_60_2017: 320145.02
+mean_42_2017: 262709.36
+mean_20_dow3_2017: 254841.90
+promo_10: 144218.36
+mean_3_2017: 44293.18
+promo_14_2017: 31958.28
+promo_11: 18631.04
+mean_364_2017: 15919.64
+mean_ly3w_dow3_2017: 13864.94
+mean_4_dow4_2017: 12622.01
+promo_12: 12417.91
+mean_4_dow2_2017: 10598.82
+promo_60_2017: 10501.14
+promo_7: 9933.28
+promo_14: 9815.66
+mean_ly8w_dow3_2017: 9511.51
+promo_140_2017: 9280.05
+mean_91_2017: 8650.70
+promo_9: 8353.11
+promo_13: 7908.50
+promo_8: 7289.30
+day_1_2017: 6011.55
+mean_ly_p3w_2017: 5469.61
+mean_182_2017: 5226.93
+mean_20_dow5_2017: 5078.27
+mean_4_dow0_2017: 4802.81
+mean_20_dow2_2017: 4507.54
+mean_20_dow6_2017: 4130.18
+mean_20_dow0_2017: 3979.91
+mean_140_2017: 3349.40
+mean_ly_n16d_2017: 3313.35
+mean_4_dow1_2017: 3210.81
+mean_ly8w_dow6_2017: 3175.46
+mean_ly8w_dow5_2017: 3065.96
+mean_4_dow6_2017: 2793.04
+mean_4_dow5_2017: 2699.51
+promo_3: 2660.94
+mean_20_dow4_2017: 2521.55
+mean_ly3w_dow4_2017: 2309.46
+mean_ly8w_dow0_2017: 2230.55
+promo_0: 2163.79
+mean_20_dow1_2017: 1981.06
+mean_ly8w_dow2_2017: 1575.79
+promo_15: 1432.74
+mean_ly8w_dow4_2017: 1355.06
+mean_ly8w_dow1_2017: 1351.42
+promo_6: 1346.63
+mean_ly3w_dow2_2017: 1331.49
+promo_1: 1222.03
+mean_ly3w_dow0_2017: 1207.13
+mean_ly3w_dow5_2017: 1202.14
+mean_ly3w_dow6_2017: 1199.74
+mean_ly3w_dow1_2017: 1195.79
+promo_4: 978.21
+promo_2: 903.14
+promo_5: 746.06
+==================================================
+Step 12
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.371205
+[200]	training's l2: 0.365894
+[300]	training's l2: 0.362496
+[400]	training's l2: 0.359822
+[500]	training's l2: 0.357616
+[LightGBM] [Info] Finished loading 500 models
+mean_4_dow4_2017: 1662923.41
+mean_21_2017: 1325399.45
+mean_30_2017: 919896.37
+mean_14_2017: 822940.06
+mean_7_2017: 477161.33
+mean_20_dow4_2017: 377127.14
+mean_3_2017: 306297.32
+mean_60_2017: 253171.78
+promo_11: 161481.63
+mean_ly3w_dow4_2017: 32080.72
+promo_14_2017: 29043.76
+mean_ly8w_dow4_2017: 23527.92
+promo_14: 16825.94
+mean_4_dow3_2017: 16025.74
+promo_12: 15503.65
+mean_364_2017: 14408.78
+mean_91_2017: 11009.80
+promo_140_2017: 9619.12
+promo_13: 9432.67
+promo_10: 9028.27
+promo_60_2017: 8591.67
+promo_4: 8314.15
+mean_ly_p3w_2017: 7407.67
+promo_7: 7204.27
+promo_9: 6751.33
+mean_42_2017: 6322.52
+day_1_2017: 5903.03
+promo_8: 5301.17
+mean_182_2017: 4324.94
+mean_ly8w_dow0_2017: 4172.96
+mean_20_dow0_2017: 3804.79
+mean_140_2017: 3747.34
+mean_4_dow0_2017: 3683.66
+mean_20_dow3_2017: 3379.14
+mean_ly8w_dow2_2017: 3130.07
+mean_4_dow1_2017: 3049.26
+mean_20_dow2_2017: 2997.72
+mean_20_dow6_2017: 2892.09
+mean_ly8w_dow5_2017: 2824.35
+mean_20_dow5_2017: 2788.77
+mean_20_dow1_2017: 2686.16
+mean_ly8w_dow3_2017: 2609.35
+mean_4_dow5_2017: 2584.96
+mean_4_dow6_2017: 2555.11
+mean_ly_n16d_2017: 2347.08
+mean_ly8w_dow1_2017: 2322.28
+mean_4_dow2_2017: 2134.50
+mean_ly8w_dow6_2017: 2073.74
+promo_0: 1970.37
+promo_6: 1615.54
+promo_15: 1540.18
+mean_ly3w_dow3_2017: 1435.74
+mean_ly3w_dow6_2017: 1295.44
+mean_ly3w_dow5_2017: 1156.75
+promo_1: 1150.96
+mean_ly3w_dow1_2017: 1140.71
+mean_ly3w_dow2_2017: 1123.04
+mean_ly3w_dow0_2017: 1058.08
+promo_2: 960.29
+promo_3: 542.85
+promo_5: 478.78
+==================================================
+Step 13
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.362154
+[200]	training's l2: 0.357647
+[300]	training's l2: 0.354705
+[400]	training's l2: 0.352176
+[500]	training's l2: 0.350169
+[LightGBM] [Info] Finished loading 500 models
+mean_21_2017: 1488389.01
+mean_30_2017: 1468460.60
+mean_14_2017: 488078.62
+mean_60_2017: 466708.74
+mean_7_2017: 436738.88
+mean_3_2017: 331142.52
+promo_12: 155862.82
+mean_4_dow5_2017: 115080.58
+mean_20_dow5_2017: 108922.07
+mean_42_2017: 43405.00
+promo_14_2017: 29100.45
+mean_364_2017: 23263.56
+promo_13: 21677.90
+promo_14: 15143.49
+mean_ly8w_dow5_2017: 14728.25
+promo_10: 13790.09
+day_1_2017: 10778.89
+promo_60_2017: 8741.51
+mean_ly3w_dow5_2017: 8481.26
+mean_91_2017: 7741.62
+promo_140_2017: 7237.78
+promo_11: 5389.14
+mean_ly_p3w_2017: 5319.11
+mean_20_dow6_2017: 4768.96
+mean_140_2017: 4665.65
+mean_4_dow0_2017: 4286.59
+promo_7: 4144.61
+mean_4_dow6_2017: 4013.78
+mean_20_dow3_2017: 3846.18
+mean_4_dow2_2017: 3812.79
+promo_8: 3668.39
+mean_4_dow1_2017: 3639.99
+mean_ly8w_dow3_2017: 3570.14
+promo_15: 3323.43
+mean_182_2017: 3120.91
+mean_20_dow2_2017: 3104.52
+promo_9: 3097.35
+mean_20_dow0_2017: 3057.33
+mean_4_dow4_2017: 2814.58
+promo_0: 2739.69
+mean_4_dow3_2017: 2576.78
+mean_ly8w_dow4_2017: 2396.73
+mean_20_dow4_2017: 2285.18
+mean_ly8w_dow6_2017: 2069.50
+mean_ly8w_dow2_2017: 2016.44
+mean_ly8w_dow0_2017: 1981.53
+mean_ly3w_dow6_2017: 1963.75
+mean_20_dow1_2017: 1935.10
+mean_ly_n16d_2017: 1755.63
+promo_5: 1705.10
+mean_ly8w_dow1_2017: 1672.38
+mean_ly3w_dow0_2017: 1648.58
+promo_6: 1639.24
+mean_ly3w_dow3_2017: 1474.86
+mean_ly3w_dow1_2017: 1403.45
+mean_ly3w_dow4_2017: 1368.70
+mean_ly3w_dow2_2017: 1151.51
+promo_1: 1030.48
+promo_2: 846.22
+promo_4: 822.68
+promo_3: 812.75
+==================================================
+Step 14
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.357421
+[200]	training's l2: 0.353308
+[300]	training's l2: 0.350333
+[400]	training's l2: 0.347951
+[500]	training's l2: 0.3459
+[LightGBM] [Info] Finished loading 500 models
+mean_21_2017: 1892242.53
+mean_30_2017: 1203344.64
+mean_7_2017: 430206.92
+mean_20_dow6_2017: 303082.74
+mean_60_2017: 235496.08
+promo_13: 212724.56
+mean_14_2017: 189121.59
+mean_3_2017: 186459.67
+mean_4_dow6_2017: 115820.49
+mean_42_2017: 85837.49
+promo_14_2017: 28569.03
+day_1_2017: 23969.45
+mean_364_2017: 21638.78
+promo_14: 20419.31
+promo_12: 16442.31
+mean_91_2017: 14545.63
+mean_20_dow5_2017: 12693.37
+promo_60_2017: 11802.69
+promo_10: 10340.72
+promo_6: 10118.04
+mean_ly8w_dow6_2017: 9605.58
+mean_ly3w_dow6_2017: 9282.86
+promo_140_2017: 8008.01
+mean_4_dow5_2017: 7580.23
+mean_182_2017: 5722.35
+mean_20_dow1_2017: 5230.10
+promo_0: 4751.68
+mean_140_2017: 4485.30
+mean_ly_p3w_2017: 4235.30
+mean_4_dow0_2017: 4101.26
+mean_4_dow1_2017: 4007.90
+mean_ly8w_dow5_2017: 4001.39
+mean_20_dow0_2017: 3991.74
+mean_20_dow3_2017: 3589.09
+mean_ly3w_dow5_2017: 3563.92
+promo_7: 3480.15
+promo_11: 3451.07
+promo_15: 3294.65
+mean_4_dow3_2017: 3102.02
+mean_4_dow2_2017: 3031.11
+mean_20_dow4_2017: 2762.05
+promo_8: 2756.83
+mean_ly_n16d_2017: 2709.30
+mean_20_dow2_2017: 2682.97
+mean_ly8w_dow3_2017: 2666.54
+promo_9: 2509.34
+mean_4_dow4_2017: 2423.39
+mean_ly8w_dow2_2017: 2137.14
+mean_ly8w_dow4_2017: 2026.03
+mean_ly8w_dow0_2017: 1948.66
+mean_ly8w_dow1_2017: 1422.75
+mean_ly3w_dow1_2017: 1389.54
+mean_ly3w_dow2_2017: 1352.01
+mean_ly3w_dow0_2017: 1351.18
+mean_ly3w_dow4_2017: 1340.93
+mean_ly3w_dow3_2017: 1217.99
+promo_1: 1208.46
+promo_2: 948.02
+promo_3: 757.75
+promo_4: 566.20
+promo_5: 518.33
+==================================================
+Step 15
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.342158
+[200]	training's l2: 0.337777
+[300]	training's l2: 0.335115
+[400]	training's l2: 0.332899
+[500]	training's l2: 0.330693
+[LightGBM] [Info] Finished loading 500 models
+mean_21_2017: 2207245.54
+mean_30_2017: 782050.57
+mean_7_2017: 583783.06
+mean_42_2017: 337768.13
+mean_14_2017: 330780.63
+promo_14: 278653.34
+mean_20_dow0_2017: 266404.51
+mean_60_2017: 166732.17
+mean_4_dow0_2017: 107129.45
+promo_14_2017: 32482.93
+mean_3_2017: 25482.11
+mean_364_2017: 24537.69
+promo_7: 20801.65
+promo_0: 20074.95
+day_1_2017: 19962.86
+mean_91_2017: 15131.30
+promo_140_2017: 14014.20
+promo_13: 13930.11
+promo_60_2017: 13139.32
+mean_20_dow2_2017: 11935.42
+mean_ly8w_dow0_2017: 10749.97
+mean_ly3w_dow0_2017: 10203.93
+promo_12: 9452.43
+mean_182_2017: 8209.48
+promo_10: 5538.43
+mean_20_dow4_2017: 4772.95
+promo_9: 4244.49
+mean_ly_p3w_2017: 4096.19
+promo_15: 4079.98
+mean_4_dow6_2017: 3335.21
+mean_4_dow2_2017: 3275.53
+mean_20_dow3_2017: 3064.66
+mean_4_dow5_2017: 3029.77
+promo_2: 2988.52
+mean_ly8w_dow3_2017: 2985.52
+mean_20_dow6_2017: 2984.72
+promo_11: 2983.83
+mean_4_dow4_2017: 2948.53
+mean_ly8w_dow4_2017: 2799.37
+mean_ly8w_dow2_2017: 2775.56
+mean_4_dow1_2017: 2723.86
+mean_20_dow1_2017: 2568.65
+mean_140_2017: 2416.05
+mean_ly_n16d_2017: 2279.71
+mean_20_dow5_2017: 2190.82
+mean_4_dow3_2017: 2155.08
+promo_8: 2028.47
+mean_ly8w_dow6_2017: 2010.19
+mean_ly3w_dow2_2017: 1981.20
+mean_ly3w_dow5_2017: 1923.08
+mean_ly8w_dow5_2017: 1827.66
+promo_6: 1823.41
+mean_ly8w_dow1_2017: 1673.83
+promo_4: 1387.17
+mean_ly3w_dow4_2017: 1236.52
+mean_ly3w_dow6_2017: 1211.07
+mean_ly3w_dow1_2017: 1115.51
+promo_1: 1111.70
+mean_ly3w_dow3_2017: 1070.58
+promo_5: 691.87
+promo_3: 260.32
+==================================================
+Step 16
+==================================================
+[LightGBM] [Info] Total Bins 10955
+[LightGBM] [Info] Number of data: 1543446, number of used features: 61
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.35251
+[200]	training's l2: 0.348328
+[300]	training's l2: 0.345715
+[400]	training's l2: 0.343372
+[500]	training's l2: 0.341396
+[LightGBM] [Info] Finished loading 500 models
+mean_21_2017: 1517690.99
+mean_30_2017: 1073026.18
+mean_42_2017: 348041.76
+mean_14_2017: 344716.64
+mean_7_2017: 317606.51
+mean_60_2017: 238247.34
+mean_20_dow1_2017: 212967.72
+promo_15: 188592.78
+mean_91_2017: 29696.48
+mean_4_dow1_2017: 22356.74
+mean_364_2017: 21870.90
+mean_20_dow2_2017: 20949.43
+promo_14_2017: 20862.03
+day_1_2017: 20563.88
+promo_14: 19037.05
+promo_60_2017: 13540.42
+mean_3_2017: 11808.23
+promo_140_2017: 9487.18
+mean_ly3w_dow1_2017: 9195.09
+mean_20_dow4_2017: 5371.21
+mean_4_dow2_2017: 4834.88
+mean_ly_p3w_2017: 4527.32
+mean_ly8w_dow1_2017: 4484.96
+mean_4_dow0_2017: 4138.50
+mean_182_2017: 4138.27
+promo_10: 4102.37
+mean_ly8w_dow4_2017: 3751.41
+promo_13: 3537.09
+mean_ly3w_dow2_2017: 3463.44
+mean_20_dow0_2017: 3369.50
+mean_4_dow5_2017: 3351.68
+mean_4_dow6_2017: 3321.42
+mean_140_2017: 3182.89
+mean_4_dow4_2017: 3121.43
+mean_20_dow5_2017: 2961.49
+mean_ly8w_dow5_2017: 2938.91
+mean_4_dow3_2017: 2857.86
+promo_7: 2747.00
+mean_ly8w_dow3_2017: 2701.46
+promo_8: 2655.63
+promo_0: 2606.50
+promo_12: 2546.62
+mean_ly8w_dow0_2017: 2307.44
+mean_20_dow6_2017: 2285.09
+mean_ly8w_dow2_2017: 2268.22
+mean_ly8w_dow6_2017: 2167.74
+mean_20_dow3_2017: 2127.14
+mean_ly3w_dow6_2017: 2071.05
+mean_ly_n16d_2017: 1903.88
+promo_9: 1662.58
+mean_ly3w_dow0_2017: 1625.56
+mean_ly3w_dow4_2017: 1580.04
+promo_11: 1569.01
+mean_ly3w_dow5_2017: 1495.19
+mean_ly3w_dow3_2017: 1352.15
+promo_1: 1299.50
+promo_4: 1075.70
+promo_2: 798.13
+promo_6: 749.77
+promo_3: 568.88
+promo_5: 490.98
+2017-12-28 16:34:12,696 __main__ 233 [INFO]    [<module>] Making submission... 
+SUM = 10120680.474378942
+MEAN = 3.0027558444116127
+Traceback (most recent call last):
+  File "T022_T9WK_MoreLY.py", line 253, in <module>
+    df_sub = pd.read_csv('../input/sub_zero_30d.csv')
+  File "/home/zyp/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 655, in parser_f
+    return _read(filepath_or_buffer, kwds)
+  File "/home/zyp/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 405, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/zyp/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 764, in __init__
+    self._make_engine(self.engine)
+  File "/home/zyp/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 985, in _make_engine
+    self._engine = CParserWrapper(self.f, **self.options)
+  File "/home/zyp/anaconda3/lib/python3.6/site-packages/pandas/io/parsers.py", line 1605, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+  File "pandas/_libs/parsers.pyx", line 394, in pandas._libs.parsers.TextReader.__cinit__ (pandas/_libs/parsers.c:4209)
+  File "pandas/_libs/parsers.pyx", line 710, in pandas._libs.parsers.TextReader._setup_parser_source (pandas/_libs/parsers.c:8873)
+FileNotFoundError: File b'../input/sub_zero_30d.csv' does not exist
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ 
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ l
+total 256
+-rw-rw-r-- 1 zyp zyp   735 Dec 22 16:49 train.py.log
+-rw-rw-r-- 1 zyp zyp 10354 Dec 22 22:33 T001_lb515_nopromo.py
+-rw-rw-r-- 1 zyp zyp  2835 Dec 22 22:43 T001_Val_nopromo.py
+-rw-rw-r-- 1 zyp zyp  7403 Dec 23 09:54 T002_Train_ToAug15.py
+-rw-rw-r-- 1 zyp zyp  7403 Dec 23 12:25 T003_Train_2016Aug.py
+-rw-rw-r-- 1 zyp zyp  7261 Dec 23 12:27 #T003_Train_2016Aug.py#
+drwxrwxr-x 2 zyp zyp  4096 Dec 23 14:47 logs
+-rw-rw-r-- 1 zyp zyp  8879 Dec 23 15:14 T004_lb515_sample10p.py
+-rw-rw-r-- 1 zyp zyp  2836 Dec 23 15:16 V004_Result.py
+-rw-rw-r-- 1 zyp zyp 10364 Dec 23 18:59 T005_Train_NoWeight.py
+-rw-rw-r-- 1 zyp zyp 10701 Dec 23 19:33 T006_Train_MoreWKs.py
+-rw-rw-r-- 1 zyp zyp  7754 Dec 23 19:47 T007_Train_More4WKs_ToAug15.py
+-rw-rw-r-- 1 zyp zyp 10151 Dec 25 11:20 tmp.py
+-rw-rw-r-- 1 zyp zyp  8802 Dec 25 11:22 T008_XGB_MoreWK.py
+drwxrwxr-x 2 zyp zyp  4096 Dec 25 11:55 data
+-rw-rw-r-- 1 zyp zyp  7709 Dec 25 12:23 T009_XBG_ToAug15.py
+-rw-rw-r-- 1 zyp zyp  7742 Dec 26 15:29 T012_p_t007.py
+-rw-rw-r-- 1 zyp zyp  7742 Dec 26 15:32 T012_m.py
+-rw-rw-r-- 1 zyp zyp  1576 Dec 26 15:43 T012_merge.py
+-rw-rw-r-- 1 zyp zyp  1559 Dec 26 17:26 T013_setdiscontiuetozero.py
+-rw-rw-r-- 1 zyp zyp  1041 Dec 26 19:49 T014_mergedis.py
+-rw-rw-r-- 1 zyp zyp  8414 Dec 26 20:54 T014_train_2016.py
+-rw-rw-r-- 1 zyp zyp  8698 Dec 26 20:58 T015_LY_WK123.py
+-rw-rw-r-- 1 zyp zyp  8819 Dec 26 21:25 T016_LY_WK123_DOW.py
+-rw-rw-r-- 1 zyp zyp  1733 Dec 27 11:08 T017_zero_60D.py
+-rw-rw-r-- 1 zyp zyp  1756 Dec 27 11:27 T018_zero_45D.py~
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 11:35 T018_zero_45D.py
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 12:31 T019_zero_30D.py~
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 12:32 T019_zero_30D.py
+-rw-rw-r-- 1 zyp zyp  3264 Dec 28 12:27 val_result.py
+-rw-rw-r-- 1 zyp zyp 10019 Dec 28 12:27 T020_val_t016.py
+-rw-rw-r-- 1 zyp zyp  8758 Dec 28 16:07 T021_Train9WKs.py
+-rw-rw-r-- 1 zyp zyp  8987 Dec 28 16:07 T022_T9WK_MoreLY.py
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ cd ../input/
+zyp@ubuntu:~/kaggle/kagglegrocery/input$ l
+total 6470584
+-rw-rw-r-- 1 zyp zyp 4997452288 Oct 19 11:30 train.csv
+-rw-rw-r-- 1 zyp zyp  126163026 Oct 19 11:30 test.csv
+-rw-rw-r-- 1 zyp zyp    1552637 Oct 19 11:30 transactions.csv
+-rw-rw-r-- 1 zyp zyp       1387 Oct 19 11:30 stores.csv
+-rw-rw-r-- 1 zyp zyp   40445582 Oct 19 11:30 sample_submission.csv
+-rw-rw-r-- 1 zyp zyp      20580 Oct 19 11:30 oil.csv
+-rw-rw-r-- 1 zyp zyp     101841 Oct 19 11:30 items.csv
+-rw-rw-r-- 1 zyp zyp      22309 Oct 19 11:30 holidays_events.csv
+-rw-rw-r-- 1 zyp zyp      31859 Dec 12 16:16 test_small.csv
+-rw-rw-r-- 1 zyp zyp    1389991 Dec 12 16:16 train_small.csv
+-rw-rw-r-- 1 zyp zyp    2870361 Dec 22 17:40 test_1s.csv
+-rw-rw-r-- 1 zyp zyp  102261625 Dec 22 17:40 train_1s.csv
+-rw-rw-r-- 1 zyp zyp    1768157 Dec 26 11:23 train_p.p
+-rw-rw-r-- 1 zyp zyp       1311 Dec 26 11:23 test_p.p
+-rw-rw-r-- 1 zyp zyp      57866 Dec 26 11:23 test_m.p
+-rw-rw-r-- 1 zyp zyp          0 Dec 26 11:36 train_m.p
+-rw-rw-r-- 1 zyp zyp 1118275765 Dec 26 11:56 train_m.csv.gz
+-rw-rw-r-- 1 zyp zyp  103540710 Dec 26 11:56 train_p.csv
+-rw-rw-r-- 1 zyp zyp   86059112 Dec 26 12:36 test_m.csv
+-rw-rw-r-- 1 zyp zyp   13365552 Dec 26 12:36 test_p.csv
+-rw-rw-r-- 1 zyp zyp    7960215 Dec 26 17:28 sub_zero3m.csv
+-rw-rw-r-- 1 zyp zyp    9741065 Dec 27 11:15 sub_zero_60d.csv
+-rw-rw-r-- 1 zyp zyp   11053906 Dec 27 11:29 sub_zero_45d.csv
+-rw-rw-r-- 1 zyp zyp    1677002 Dec 27 12:34 sub_zero_30d.csv.gz
+zyp@ubuntu:~/kaggle/kagglegrocery/input$ gunzip sub_zero_30d.csv.gz 
+zyp@ubuntu:~/kaggle/kagglegrocery/input$ l
+total 6481476
+-rw-rw-r-- 1 zyp zyp 4997452288 Oct 19 11:30 train.csv
+-rw-rw-r-- 1 zyp zyp  126163026 Oct 19 11:30 test.csv
+-rw-rw-r-- 1 zyp zyp    1552637 Oct 19 11:30 transactions.csv
+-rw-rw-r-- 1 zyp zyp       1387 Oct 19 11:30 stores.csv
+-rw-rw-r-- 1 zyp zyp   40445582 Oct 19 11:30 sample_submission.csv
+-rw-rw-r-- 1 zyp zyp      20580 Oct 19 11:30 oil.csv
+-rw-rw-r-- 1 zyp zyp     101841 Oct 19 11:30 items.csv
+-rw-rw-r-- 1 zyp zyp      22309 Oct 19 11:30 holidays_events.csv
+-rw-rw-r-- 1 zyp zyp      31859 Dec 12 16:16 test_small.csv
+-rw-rw-r-- 1 zyp zyp    1389991 Dec 12 16:16 train_small.csv
+-rw-rw-r-- 1 zyp zyp    2870361 Dec 22 17:40 test_1s.csv
+-rw-rw-r-- 1 zyp zyp  102261625 Dec 22 17:40 train_1s.csv
+-rw-rw-r-- 1 zyp zyp    1768157 Dec 26 11:23 train_p.p
+-rw-rw-r-- 1 zyp zyp       1311 Dec 26 11:23 test_p.p
+-rw-rw-r-- 1 zyp zyp      57866 Dec 26 11:23 test_m.p
+-rw-rw-r-- 1 zyp zyp          0 Dec 26 11:36 train_m.p
+-rw-rw-r-- 1 zyp zyp 1118275765 Dec 26 11:56 train_m.csv.gz
+-rw-rw-r-- 1 zyp zyp  103540710 Dec 26 11:56 train_p.csv
+-rw-rw-r-- 1 zyp zyp   86059112 Dec 26 12:36 test_m.csv
+-rw-rw-r-- 1 zyp zyp   13365552 Dec 26 12:36 test_p.csv
+-rw-rw-r-- 1 zyp zyp    7960215 Dec 26 17:28 sub_zero3m.csv
+-rw-rw-r-- 1 zyp zyp    9741065 Dec 27 11:15 sub_zero_60d.csv
+-rw-rw-r-- 1 zyp zyp   11053906 Dec 27 11:29 sub_zero_45d.csv
+-rw-rw-r-- 1 zyp zyp   12829484 Dec 27 12:34 sub_zero_30d.csv
+zyp@ubuntu:~/kaggle/kagglegrocery/input$ cd ..
+zyp@ubuntu:~/kaggle/kagglegrocery$ l
+total 36
+drwxrwxr-x 2 zyp zyp 4096 Dec 22 16:49 others
+drwxrwxr-x 2 zyp zyp 4096 Dec 22 17:11 lb_script
+drwxrwxr-x 2 zyp zyp 4096 Dec 22 22:33 logs
+drwxrwxr-x 4 zyp zyp 4096 Dec 28 16:07 practice
+drwxrwxr-x 4 zyp zyp 4096 Dec 28 16:07 jupyter
+drwxrwxr-x 2 zyp zyp 4096 Dec 28 16:07 steps_summary
+drwxrwxr-x 5 zyp zyp 4096 Dec 28 16:13 pz_script
+drwxrwxr-x 2 zyp zyp 4096 Dec 28 16:34 submit
+drwxrwxr-x 2 zyp zyp 4096 Dec 28 16:35 input
+zyp@ubuntu:~/kaggle/kagglegrocery$ cd practice/
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ l
+total 256
+-rw-rw-r-- 1 zyp zyp   735 Dec 22 16:49 train.py.log
+-rw-rw-r-- 1 zyp zyp 10354 Dec 22 22:33 T001_lb515_nopromo.py
+-rw-rw-r-- 1 zyp zyp  2835 Dec 22 22:43 T001_Val_nopromo.py
+-rw-rw-r-- 1 zyp zyp  7403 Dec 23 09:54 T002_Train_ToAug15.py
+-rw-rw-r-- 1 zyp zyp  7403 Dec 23 12:25 T003_Train_2016Aug.py
+-rw-rw-r-- 1 zyp zyp  7261 Dec 23 12:27 #T003_Train_2016Aug.py#
+drwxrwxr-x 2 zyp zyp  4096 Dec 23 14:47 logs
+-rw-rw-r-- 1 zyp zyp  8879 Dec 23 15:14 T004_lb515_sample10p.py
+-rw-rw-r-- 1 zyp zyp  2836 Dec 23 15:16 V004_Result.py
+-rw-rw-r-- 1 zyp zyp 10364 Dec 23 18:59 T005_Train_NoWeight.py
+-rw-rw-r-- 1 zyp zyp 10701 Dec 23 19:33 T006_Train_MoreWKs.py
+-rw-rw-r-- 1 zyp zyp  7754 Dec 23 19:47 T007_Train_More4WKs_ToAug15.py
+-rw-rw-r-- 1 zyp zyp 10151 Dec 25 11:20 tmp.py
+-rw-rw-r-- 1 zyp zyp  8802 Dec 25 11:22 T008_XGB_MoreWK.py
+drwxrwxr-x 2 zyp zyp  4096 Dec 25 11:55 data
+-rw-rw-r-- 1 zyp zyp  7709 Dec 25 12:23 T009_XBG_ToAug15.py
+-rw-rw-r-- 1 zyp zyp  7742 Dec 26 15:29 T012_p_t007.py
+-rw-rw-r-- 1 zyp zyp  7742 Dec 26 15:32 T012_m.py
+-rw-rw-r-- 1 zyp zyp  1576 Dec 26 15:43 T012_merge.py
+-rw-rw-r-- 1 zyp zyp  1559 Dec 26 17:26 T013_setdiscontiuetozero.py
+-rw-rw-r-- 1 zyp zyp  1041 Dec 26 19:49 T014_mergedis.py
+-rw-rw-r-- 1 zyp zyp  8414 Dec 26 20:54 T014_train_2016.py
+-rw-rw-r-- 1 zyp zyp  8698 Dec 26 20:58 T015_LY_WK123.py
+-rw-rw-r-- 1 zyp zyp  8819 Dec 26 21:25 T016_LY_WK123_DOW.py
+-rw-rw-r-- 1 zyp zyp  1733 Dec 27 11:08 T017_zero_60D.py
+-rw-rw-r-- 1 zyp zyp  1756 Dec 27 11:27 T018_zero_45D.py~
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 11:35 T018_zero_45D.py
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 12:31 T019_zero_30D.py~
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 12:32 T019_zero_30D.py
+-rw-rw-r-- 1 zyp zyp  3264 Dec 28 12:27 val_result.py
+-rw-rw-r-- 1 zyp zyp 10019 Dec 28 12:27 T020_val_t016.py
+-rw-rw-r-- 1 zyp zyp  8758 Dec 28 16:07 T021_Train9WKs.py
+-rw-rw-r-- 1 zyp zyp  8987 Dec 28 16:07 T022_T9WK_MoreLY.py
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ cp T022_T9WK_MoreLY.py T022_Merge_Tmp.py
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ cd ../submit/
+zyp@ubuntu:~/kaggle/kagglegrocery/submit$ l
+total 1047148
+-rw-rw-r-- 1 zyp zyp 54174072 Dec 22 16:49 xgb_3_exp1m.csv
+-rw-rw-r-- 1 zyp zyp 14999528 Dec 22 16:49 xgb_v03_exp1m.csv.gz
+-rw-rw-r-- 1 zyp zyp 54214799 Dec 22 16:49 xgb_v01.csv
+-rw-rw-r-- 1 zyp zyp 54172899 Dec 22 16:49 ma8dwof.csv
+-rw-rw-r-- 1 zyp zyp 14973307 Dec 22 16:49 xgb_v05_3y.csv.gz
+-rw-rw-r-- 1 zyp zyp 54211682 Dec 22 16:49 xgb_v02.csv
+-rw-rw-r-- 1 zyp zyp 14498950 Dec 22 16:49 xgb_v04_1y.csv.gz
+-rw-rw-r-- 1 zyp zyp 57509045 Dec 22 22:41 lgb_515_nopromo.csv
+-rw-rw-r-- 1 zyp zyp 57512039 Dec 23 10:21 T002_lb515_TrainToAug15.csv
+-rw-rw-r-- 1 zyp zyp 16952118 Dec 23 15:23 T004_lgb.csv.gz
+-rw-rw-r-- 1 zyp zyp 17000901 Dec 23 19:16 T005_lgb_NoWeght.csv.gz
+-rw-rw-r-- 1 zyp zyp 57513423 Dec 23 19:48 T006_lgb_moreWK.csv
+-rw-rw-r-- 1 zyp zyp 57512273 Dec 23 20:09 T007_MoreWKs_TrainToAug15.csv
+-rw-rw-r-- 1 zyp zyp 16985252 Dec 25 11:47 T008_xgb_moreWK.csv.gz
+-rw-rw-r-- 1 zyp zyp 57518798 Dec 25 15:44 T009_xgb_moreWK_ToAug15.csv
+-rw-rw-r-- 1 zyp zyp 15361271 Dec 25 20:24 T10_NewSKU_V01.csv.gz
+-rw-rw-r-- 1 zyp zyp  6055648 Dec 26 14:29 T011_p_submit.csv
+-rw-rw-r-- 1 zyp zyp 17019562 Dec 26 15:11 T011_merged_submit.csv.gz
+-rw-rw-r-- 1 zyp zyp  6056130 Dec 26 15:32 T012_p.csv
+-rw-rw-r-- 1 zyp zyp 39368941 Dec 26 15:52 T012_m.csv
+-rw-rw-r-- 1 zyp zyp 17009114 Dec 26 16:16 T012_merged_p_m.csv.gz
+-rw-rw-r-- 1 zyp zyp 16898135 Dec 26 16:43 T013_zero_3m_discontiue.csv.gz
+-rw-rw-r-- 1 zyp zyp 57512242 Dec 26 17:28 T013_zero_3m_discontiue.csv
+-rw-rw-r-- 1 zyp zyp 57513831 Dec 26 19:46 T014_52WKs.csv
+-rw-rw-r-- 1 zyp zyp 57513802 Dec 26 19:50 T014_merged_52wk_dis.csv
+-rw-rw-r-- 1 zyp zyp 16899412 Dec 26 21:21 T015_mg_ly_wk123.csv.gz
+-rw-rw-r-- 1 zyp zyp 57514951 Dec 26 21:49 T016_mg_ly_wk123_dow.csv
+-rw-rw-r-- 1 zyp zyp 16830473 Dec 27 11:15 T017_zero_2m_t016.csv.gz
+-rw-rw-r-- 1 zyp zyp 16727845 Dec 27 11:30 T018.zero_45d.csv.gz
+-rw-rw-r-- 1 zyp zyp 16654837 Dec 27 12:34 T019_zero_30d.csv.gz
+-rw-rw-r-- 1 zyp zyp 57517552 Dec 28 16:34 T022_tmp.csv
+zyp@ubuntu:~/kaggle/kagglegrocery/submit$ PRA
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ l
+total 260
+-rw-rw-r-- 1 zyp zyp   735 Dec 22 16:49 train.py.log
+-rw-rw-r-- 1 zyp zyp 10354 Dec 22 22:33 T001_lb515_nopromo.py
+-rw-rw-r-- 1 zyp zyp  2835 Dec 22 22:43 T001_Val_nopromo.py
+-rw-rw-r-- 1 zyp zyp  7403 Dec 23 09:54 T002_Train_ToAug15.py
+-rw-rw-r-- 1 zyp zyp  7403 Dec 23 12:25 T003_Train_2016Aug.py
+-rw-rw-r-- 1 zyp zyp  7261 Dec 23 12:27 #T003_Train_2016Aug.py#
+drwxrwxr-x 2 zyp zyp  4096 Dec 23 14:47 logs
+-rw-rw-r-- 1 zyp zyp  8879 Dec 23 15:14 T004_lb515_sample10p.py
+-rw-rw-r-- 1 zyp zyp  2836 Dec 23 15:16 V004_Result.py
+-rw-rw-r-- 1 zyp zyp 10364 Dec 23 18:59 T005_Train_NoWeight.py
+-rw-rw-r-- 1 zyp zyp 10701 Dec 23 19:33 T006_Train_MoreWKs.py
+-rw-rw-r-- 1 zyp zyp  7754 Dec 23 19:47 T007_Train_More4WKs_ToAug15.py
+-rw-rw-r-- 1 zyp zyp 10151 Dec 25 11:20 tmp.py
+-rw-rw-r-- 1 zyp zyp  8802 Dec 25 11:22 T008_XGB_MoreWK.py
+drwxrwxr-x 2 zyp zyp  4096 Dec 25 11:55 data
+-rw-rw-r-- 1 zyp zyp  7709 Dec 25 12:23 T009_XBG_ToAug15.py
+-rw-rw-r-- 1 zyp zyp  7742 Dec 26 15:29 T012_p_t007.py
+-rw-rw-r-- 1 zyp zyp  7742 Dec 26 15:32 T012_m.py
+-rw-rw-r-- 1 zyp zyp  1576 Dec 26 15:43 T012_merge.py
+-rw-rw-r-- 1 zyp zyp  1559 Dec 26 17:26 T013_setdiscontiuetozero.py
+-rw-rw-r-- 1 zyp zyp  1041 Dec 26 19:49 T014_mergedis.py
+-rw-rw-r-- 1 zyp zyp  8414 Dec 26 20:54 T014_train_2016.py
+-rw-rw-r-- 1 zyp zyp  8698 Dec 26 20:58 T015_LY_WK123.py
+-rw-rw-r-- 1 zyp zyp  8819 Dec 26 21:25 T016_LY_WK123_DOW.py
+-rw-rw-r-- 1 zyp zyp  1733 Dec 27 11:08 T017_zero_60D.py
+-rw-rw-r-- 1 zyp zyp  1756 Dec 27 11:27 T018_zero_45D.py~
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 11:35 T018_zero_45D.py
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 12:31 T019_zero_30D.py~
+-rw-rw-r-- 1 zyp zyp  1752 Dec 27 12:32 T019_zero_30D.py
+-rw-rw-r-- 1 zyp zyp  3264 Dec 28 12:27 val_result.py
+-rw-rw-r-- 1 zyp zyp 10019 Dec 28 12:27 T020_val_t016.py
+-rw-rw-r-- 1 zyp zyp  8758 Dec 28 16:07 T021_Train9WKs.py
+-rw-rw-r-- 1 zyp zyp  8987 Dec 28 16:07 T022_T9WK_MoreLY.py
+-rw-rw-r-- 1 zyp zyp   849 Dec 28 16:37 T022_Merge_Tmp.py
+zyp@ubuntu:~/kaggle/kagglegrocery/practice$ python T022_Merge_Tmp.py 
+Merged  SUM = 10102402.818500582
+Merged  MEAN = 2.997332954305574
+A
+A
+
+A
+A
+A
+A
+A
+A
+A
+
