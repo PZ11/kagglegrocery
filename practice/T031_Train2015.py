@@ -39,7 +39,7 @@ logger.addHandler(handler)
 
 logger.info('start')
 
-##########################################################################
+#########################################################################
 
 if len(sys.argv) == 1:
     param_1 = "Full Run"
@@ -71,7 +71,7 @@ else:
         converters={'unit_sales': lambda u: np.log1p(
             float(u)) if float(u) > 0 else 0},
         parse_dates=["date"],
-        skiprows=range(1, 45811211)  # 2016-01-01
+        skiprows=range(1, 23398768)  # 2014-05-06
     )
 
     df_test = pd.read_csv(
@@ -91,6 +91,17 @@ logger.info('Load data successful')
 
 ###############################################################################
 # Functions
+
+
+def create_feature_map(i, X_train, bst):
+    outfile = open('./logs/lgb.fmap', 'a')
+    outfile.write("\n -----------------------Cycle ")
+    outfile.write(str(i))
+    outfile.write(" ----------------------\n")
+    outfile.write("\n".join(("%s: %.2f" % x) for x in sorted(
+        zip(X_train.columns, bst.feature_importance("gain")),
+        key=lambda x: x[1], reverse=True   )))
+    outfile.close()
 
 
 def NWRMSLE(y, pred, weights=None):
@@ -162,13 +173,18 @@ def prepare_dataset(t2017, is_train=True):
 
        #"mean_ly_wk1_2017": get_timespan(df_2017, t2017, 364, 7).mean(axis=1).values,
        #"mean_ly_wk2_2017": get_timespan(df_2017, t2017, 364, 14).mean(axis=1).values,        
-        "mean_ly_n16d_2017": get_timespan(df_2017, t2017, 364, 16).mean(axis=1).values,
+        "mean_ly_n16d": get_timespan(df_2017, t2017, 364, 16).mean(axis=1).values,
 
-        "mean_ly_7_2017":  get_timespan(df_2017, t2017, 371, 7 ).mean(axis=1).values,
-        "mean_ly_14_2017": get_timespan(df_2017, t2017, 378, 14).mean(axis=1).values,
-        "mean_ly_30_2017": get_timespan(df_2017, t2017, 394, 30).mean(axis=1).values,
-        "mean_ly_21_2017": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
+        #"mean_l2y_7":  get_timespan(df_2017, t2017, 736, 7 ).mean(axis=1).values,
+        #"mean_l2y_14": get_timespan(df_2017, t2017, 743, 14).mean(axis=1).values,
+        #"mean_l2y_30": get_timespan(df_2017, t2017, 759, 30).mean(axis=1).values,
+        #"mean_l2y_21": get_timespan(df_2017, t2017, 750, 21).mean(axis=1).values,
 
+        "mean_ly_7":  get_timespan(df_2017, t2017, 371, 7 ).mean(axis=1).values,
+        "mean_ly_14": get_timespan(df_2017, t2017, 378, 14).mean(axis=1).values,
+        "mean_ly_30": get_timespan(df_2017, t2017, 394, 30).mean(axis=1).values,
+        "mean_ly_21": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
+        
         "promo_14_2017": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
         "promo_60_2017": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
         "promo_140_2017": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values
@@ -177,10 +193,14 @@ def prepare_dataset(t2017, is_train=True):
     for i in range(7):
         X['mean_4_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
         X['mean_20_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 140-i, 20, freq='7D').mean(axis=1).values
-        X['mean_52_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
-        X['mean_ly3w_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
-        X['mean_ly8w_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
+        X['mean_52_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values
 
+        X['mean_ly3w_dow{}'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
+        X['mean_ly8w_dow{}'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
+
+        #X['mean_l2y3w_dow{}'.format(i)] = get_timespan(df_2017, t2017, 729-i, 3, freq='7D').mean(axis=1).values
+        #X['mean_l2y8w_dow{}'.format(i)] = get_timespan(df_2017, t2017, 759-i, 7, freq='7D').mean(axis=1).values
+        
     for i in range(16):
         X["promo_{}".format(i)] = promo_2017[
             t2017 + timedelta(days=i)].values.astype(np.uint8)
@@ -195,7 +215,7 @@ def prepare_dataset(t2017, is_train=True):
 
 ###############################################################################
 
-df_2017 = df_train.loc[df_train.date >= pd.datetime(2015, 5, 1)]
+df_2017 = df_train.loc[df_train.date >= pd.datetime(2014, 5, 7)]
 del df_train
 
 promo_2017_train = df_2017.set_index(
@@ -218,16 +238,28 @@ items = items.reindex(df_2017.index.get_level_values(1))
 
 df_2017[pd.datetime(2016, 12, 25)] = 0
 df_2017[pd.datetime(2015, 12, 25)] = 0
+df_2017[pd.datetime(2014, 12, 25)] = 0
 if param_1 == "1s":
     df_2017[pd.datetime(2017, 1, 1)] = 0
     df_2017[pd.datetime(2016, 1, 1)] = 0
+    df_2017[pd.datetime(2015, 1, 1)] = 0    
     df_2017[pd.datetime(2015, 7, 7)] = 0
+    promo_2017[pd.datetime(2015, 7, 7)] = 0    
 
 ##########################################################################
 logger.info('Preparing traing dataset...')
 
 X_l, y_l = [], []
 
+t2015 = date(2015, 8, 5)
+for i in range(4):
+    delta = timedelta(days=7 * i)
+    X_tmp, y_tmp = prepare_dataset(
+        t2015 + delta
+    )
+    X_l.append(X_tmp)
+    y_l.append(y_tmp)
+    
 t2016 = date(2016, 8, 3)
 for i in range(4):
     delta = timedelta(days=7 * i)
@@ -285,7 +317,7 @@ for i in range(16):
     dtrain = lgb.Dataset(
         X_train, label=y_train[:, i],
         categorical_feature=cate_vars,
-        weight=pd.concat([items["perishable"]] * (train_week_2017 + 4)) * 0.25 + 1
+        weight=pd.concat([items["perishable"]] * (train_week_2017 + 8)) * 0.25 + 1
     )
 
     if (param_1 == "val"):
@@ -311,6 +343,7 @@ for i in range(16):
         zip(X_train.columns, bst.feature_importance("gain")),
         key=lambda x: x[1], reverse=True
     )))
+    create_feature_map(i, X_train, bst)
 
     test_pred.append(bst.predict(
         X_test, num_iteration=bst.best_iteration or MAX_ROUNDS))
@@ -367,7 +400,7 @@ else:
 
     submission = df_test[["id"]].join(df_preds, how="left").fillna(0)
     submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
-    submission.to_csv('../submit/T030_tmp.csv', float_format='%.4f', index=None)
+    submission.to_csv('../submit/T031_tmp.csv', float_format='%.4f', index=None)
 
     # PZ, Check overral result
     print("SUM =",  submission.unit_sales.sum())
@@ -387,5 +420,5 @@ else:
     print("Merged  SUM =",  submission.unit_sales.sum())
     print("Merged  MEAN =",  submission.unit_sales.mean())
 
-    submission.to_csv('../submit/T030_train2016.csv.gz',
+    submission.to_csv('../submit/T031_train2016.csv.gz',
                       float_format='%.4f', index=None, compression='gzip')

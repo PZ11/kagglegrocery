@@ -72,13 +72,17 @@ def eval_test(test_e):
 #------------------------------------------------------------------------------------------#
 
 #col = ['order_id', 'user_id', 'product_id', 'order_number', 'order_number_rev']
-val = pd.read_pickle('../data/T020_val_t016.p')
+if len(sys.argv) == 1:
+    print ("please add input parameter")
+else:
+    param_1= sys.argv[1] 
+    val = pd.read_pickle(param_1)
 
-print("Validation mse:", mean_squared_error(
-    np.log1p(val.unit_sales),np.log1p(val.pred_sales)))
+    print("Validation mse:", mean_squared_error(
+        np.log1p(val.unit_sales),np.log1p(val.pred_sales)))
 
-items = pd.read_csv('../input/items.csv'  )
-test = pd.merge(val, items, on='item_nbr',how='inner')
+    items = pd.read_csv('../input/items.csv'  )
+    test = pd.merge(val, items, on='item_nbr',how='inner')
 
-eval_test(test)
+    eval_test(test)
 
