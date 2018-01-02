@@ -286,9 +286,6 @@ for i in range(16):
     print("=" * 50)
     features_t = features_all.copy()
 
-    for j in range(16):
-        if j != i:
-            features_t.remove("promo_{}".format(j))
 
     for j in range(7):
         if j != i%7:
@@ -340,6 +337,9 @@ for i in range(16):
             X_val, num_iteration=bst.best_iteration or MAX_ROUNDS))
 
 del X_train, y_train
+del dtrain
+gc.collect()
+
 ##########################################################################
 # Validate
 # Need to use expm1 when y is log1p
@@ -363,20 +363,23 @@ if param_1 == "val":
     test_e = pd.merge(valid, pred, on=['item_nbr', 'store_nbr', 'level_2'])
     test_e["date"] = test_e.level_2
 
+
     del valid, pred
     del X_val, y_val
-    del bst
+    del bst, dval
     del X_train_allF, X_val_allF
     del df_2017
+    del test_pred, X_test
+    gc.collect()
 
-    test_e.to_pickle('../data/V033.p')
+    test_e.to_pickle('../data/V035.p')
 
     # Check memory usage of test_e
     print(test_e.memory_usage(index=True))
     new_mem_test=test_e.memory_usage(index=True).sum()
     print("test dataset uses ",new_mem_test/ 1024**2," MB after changes")
 
-    :gc.collect()
+    gc.collect()
     
     items = items.reset_index()
     test = pd.merge(test_e, items, on='item_nbr',how='inner')[['unit_sales', 'pred_sales', 'date', 'perishable']]
@@ -406,7 +409,7 @@ else:
 
     submission = df_test[["id"]].join(df_preds, how="left").fillna(0)
     submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
-    submission.to_csv('../submit/T033_tmp.csv', float_format='%.4f', index=None)
+    submission.to_csv('../submit/T035_tmp.csv', float_format='%.4f', index=None)
 
     # PZ, Check overral result
     print("SUM =",  submission.unit_sales.sum())
@@ -426,5 +429,5 @@ else:
     print("Merged  SUM =",  submission.unit_sales.sum())
     print("Merged  MEAN =",  submission.unit_sales.mean())
 
-    submission.to_csv('../submit/T033_singleDowPromo.csv.gz',
+    submission.to_csv('../submit/T035_singleDow_allPromo.csv.gz',
                       float_format='%.4f', index=None, compression='gzip')

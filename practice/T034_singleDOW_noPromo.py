@@ -170,9 +170,9 @@ def prepare_dataset(t2017, is_train=True):
         "mean_ly_30_2017": get_timespan(df_2017, t2017, 394, 30).mean(axis=1).values,
         "mean_ly_21_2017": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
 
-        "promo_14_2017": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
-        "promo_60_2017": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
-        "promo_140_2017": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values
+#        "promo_14_2017": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
+#        "promo_60_2017": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
+#        "promo_140_2017": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values
     })
 
     for i in range(7):
@@ -182,9 +182,9 @@ def prepare_dataset(t2017, is_train=True):
         X['mean_ly3w_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
         X['mean_ly8w_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
 
-    for i in range(16):
-        X["promo_{}".format(i)] = promo_2017[
-            t2017 + timedelta(days=i)].values.astype(np.uint8)
+#    for i in range(16):
+#        X["promo_{}".format(i)] = promo_2017[
+#            t2017 + timedelta(days=i)].values.astype(np.uint8)
 
     if is_train:
         y = df_2017[
@@ -286,9 +286,9 @@ for i in range(16):
     print("=" * 50)
     features_t = features_all.copy()
 
-    for j in range(16):
-        if j != i:
-            features_t.remove("promo_{}".format(j))
+#    for j in range(16):
+#        if j != i:
+#            features_t.remove("promo_{}".format(j))
 
     for j in range(7):
         if j != i%7:
@@ -369,14 +369,14 @@ if param_1 == "val":
     del X_train_allF, X_val_allF
     del df_2017
 
-    test_e.to_pickle('../data/V033.p')
+    test_e.to_pickle('../data/V034.p')
 
     # Check memory usage of test_e
     print(test_e.memory_usage(index=True))
     new_mem_test=test_e.memory_usage(index=True).sum()
     print("test dataset uses ",new_mem_test/ 1024**2," MB after changes")
 
-    :gc.collect()
+    gc.collect()
     
     items = items.reset_index()
     test = pd.merge(test_e, items, on='item_nbr',how='inner')[['unit_sales', 'pred_sales', 'date', 'perishable']]
@@ -406,7 +406,7 @@ else:
 
     submission = df_test[["id"]].join(df_preds, how="left").fillna(0)
     submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
-    submission.to_csv('../submit/T033_tmp.csv', float_format='%.4f', index=None)
+    submission.to_csv('../submit/T034_tmp.csv', float_format='%.4f', index=None)
 
     # PZ, Check overral result
     print("SUM =",  submission.unit_sales.sum())
@@ -426,5 +426,5 @@ else:
     print("Merged  SUM =",  submission.unit_sales.sum())
     print("Merged  MEAN =",  submission.unit_sales.mean())
 
-    submission.to_csv('../submit/T033_singleDowPromo.csv.gz',
+    submission.to_csv('../submit/T034_singleDowPromo.csv.gz',
                       float_format='%.4f', index=None, compression='gzip')

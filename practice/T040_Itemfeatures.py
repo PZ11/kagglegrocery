@@ -252,12 +252,12 @@ for i in range(train_week_2017):
     y_l.append(y_tmp)
 
 
-X_train_allF = pd.concat(X_l, axis=0)
+X_train = pd.concat(X_l, axis=0)
 y_train = np.concatenate(y_l, axis=0)
 del X_l, y_l
 
-X_val_allF, y_val = prepare_dataset(date(2017, 7, 26))
-X_test_allF = prepare_dataset(date(2017, 8, 16), is_train=False)
+X_val, y_val = prepare_dataset(date(2017, 7, 26))
+X_test = prepare_dataset(date(2017, 8, 16), is_train=False)
 
 ##########################################################################
 logger.info('Training and predicting models...')
@@ -278,29 +278,10 @@ MAX_ROUNDS = 500
 val_pred = []
 test_pred = []
 cate_vars = []
-features_all = X_train_allF.columns.tolist()
-
 for i in range(16):
     print("=" * 50)
     print("Step %d" % (i+1))
     print("=" * 50)
-    features_t = features_all.copy()
-
-    for j in range(16):
-        if j != i:
-            features_t.remove("promo_{}".format(j))
-
-    for j in range(7):
-        if j != i%7:
-            features_t.remove('mean_4_dow{}_2017'.format(j))
-            features_t.remove('mean_20_dow{}_2017'.format(j))
-            features_t.remove('mean_52_dow{}_2017'.format(j))
-            features_t.remove('mean_ly3w_dow{}_2017'.format(j))
-            features_t.remove('mean_ly8w_dow{}_2017'.format(j))
-
-    X_train = X_train_allF[features_t]
-    X_val = X_val_allF[features_t]
-    X_test = X_test_allF[features_t]
 
     dtrain = lgb.Dataset(
         X_train, label=y_train[:, i],
@@ -340,6 +321,9 @@ for i in range(16):
             X_val, num_iteration=bst.best_iteration or MAX_ROUNDS))
 
 del X_train, y_train
+del dtrain
+gc.collect()
+
 ##########################################################################
 # Validate
 # Need to use expm1 when y is log1p
@@ -363,31 +347,32 @@ if param_1 == "val":
     test_e = pd.merge(valid, pred, on=['item_nbr', 'store_nbr', 'level_2'])
     test_e["date"] = test_e.level_2
 
+
     del valid, pred
     del X_val, y_val
-    del bst
+    del bst, dval
     del X_train_allF, X_val_allF
     del df_2017
-
-    test_e.to_pickle('../data/V033.p')
+    del test_pred, X_test
+    gc.collect()
+    
+    test_e.to_pickle('../data/V034.p')
 
     # Check memory usage of test_e
     print(test_e.memory_usage(index=True))
     new_mem_test=test_e.memory_usage(index=True).sum()
     print("test dataset uses ",new_mem_test/ 1024**2," MB after changes")
 
-    :gc.collect()
-    
+ 
     items = items.reset_index()
     test = pd.merge(test_e, items, on='item_nbr',how='inner')[['unit_sales', 'pred_sales', 'date', 'perishable']]
     del test_e, items
-
+    gc.collect()
+    
     # Check memory usage of test
     print(test.memory_usage(index=True))
     new_mem_test=test.memory_usage(index=True).sum()
     print("test dataset uses ",new_mem_test/ 1024**2," MB after changes")
-
-    gc.collect()
 
     eval_test(test)
 
@@ -406,7 +391,7 @@ else:
 
     submission = df_test[["id"]].join(df_preds, how="left").fillna(0)
     submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
-    submission.to_csv('../submit/T033_tmp.csv', float_format='%.4f', index=None)
+    submission.to_csv('../submit/T030_tmp.csv', float_format='%.4f', index=None)
 
     # PZ, Check overral result
     print("SUM =",  submission.unit_sales.sum())
@@ -426,5 +411,5 @@ else:
     print("Merged  SUM =",  submission.unit_sales.sum())
     print("Merged  MEAN =",  submission.unit_sales.mean())
 
-    submission.to_csv('../submit/T033_singleDowPromo.csv.gz',
+    submission.to_csv('../submit/T030_train2016.csv.gz',
                       float_format='%.4f', index=None, compression='gzip')
