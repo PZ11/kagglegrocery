@@ -72,7 +72,7 @@ else:
         converters={'unit_sales': lambda u: np.log1p(
             float(u)) if float(u) > 0 else 0},
         parse_dates=["date"],
-        skiprows=range(1, 45811211)  # 2016-01-01
+        skiprows=range(1, 23398768)  # 2014-05-06
     )
 
     df_test = pd.read_csv(
@@ -134,6 +134,7 @@ def prepare_dataset(t2017, is_train=True):
 
     for i in range(16):
         X['ly_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 364-i, 1).values.ravel()
+        X['l2y_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 728-i, 1).values.ravel()        
         
     for i in range(7):
         X['mean_4_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
@@ -156,7 +157,7 @@ def prepare_dataset(t2017, is_train=True):
 
 ###############################################################################
 
-df_2017 = df_train.loc[df_train.date >= pd.datetime(2015, 5, 1)]
+df_2017 = df_train.loc[df_train.date >= pd.datetime(2014, 5, 1)]
 del df_train
 
 promo_2017_train = df_2017.set_index(
@@ -179,13 +180,19 @@ items = items.reindex(df_2017.index.get_level_values(1))
 df_2017_nbr = pd.DataFrame(df_2017.copy())
 df_2017_nbr.reset_index(inplace = True)
 
+
+    
 df_2017[pd.datetime(2016, 12, 25)] = 0
 df_2017[pd.datetime(2015, 12, 25)] = 0
+df_2017[pd.datetime(2014, 12, 25)] = 0
 if param_1 == "1s":
     df_2017[pd.datetime(2017, 1, 1)] = 0
     df_2017[pd.datetime(2016, 1, 1)] = 0
+    df_2017[pd.datetime(2015, 1, 1)] = 0    
     df_2017[pd.datetime(2015, 7, 7)] = 0
+#    promo_2017[pd.datetime(2015, 7, 7)] = 0
 
+    
 ##########################################################################
 logger.info('Preparing traing dataset...')
 
