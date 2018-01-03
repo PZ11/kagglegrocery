@@ -164,6 +164,7 @@ for i in range(16):
     for j in range(16):
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
+            features_t.remove('l2y_1d_d{}'.format(j))
 
     for j in range(7):
         if j != i%7:
