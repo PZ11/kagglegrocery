@@ -1,0 +1,3 @@
+python T040_storeitem_features.py $1
+wait
+python T040_model.py $1
