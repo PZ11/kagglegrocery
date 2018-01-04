@@ -1,0 +1,2 @@
+python 004_store_features.py $1 $2
+python 100_model_addstore.py $1 $2

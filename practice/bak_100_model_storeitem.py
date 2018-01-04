@@ -2,13 +2,6 @@
 """
 This is an upgraded version of Ceshine's LGBM starter script, simply adding
 more average features and weekly average features on it.
-
-Run 1 Store validation  : .py 1s 045
-Run 1 Store submission  : .py 1ss 045
-Run all Store validation: .py val 045
-Run all Store submission: .py a 045
-
-
 """
 from datetime import date, timedelta
 
@@ -58,7 +51,6 @@ logger.info('start')
 
 if len(sys.argv) == 1:
     param_1 = "Full Run"
-    param_2 = "999"
 else:
     param_1 = sys.argv[1]
     print("input parameter = ", param_1)
@@ -76,14 +68,6 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     val_out = pd.read_pickle('../data/storeitem_val_1s.p')
     X_test_out = pd.read_pickle('../data/storeitem_test_1s.p')
 
-    item_train_out = pd.read_pickle('../data/item_train_1s.p')
-    item_val_out = pd.read_pickle('../data/item_val_1s.p')
-    item_X_test_out = pd.read_pickle('../data/item_test_1s.p')
-
-    store_train_out = pd.read_pickle('../data/store_train_1s.p')
-    store_val_out = pd.read_pickle('../data/store_val_1s.p')
-    store_X_test_out = pd.read_pickle('../data/store_test_1s.p')
-
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -97,15 +81,6 @@ else:
     val_out = pd.read_pickle('../data/storeitem_val.p')
     X_test_out = pd.read_pickle('../data/storeitem_test.p')
 
-    item_train_out = pd.read_pickle('../data/item_train.p')
-    item_val_out = pd.read_pickle('../data/item_val.p')
-    item_X_test_out = pd.read_pickle('../data/item_test.p')
-
-    store_train_out = pd.read_pickle('../data/store_train.p')
-    store_val_out = pd.read_pickle('../data/store_val.p')
-    store_X_test_out = pd.read_pickle('../data/store_test.p')
-
-
     df_test = pd.read_csv(
         "../input/test.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -115,6 +90,11 @@ else:
     )
 
     
+# On validation step, need remove last 2 weeks in the train data
+train_out["date"] = pd.to_datetime(train_out["date"])
+if ((param_1 == "val") or (param_1 == "1s")):
+    train_out = train_out.loc[train_out["date"] < '2017-07-19', ]
+
 items = pd.read_csv(
     "../input/items.csv",
 ).set_index("item_nbr")
@@ -128,35 +108,16 @@ items_val = items_val.reindex(val_out['item_nbr'])
 logger.info('Load data successful')
 
 ###############################################################################
-# Merge item features with item_store features
-del train_out["index"]
-del item_train_out["index"]
-del store_train_out["index"]
-
-train_out = pd.merge(train_out, item_train_out, how='inner', on=['item_nbr','date'])
-val_out = pd.merge(val_out, item_val_out, how='inner', on=['item_nbr','date'])
-X_test_out = pd.merge(X_test_out, item_X_test_out, how='inner', on=['item_nbr','date'])
-
-# Merge store features with item_store features
-
-train_out = pd.merge(train_out, store_train_out, how='inner', on=['store_nbr','date'])
-val_out = pd.merge(val_out, store_val_out, how='inner', on=['store_nbr','date'])
-X_test_out = pd.merge(X_test_out, store_X_test_out, how='inner', on=['store_nbr','date'])
 ###############################################################################
 logger.info('Preparing traing dataset...')
-    
-# On validation step, need remove last 2 weeks in the train data
-#train_out["date"] = pd.to_datetime(train_out["date"])
-#if ((param_1 == "val") or (param_1 == "1s")):
-#    train_out = train_out.loc[train_out["date"] < '2017-07-19', ]
 
-    
 all_columns = train_out.columns.tolist()
 
 y_columns = ['day'+str(i) for i in range(1, 17)]
 x_columns = [item for item in all_columns if item not in y_columns]
 
 features_all = x_columns
+features_all.remove("index") 
 features_all.remove("date") 
 features_all.remove("item_nbr") 
 features_all.remove("store_nbr") 
@@ -224,16 +185,6 @@ for i in range(16):
             features_t.remove('dow_ly3w_{}_mean'.format(j))
             features_t.remove('dow_ly8w_{}_mean'.format(j))
             
-            features_t.remove('item_dow_4_{}_mean'.format(j))
-            features_t.remove('item_dow_13_{}_mean'.format(j))
-            features_t.remove('item_dow_26_{}_mean'.format(j))
-            features_t.remove('item_dow_52_{}_mean'.format(j))
-
-            features_t.remove('store_dow_4_{}_mean'.format(j))
-            features_t.remove('store_dow_13_{}_mean'.format(j))
-            features_t.remove('store_dow_26_{}_mean'.format(j))
-            features_t.remove('store_dow_52_{}_mean'.format(j))     
-      
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
     X_test = X_test_allF[features_t]

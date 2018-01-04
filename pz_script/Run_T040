@@ -1,3 +1,0 @@
-python 002_storeitem_features.py $1
-wait
-python 100_model_train.py $1
