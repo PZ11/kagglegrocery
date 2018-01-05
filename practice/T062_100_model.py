@@ -66,8 +66,8 @@ else:
     param_1 = sys.argv[1]
     param_2 = sys.argv[2]
 
-print("input parameter = ", param_1)
-print("Test/val number = ", param_2)
+logger.info("input parameter = ", param_1)
+logger.info("Test/val number = ", param_2)
 submit_filename = '../submit/T' + param_2 + '.csv.gz'
 val_filename = '../data/V' + param_2 + '.p'
 
@@ -90,10 +90,6 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     s_f_train_out = pd.read_pickle('../data/storefamily_train_1s.p')
     s_f_val_out = pd.read_pickle('../data/storefamily_val_1s.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test_1s.p')
-
-    class_train_out = pd.read_pickle('../data/class_train_1s.p')
-    class_val_out = pd.read_pickle('../data/class_val_1s.p')
-    class_X_test_out = pd.read_pickle('../data/class_test_1s.p')
     
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
@@ -120,10 +116,6 @@ else:
     s_f_val_out = pd.read_pickle('../data/storefamily_val.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test.p')
 
-    class_train_out = pd.read_pickle('../data/class_train.p')
-    class_val_out = pd.read_pickle('../data/class_val.p')
-    class_X_test_out = pd.read_pickle('../data/class_test.p')
-
     df_test = pd.read_csv(
         "../input/test.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -134,9 +126,11 @@ else:
 
 
 # On validation step, need remove last 2 weeks in the train data
-if ((param_1 == "val") or (param_1 == "1s")):
-    train_out = train_out.loc[train_out["date"] < date(2017, 7, 19), ]
+# train_out["date"] = pd.to_datetime(train_out["date"])
+#if ((param_1 == "val") or (param_1 == "1s")):
+#    train_out = train_out.loc[train_out["date"] < '2017-07-19', ]
 
+  
 items = pd.read_csv(
     "../input/items.csv",
 )
@@ -151,53 +145,13 @@ logger.info('Load data successful')
 ###############################################################################
 # Delete index columns before merge 
 del train_out["index"]
-
-########################################
-# Merge store-family features
+del item_train_out["index"]
+del store_train_out["index"]
 del s_f_train_out["index"]
 
-items_c = items.copy()
-del items_c["class"], items_c["perishable"]
 
 
-s_f_train_out = pd.merge(s_f_train_out, items_c, how = 'inner', on=['family'] )
-s_f_val_out = pd.merge(s_f_val_out, items_c, how = 'inner', on=['family'] )
-s_f_X_test_out = pd.merge(s_f_X_test_out, items_c, how = 'inner', on = ['family'] )
-
-del s_f_train_out['family'], s_f_val_out['family'], s_f_X_test_out['family']
-
-train_out = pd.merge(train_out, s_f_train_out, how='inner', on=['store_nbr','item_nbr','date'])
-val_out = pd.merge(val_out, s_f_val_out, how='inner', on=['store_nbr','item_nbr','date'])
-X_test_out = pd.merge(X_test_out, s_f_X_test_out, how='inner', on=['store_nbr','item_nbr','date'])
-
-del items_c,s_f_train_out, s_f_val_out, s_f_X_test_out
-gc.collect()
-
-########################################
-# Merge class features
-del class_train_out["index"]
-
-items_c = items.copy()
-del items_c["family"], items_c["perishable"]
-
-
-class_train_out = pd.merge(class_train_out, items_c, how = 'inner', on=['class'] )
-class_val_out = pd.merge(class_val_out, items_c, how = 'inner', on=['class'] )
-class_X_test_out = pd.merge(class_X_test_out, items_c, how = 'inner', on = ['class'] )
-
-del class_train_out['class'], class_val_out['class'], class_X_test_out['class']
-
-train_out = pd.merge(train_out, class_train_out, how='inner', on=['item_nbr','date'])
-val_out = pd.merge(val_out, class_val_out, how='inner', on=['item_nbr','date'])
-X_test_out = pd.merge(X_test_out, class_X_test_out, how='inner', on=['item_nbr','date'])
-
-del items_c,class_train_out, class_val_out, class_X_test_out
-gc.collect()
-
-########################################
-# Merge item features
-del item_train_out["index"]
-
+# Merge item features 
 train_out = pd.merge(train_out, item_train_out, how='inner', on=['item_nbr','date'])
 val_out = pd.merge(val_out, item_val_out, how='inner', on=['item_nbr','date'])
 X_test_out = pd.merge(X_test_out, item_X_test_out, how='inner', on=['item_nbr','date'])
@@ -206,15 +160,11 @@ del item_train_out, item_val_out, item_X_test_out
 gc.collect()
 
 
-########################################
-# Merge store features
-del store_train_out["index"]
 
+# Merge store features
 train_out = pd.merge(train_out, store_train_out, how='inner', on=['store_nbr','date'])
 val_out = pd.merge(val_out, store_val_out, how='inner', on=['store_nbr','date'])
 X_test_out = pd.merge(X_test_out, store_X_test_out, how='inner', on=['store_nbr','date'])
-
-
 
 print(train_out.groupby(['date']).size())
 
@@ -312,16 +262,6 @@ for i in range(16):
             features_t.remove('store_dow_26_{}_mean'.format(j))
             features_t.remove('store_dow_52_{}_mean'.format(j))     
 
-            features_t.remove('s_f_dow_4_{}_mean'.format(j))
-            features_t.remove('s_f_dow_13_{}_mean'.format(j))
-            features_t.remove('s_f_dow_26_{}_mean'.format(j))
-            features_t.remove('s_f_dow_52_{}_mean'.format(j))
-            
-            features_t.remove('class_dow_4_{}_mean'.format(j))
-            features_t.remove('class_dow_13_{}_mean'.format(j))
-            features_t.remove('class_dow_26_{}_mean'.format(j))
-            features_t.remove('class_dow_52_{}_mean'.format(j))
-            
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
     X_test = X_test_allF[features_t]
@@ -449,8 +389,8 @@ else:
 #    submission.to_csv('../submit/T043_tmp.csv', float_format='%.4f', index=None)
 
     # PZ, Check overral result
-    print("SUM =",  submission.unit_sales.sum())
-    print("MEAN =",  submission.unit_sales.mean())
+    logger.info("SUM =",  submission.unit_sales.sum())
+    logger.info("MEAN =",  submission.unit_sales.mean())
 
     ##########################################################################
     df_prev = submission
@@ -463,8 +403,8 @@ else:
     submission = t_new[['id', 'unit_sales']]
     del t_new
 
-    print("Merged  SUM =",  submission.unit_sales.sum())
-    print("Merged  MEAN =",  submission.unit_sales.mean())
+    logger.info("Merged  SUM =",  submission.unit_sales.sum())
+    logger.info("Merged  MEAN =",  submission.unit_sales.mean())
 
     submission.to_csv(submit_filename,
                       float_format='%.4f', index=None, compression='gzip')

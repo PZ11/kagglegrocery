@@ -210,10 +210,8 @@ for i in range(4):
     X_l.append(X_tmp)
     y_l.append(y_tmp)
 
-# Always load 9 weeks of data, regardless val or not 
+# Always load 9 weeks of data. if val, 2 weeks will be removed in 100_model. 
 train_week_2017 = 9
-#if param_1 != "val":
-#    train_week_2017 = 9
 
 t2017 = date(2017, 5, 31)
 for i in range(train_week_2017):

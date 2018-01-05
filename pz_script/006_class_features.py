@@ -50,7 +50,7 @@ else:
 
 if param_1 == "1s":
     df_train = pd.read_csv(
-        '../input/train_2s.csv', usecols=[1, 2, 3, 4, 5],
+        '../input/train_1s.csv', usecols=[1, 2, 3, 4, 5],
         dtype={'onpromotion': bool},
         converters={'unit_sales': lambda u: np.log1p(
             float(u)) if float(u) > 0 else 0},
@@ -58,7 +58,7 @@ if param_1 == "1s":
     )
 
     df_test = pd.read_csv(
-        "../input/test_2s.csv", usecols=[0, 1, 2, 3, 4],
+        "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
         parse_dates=["date"]  # , date_parser=parser
     ).set_index(
@@ -83,6 +83,9 @@ else:
         ['store_nbr', 'item_nbr', 'date']
     )
 
+    
+items = pd.read_csv("../input/items.csv",)
+
 logger.info('Load data successful')
 
 ###############################################################################
@@ -97,22 +100,22 @@ def get_timespan(df, dt, minus, periods, freq='D'):
 
 def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
-        "store_nbr": df_2017_nbr.store_nbr,
+        "class": df_2017_nbr['class'],
         "date": (t2017), 
-        "store_day_1_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
-        "store_mean_7_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
-        "store_mean_21_2017": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
-        "store_mean_42_2017": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
-        "store_mean_91_2017": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
-        "store_mean_182_2017": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
-        "store_mean_364_2017": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
+        "class_day_1_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
+        "class_mean_7_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
+        "class_mean_21_2017": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
+        "class_mean_42_2017": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
+        "class_mean_91_2017": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
+        "class_mean_182_2017": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
+        "class_mean_364_2017": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
     })
   
     for i in range(7):
-        X['store_dow_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
-        X['store_dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
-        X['store_dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
-        X['store_dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
+        X['class_dow_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
+        X['class_dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
+        X['class_dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
+        X['class_dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
 
 
     if is_train:
@@ -123,25 +126,23 @@ def prepare_dataset(t2017, is_train=True):
     return X
 
 ###############################################################################
+# Aggregate to class level
 
-df_2017 = df_train.loc[df_train.date >= pd.datetime(2014, 5, 1)]
-del df_train
+df_train_item_class = pd.merge(df_train, items, on =['item_nbr'], how = 'inner')
 
+df_train_class = df_train_item_class[['class', 'date', 'unit_sales', 'item_nbr']]\
+                        .groupby(['class','date'])\
+                        .agg({'unit_sales': 'sum', 'item_nbr':'count'}).reset_index()
+df_train_class["item_avg_sales"] = df_train_class["unit_sales"] / df_train_class["item_nbr"]
 
-# Aggregate to store level
-df_train_store = df_2017[['item_nbr','date', 'store_nbr', 'unit_sales']].groupby(['store_nbr','date'])\
-    .agg({'unit_sales': 'sum', 'item_nbr':'count'}).reset_index()
-
-df_train_store["store_avg_sales"] = df_train_store["unit_sales"] / df_train_store["item_nbr"]
-
-df_2017 = df_train_store.set_index(
-    ["store_nbr", "date"])[["store_avg_sales"]].unstack(
+df_2017 = df_train_class.set_index(
+    ["class", "date"])[["item_avg_sales"]].unstack(
         level=-1).fillna(0)
+
 df_2017.columns = df_2017.columns.get_level_values(1)
 
 df_2017_nbr = pd.DataFrame(df_2017.copy())
 df_2017_nbr.reset_index(inplace = True)
-
 
     
 df_2017[pd.datetime(2016, 12, 25)] = 0
@@ -191,7 +192,7 @@ X_val, y_val = prepare_dataset(date(2017, 7, 26))
 X_test = prepare_dataset(date(2017, 8, 16), is_train=False)
 
 ##########################################################################
-logger.info('Save Store store Features ...')
+logger.info('Save Store Item Features ...')
 
 y_columns = ["day" + str(i) for i in range(1, 17)]
 
@@ -212,11 +213,11 @@ val_out = X_val
 
 
 if param_1 == "1s":
-    train_out.to_pickle('../data/store_train_1s.p')
-    val_out.to_pickle('../data/store_val_1s.p')
-    X_test.to_pickle('../data/store_test_1s.p')
+    train_out.to_pickle('../data/class_train_1s.p')
+    val_out.to_pickle('../data/class_val_1s.p')
+    X_test.to_pickle('../data/class_test_1s.p')
     
 else:
-    train_out.to_pickle('../data/store_train.p')
-    val_out.to_pickle('../data/store_val.p')
-    X_test.to_pickle('../data/store_test.p')
+    train_out.to_pickle('../data/class_train.p')
+    val_out.to_pickle('../data/class_val.p')
+    X_test.to_pickle('../data/class_test.p')

@@ -169,9 +169,7 @@ for i in range(4):
     X_l.append(X_tmp)
     y_l.append(y_tmp)
 
-train_week_2017 = 7
-if param_1 != "val":
-    train_week_2017 = 9
+train_week_2017 = 9
 
 t2017 = date(2017, 5, 31)
 for i in range(train_week_2017):
