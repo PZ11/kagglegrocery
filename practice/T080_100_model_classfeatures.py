@@ -94,7 +94,7 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     class_train_out = pd.read_pickle('../data/class_train_1s.p')
     class_val_out = pd.read_pickle('../data/class_val_1s.p')
     class_X_test_out = pd.read_pickle('../data/class_test_1s.p')
-
+    
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -152,6 +152,26 @@ logger.info('Load data successful')
 # Delete index columns before merge 
 del train_out["index"]
 
+########################################
+# Merge store-family features
+del s_f_train_out["index"]
+
+items_c = items.copy()
+del items_c["class"], items_c["perishable"]
+
+
+s_f_train_out = pd.merge(s_f_train_out, items_c, how = 'inner', on=['family'] )
+s_f_val_out = pd.merge(s_f_val_out, items_c, how = 'inner', on=['family'] )
+s_f_X_test_out = pd.merge(s_f_X_test_out, items_c, how = 'inner', on = ['family'] )
+
+del s_f_train_out['family'], s_f_val_out['family'], s_f_X_test_out['family']
+
+train_out = pd.merge(train_out, s_f_train_out, how='inner', on=['store_nbr','item_nbr','date'])
+val_out = pd.merge(val_out, s_f_val_out, how='inner', on=['store_nbr','item_nbr','date'])
+X_test_out = pd.merge(X_test_out, s_f_X_test_out, how='inner', on=['store_nbr','item_nbr','date'])
+
+del items_c,s_f_train_out, s_f_val_out, s_f_X_test_out
+gc.collect()
 
 ########################################
 # Merge class features
@@ -172,28 +192,6 @@ val_out = pd.merge(val_out, class_val_out, how='inner', on=['item_nbr','date'])
 X_test_out = pd.merge(X_test_out, class_X_test_out, how='inner', on=['item_nbr','date'])
 
 del items_c,class_train_out, class_val_out, class_X_test_out
-gc.collect()
-
-
-########################################
-# Merge store-family features
-del s_f_train_out["index"]
-
-items_c = items.copy()
-del items_c["class"], items_c["perishable"]
-
-
-s_f_train_out = pd.merge(s_f_train_out, items_c, how = 'inner', on=['family'] )
-s_f_val_out = pd.merge(s_f_val_out, items_c, how = 'inner', on=['family'] )
-s_f_X_test_out = pd.merge(s_f_X_test_out, items_c, how = 'inner', on = ['family'] )
-
-del s_f_train_out['family'], s_f_val_out['family'], s_f_X_test_out['family']
-
-train_out = pd.merge(train_out, s_f_train_out, how='inner', on=['store_nbr','item_nbr','date'])
-val_out = pd.merge(val_out, s_f_val_out, how='inner', on=['store_nbr','item_nbr','date'])
-X_test_out = pd.merge(X_test_out, s_f_X_test_out, how='inner', on=['store_nbr','item_nbr','date'])
-
-del items_c,s_f_train_out, s_f_val_out, s_f_X_test_out
 gc.collect()
 
 ########################################
@@ -279,19 +277,7 @@ cate_vars = []
 train_week_2017 = 7
 if param_1 != "val":
     train_week_2017 = 9
-
-
-for j in range(16):
-    X_train_allF['class_ratio_ly_1d_d{}'.format(j)] = X_train_allF['class_ly_1d_d{}'.format(j)] / X_train_allF['class_ly_sum']
-    X_train_allF['class_ratio_ly_1w_d{}'.format(j)] = X_train_allF['class_ly_1w_{}_sum'.format(j)] / X_train_allF['class_ly_sum']
-
-    X_val_allF['class_ratio_ly_1d_d{}'.format(j)] = X_val_allF['class_ly_1d_d{}'.format(j)] / X_val_allF['class_ly_sum']
-    X_val_allF['class_ratio_ly_1w_d{}'.format(j)] = X_val_allF['class_ly_1w_{}_sum'.format(j)] / X_val_allF['class_ly_sum']
-
-    X_test_allF['class_ratio_ly_1d_d{}'.format(j)] = X_test_allF['class_ly_1d_d{}'.format(j)] / X_test_allF['class_ly_sum']
-    X_test_allF['class_ratio_ly_1w_d{}'.format(j)] = X_test_allF['class_ly_1w_{}_sum'.format(j)] / X_test_allF['class_ly_sum']
-
-   
+    
 features_all = X_train_allF.columns.tolist()
 
 for i in range(16):
@@ -300,20 +286,10 @@ for i in range(16):
     print("=" * 70)
     features_t = features_all.copy()
 
-
     for j in range(16):
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
             features_t.remove('l2y_1d_d{}'.format(j))
-
-            features_t.remove('class_ly_1d_d{}'.format(j))
-            features_t.remove('class_l2y_1d_d{}'.format(j))
-            features_t.remove('class_ly_1w_{}_sum'.format(j))
-            features_t.remove('class_l2y_1w_{}_sum'.format(j))
-
-            features_t.remove('class_ratio_ly_1d_d{}'.format(j))
-            features_t.remove('class_ratio_ly_1w_d{}'.format(j))
-
 
     for j in range(7):
         if j != i%7:
@@ -340,15 +316,17 @@ for i in range(16):
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
             features_t.remove('s_f_dow_52_{}_mean'.format(j))
-
-
-          
+            
+            features_t.remove('class_dow_4_{}_mean'.format(j))
+            features_t.remove('class_dow_13_{}_mean'.format(j))
+            features_t.remove('class_dow_26_{}_mean'.format(j))
+            features_t.remove('class_dow_52_{}_mean'.format(j))
+            
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
     X_test = X_test_allF[features_t]
-
-
-    
+	
+     
     dtrain = lgb.Dataset(
         X_train, label=y_train[:, i],
         categorical_feature=cate_vars,

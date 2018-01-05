@@ -102,18 +102,22 @@ def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
         "class": df_2017_nbr['class'],
         "date": (t2017), 
-        "class_ly_sum": get_timespan(df_2017, t2017, 364, 364).sum(axis=1).values,
-        "class_l2y_sum": get_timespan(df_2017, t2017, 728, 364).sum(axis=1).values
+        "class_day_1_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
+        "class_mean_7_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
+        "class_mean_21_2017": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
+        "class_mean_42_2017": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
+        "class_mean_91_2017": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
+        "class_mean_182_2017": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
+        "class_mean_364_2017": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
     })
+  
+    for i in range(7):
+        X['class_dow_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
+        X['class_dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
+        X['class_dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
+        X['class_dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
 
-    for i in range(16):
-        X['class_ly_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 364-i, 1).values.ravel()
-        X['class_l2y_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 728-i, 1).values.ravel()  
 
-    for i in range(16):
-        X['class_ly_1w_{}_sum'.format(i)] = get_timespan(df_2017, t2017, (364-(int(i/7))*7), 7).sum(axis=1).values        
-        X['class_l2y_1w_{}_sum'.format(i)] = get_timespan(df_2017, t2017, (728-(int(i/7))*7), 7).sum(axis=1).values        
- 
     if is_train:
         y = df_2017[
             pd.date_range(t2017, periods=16)
