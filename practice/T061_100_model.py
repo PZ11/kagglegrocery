@@ -59,15 +59,12 @@ logger.info('start')
 if len(sys.argv) == 1:
     param_1 = "Full Run"
     param_2 = "999"
-elif len(sys.argv) == 2:
-    param_1 = sys.argv[1]
-    param_2 = 'tmp'
 else:
     param_1 = sys.argv[1]
+    print("input parameter = ", param_1)
     param_2 = sys.argv[2]
+    print("Test/val number = ", param_2)
 
-print("input parameter = ", param_1)
-print("Test/val number = ", param_2)
 submit_filename = '../submit/T' + param_2 + '.csv.gz'
 val_filename = '../data/V' + param_2 + '.p'
 
@@ -87,10 +84,6 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     store_val_out = pd.read_pickle('../data/store_val_1s.p')
     store_X_test_out = pd.read_pickle('../data/store_test_1s.p')
 
-    s_f_train_out = pd.read_pickle('../data/storefamily_train_1s.p')
-    s_f_val_out = pd.read_pickle('../data/storefamily_val_1s.p')
-    s_f_X_test_out = pd.read_pickle('../data/storefamily_test_1s.p')
-    
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -112,9 +105,6 @@ else:
     store_val_out = pd.read_pickle('../data/store_val.p')
     store_X_test_out = pd.read_pickle('../data/store_test.p')
 
-    s_f_train_out = pd.read_pickle('../data/storefamily_train.p')
-    s_f_val_out = pd.read_pickle('../data/storefamily_val.p')
-    s_f_X_test_out = pd.read_pickle('../data/storefamily_test.p')
 
     df_test = pd.read_csv(
         "../input/test.csv", usecols=[0, 1, 2, 3, 4],
@@ -124,16 +114,11 @@ else:
         ['store_nbr', 'item_nbr', 'date']
     )
 
-
-# On validation step, need remove last 2 weeks in the train data
-# train_out["date"] = pd.to_datetime(train_out["date"])
-#if ((param_1 == "val") or (param_1 == "1s")):
-#    train_out = train_out.loc[train_out["date"] < '2017-07-19', ]
-
-  
+    
 items = pd.read_csv(
     "../input/items.csv",
-)
+).set_index("item_nbr")
+items = items.reindex(train_out.item_nbr)
 
 items_val = pd.read_csv(
     "../input/items.csv",
@@ -143,57 +128,34 @@ items_val = items_val.reindex(val_out['item_nbr'])
 logger.info('Load data successful')
 
 ###############################################################################
-# Delete index columns before merge 
+# Merge item features with item_store features
 del train_out["index"]
 del item_train_out["index"]
 del store_train_out["index"]
-del s_f_train_out["index"]
 
-# Merge store-family features
-items_c = items.copy()
-del items_c["class"], items_c["perishable"]
-
-
-s_f_train_out = pd.merge(s_f_train_out, items_c, how = 'inner', on=['family'] )
-s_f_val_out = pd.merge(s_f_val_out, items_c, how = 'inner', on=['family'] )
-s_f_X_test_out = pd.merge(s_f_X_test_out, items_c, how = 'inner', on = ['family'] )
-
-del s_f_train_out['family'], s_f_val_out['family'], s_f_X_test_out['family']
-
-train_out = pd.merge(train_out, s_f_train_out, how='inner', on=['store_nbr','item_nbr','date'])
-val_out = pd.merge(val_out, s_f_val_out, how='inner', on=['store_nbr','item_nbr','date'])
-X_test_out = pd.merge(X_test_out, s_f_X_test_out, how='inner', on=['store_nbr','item_nbr','date'])
-
-del items_c,s_f_train_out, s_f_val_out, s_f_X_test_out
-gc.collect()
-
-
-
-# Merge item features 
 train_out = pd.merge(train_out, item_train_out, how='inner', on=['item_nbr','date'])
 val_out = pd.merge(val_out, item_val_out, how='inner', on=['item_nbr','date'])
 X_test_out = pd.merge(X_test_out, item_X_test_out, how='inner', on=['item_nbr','date'])
 
-del item_train_out, item_val_out, item_X_test_out
-gc.collect()
+# Merge store features with item_store features
 
-
-
-# Merge store features
 train_out = pd.merge(train_out, store_train_out, how='inner', on=['store_nbr','date'])
 val_out = pd.merge(val_out, store_val_out, how='inner', on=['store_nbr','date'])
 X_test_out = pd.merge(X_test_out, store_X_test_out, how='inner', on=['store_nbr','date'])
 
-print(train_out.groupby(['date']).size())
-
+del item_train_out, item_val_out, item_X_test_out
 del store_train_out, store_val_out, store_X_test_out
 gc.collect()
-
 
 ###############################################################################
 logger.info('Preparing traing dataset...')
     
+# On validation step, need remove last 2 weeks in the train data
+#train_out["date"] = pd.to_datetime(train_out["date"])
+#if ((param_1 == "val") or (param_1 == "1s")):
+#    train_out = train_out.loc[train_out["date"] < '2017-07-19', ]
 
+    
 all_columns = train_out.columns.tolist()
 
 y_columns = ['day'+str(i) for i in range(1, 17)]
@@ -213,9 +175,6 @@ y_val = val_out[y_columns].values
 X_train_allF = X_train_out[features_all]
 X_val_allF = X_val_out[features_all]
 X_test_allF = X_test_out[features_all]
-
-items = items.set_index("item_nbr")
-items = items.reindex(train_out.item_nbr)
 
 del train_out
 del X_train_out, X_val_out
@@ -279,18 +238,11 @@ for i in range(16):
             features_t.remove('store_dow_13_{}_mean'.format(j))
             features_t.remove('store_dow_26_{}_mean'.format(j))
             features_t.remove('store_dow_52_{}_mean'.format(j))     
-
-            
-            features_t.remove('s_f_dow_4_{}_mean'.format(j))
-            features_t.remove('s_f_dow_13_{}_mean'.format(j))
-            features_t.remove('s_f_dow_26_{}_mean'.format(j))
-            features_t.remove('s_f_dow_52_{}_mean'.format(j))
-            
+      
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
     X_test = X_test_allF[features_t]
-	
-     
+
     dtrain = lgb.Dataset(
         X_train, label=y_train[:, i],
         categorical_feature=cate_vars,

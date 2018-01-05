@@ -83,10 +83,8 @@ else:
         ['store_nbr', 'item_nbr', 'date']
     )
 
-
-items = pd.read_csv(
-    "../input/items.csv",
-).set_index("item_nbr")
+    
+items = pd.read_csv("../input/items.csv",)
 
 logger.info('Load data successful')
 
@@ -99,56 +97,27 @@ def get_timespan(df, dt, minus, periods, freq='D'):
               (dt - timedelta(days=minus), periods=periods, freq=freq)]
 
 
+
 def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
-        "item_nbr": df_2017_nbr.item_nbr,
+        "family": df_2017_nbr.family,
         "store_nbr": df_2017_nbr.store_nbr,
         "date": (t2017), 
-        "day_1_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
-        "mean_3_2017": get_timespan(df_2017, t2017, 3, 3).mean(axis=1).values,
-        "mean_7_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
-        "mean_14_2017": get_timespan(df_2017, t2017, 14, 14).mean(axis=1).values,
-        "mean_30_2017": get_timespan(df_2017, t2017, 30, 30).mean(axis=1).values,
-        "mean_60_2017": get_timespan(df_2017, t2017, 60, 60).mean(axis=1).values,
-        "mean_140_2017": get_timespan(df_2017, t2017, 140, 140).mean(axis=1).values,
-
-        "mean_21_2017": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
-        "mean_42_2017": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
-        "mean_91_2017": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
-        "mean_182_2017": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
-        "mean_364_2017": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
-
-       #"mean_ly_wk1_2017": get_timespan(df_2017, t2017, 364, 7).mean(axis=1).values,
-       #"mean_ly_wk2_2017": get_timespan(df_2017, t2017, 364, 14).mean(axis=1).values,        
-        "mean_ly_n16d_2017": get_timespan(df_2017, t2017, 364, 16).mean(axis=1).values,
-
-        "mean_ly_7_2017":  get_timespan(df_2017, t2017, 371, 7 ).mean(axis=1).values,
-        "mean_ly_14_2017": get_timespan(df_2017, t2017, 378, 14).mean(axis=1).values,
-        "mean_ly_30_2017": get_timespan(df_2017, t2017, 394, 30).mean(axis=1).values,
-        "mean_ly_21_2017": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
-
-        "promo_14_2017": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
-        "promo_60_2017": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
-        "promo_140_2017": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values
+        "s_f_day_1_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
+        "s_f_mean_7_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
+        "s_f_mean_21_2017": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
+        "s_f_mean_42_2017": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
+        "s_f_mean_91_2017": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
+        "s_f_mean_182_2017": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
+        "s_f_mean_364_2017": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
     })
-
-    for i in range(16):
-        X['ly_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 364-i, 1).values.ravel()
-        X['l2y_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 728-i, 1).values.ravel()        
-        
+  
     for i in range(7):
-        X['dow_1_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 7-i,1).values.ravel()
-        X['dow_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
-        X['dow_8_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 56-i, 8, freq='7D').mean(axis=1).values
-        X['dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
-        X['dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
-        X['dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
-        X['dow_ly3w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
-        X['dow_ly8w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
+        X['s_f_dow_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
+        X['s_f_dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
+        X['s_f_dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
+        X['s_f_dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
 
-    for i in range(16):
-        X["promo_{}".format(i)] = promo_2017[
-            t2017 + timedelta(days=i)].values.astype(np.uint8)
 
     if is_train:
         y = df_2017[
@@ -157,32 +126,24 @@ def prepare_dataset(t2017, is_train=True):
         return X, y
     return X
 
-
 ###############################################################################
+# Aggregate to s-f(store-family) level
 
-df_2017 = df_train.loc[df_train.date >= pd.datetime(2014, 5, 1)]
-del df_train
+df_train_store_items = pd.merge(df_train, items, on =['item_nbr'], how = 'inner')
 
-promo_2017_train = df_2017.set_index(
-    ["store_nbr", "item_nbr", "date"])[["onpromotion"]].unstack(
-        level=-1).fillna(False)
-promo_2017_train.columns = promo_2017_train.columns.get_level_values(1)
-promo_2017_test = df_test[["onpromotion"]].unstack(level=-1).fillna(False)
-promo_2017_test.columns = promo_2017_test.columns.get_level_values(1)
-promo_2017_test = promo_2017_test.reindex(promo_2017_train.index).fillna(False)
-promo_2017 = pd.concat([promo_2017_train, promo_2017_test], axis=1)
-del promo_2017_test, promo_2017_train
+df_train_store_family = df_train_store_items[['family', 'date', 'store_nbr', 'unit_sales', 'item_nbr']]\
+                        .groupby(['family','store_nbr','date'])\
+                        .agg({'unit_sales': 'sum', 'item_nbr':'count'}).reset_index()
+df_train_store_family["item_avg_sales"] = df_train_store_family["unit_sales"] / df_train_store_family["item_nbr"]
 
-df_2017 = df_2017.set_index(
-    ["store_nbr", "item_nbr", "date"])[["unit_sales"]].unstack(
+df_2017 = df_train_store_family.set_index(
+    ["family", "store_nbr", "date"])[["item_avg_sales"]].unstack(
         level=-1).fillna(0)
-df_2017.columns = df_2017.columns.get_level_values(1)
 
-items = items.reindex(df_2017.index.get_level_values(1))
+df_2017.columns = df_2017.columns.get_level_values(1)
 
 df_2017_nbr = pd.DataFrame(df_2017.copy())
 df_2017_nbr.reset_index(inplace = True)
-
 
     
 df_2017[pd.datetime(2016, 12, 25)] = 0
@@ -210,10 +171,9 @@ for i in range(4):
     X_l.append(X_tmp)
     y_l.append(y_tmp)
 
-# Always load 9 weeks of data, regardless val or not 
-train_week_2017 = 9
-#if param_1 != "val":
-#    train_week_2017 = 9
+train_week_2017 = 7
+if param_1 != "val":
+    train_week_2017 = 9
 
 t2017 = date(2017, 5, 31)
 for i in range(train_week_2017):
@@ -242,23 +202,25 @@ y_columns = ["day" + str(i) for i in range(1, 17)]
 df_y_train = pd.DataFrame(data = y_train, columns = y_columns)
 X_train.reset_index(inplace = True)
 X_train.reindex(index = df_y_train.index)
-train_out = pd.concat([X_train, df_y_train], axis = 1)
+#train_out = pd.concat([X_train, df_y_train], axis = 1) 
+train_out = X_train
 
 df_y_val = pd.DataFrame(data = y_val, columns = y_columns)
 X_val.reset_index(inplace = True)
 X_val.reindex(index = df_y_val.index)
-val_out = pd.concat([X_val, df_y_val], axis = 1)
+#val_out = pd.concat([X_val, df_y_val], axis = 1)
+val_out = X_val
 
 ##########################################################################
 # output
 
 
 if param_1 == "1s":
-    train_out.to_pickle('../data/storeitem_train_1s.p')
-    val_out.to_pickle('../data/storeitem_val_1s.p')
-    X_test.to_pickle('../data/storeitem_test_1s.p')
+    train_out.to_pickle('../data/storefamily_train_1s.p')
+    val_out.to_pickle('../data/storefamily_val_1s.p')
+    X_test.to_pickle('../data/storefamily_test_1s.p')
     
 else:
-    train_out.to_pickle('../data/storeitem_train.p')
-    val_out.to_pickle('../data/storeitem_val.p')
-    X_test.to_pickle('../data/storeitem_test.p')
+    train_out.to_pickle('../data/storefamily_train.p')
+    val_out.to_pickle('../data/storefamily_val.p')
+    X_test.to_pickle('../data/storefamily_test.p')
