@@ -78,7 +78,7 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     train_out = pd.read_pickle('../data/storeitem_train_1s.p')
     val_out = pd.read_pickle('../data/storeitem_val_1s.p')
     X_test_out = pd.read_pickle('../data/storeitem_test_1s.p')
-    """
+
     item_train_out = pd.read_pickle('../data/item_train_1s.p')
     item_val_out = pd.read_pickle('../data/item_val_1s.p')
     item_X_test_out = pd.read_pickle('../data/item_test_1s.p')
@@ -94,7 +94,7 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     class_train_out = pd.read_pickle('../data/class_train_1s.p')
     class_val_out = pd.read_pickle('../data/class_val_1s.p')
     class_X_test_out = pd.read_pickle('../data/class_test_1s.p')
-    """
+
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -107,7 +107,7 @@ else:
     train_out = pd.read_pickle('../data/storeitem_train.p')
     val_out = pd.read_pickle('../data/storeitem_val.p')
     X_test_out = pd.read_pickle('../data/storeitem_test.p')
-    """
+
     item_train_out = pd.read_pickle('../data/item_train.p')
     item_val_out = pd.read_pickle('../data/item_val.p')
     item_X_test_out = pd.read_pickle('../data/item_test.p')
@@ -123,7 +123,7 @@ else:
     class_train_out = pd.read_pickle('../data/class_train.p')
     class_val_out = pd.read_pickle('../data/class_val.p')
     class_X_test_out = pd.read_pickle('../data/class_test.p')
-    """
+
     df_test = pd.read_csv(
         "../input/test.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -152,7 +152,7 @@ logger.info('Load data successful')
 # Delete index columns before merge 
 del train_out["index"]
 
-"""
+
 ########################################
 # Merge class features
 del class_train_out["index"]
@@ -223,7 +223,7 @@ print(train_out.groupby(['date']).size())
 del store_train_out, store_val_out, store_X_test_out
 gc.collect()
 
-"""
+
 ###############################################################################
 logger.info('Preparing traing dataset...')
     
@@ -280,7 +280,7 @@ train_week_2017 = 7
 if param_1 != "val":
     train_week_2017 = 9
 
-'''
+
 for j in range(16):
     X_train_allF['class_ratio_ly_1d_d{}'.format(j)] = X_train_allF['class_ly_1d_d{}'.format(j)] / X_train_allF['class_ly_sum']
     X_train_allF['class_ratio_ly_1w_d{}'.format(j)] = X_train_allF['class_ly_1w_{}_sum'.format(j)] / X_train_allF['class_ly_sum']
@@ -290,7 +290,7 @@ for j in range(16):
 
     X_test_allF['class_ratio_ly_1d_d{}'.format(j)] = X_test_allF['class_ly_1d_d{}'.format(j)] / X_test_allF['class_ly_sum']
     X_test_allF['class_ratio_ly_1w_d{}'.format(j)] = X_test_allF['class_ly_1w_{}_sum'.format(j)] / X_test_allF['class_ly_sum']
-'''
+
    
 features_all = X_train_allF.columns.tolist()
 
@@ -302,10 +302,6 @@ for i in range(16):
 
 
     for j in range(16):
-        features_t.remove('ly_1d_d{}'.format(j))
-        features_t.remove('l2y_1d_d{}'.format(j))
-            
-        '''
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
             features_t.remove('l2y_1d_d{}'.format(j))
@@ -317,7 +313,6 @@ for i in range(16):
 
             features_t.remove('class_ratio_ly_1d_d{}'.format(j))
             features_t.remove('class_ratio_ly_1w_d{}'.format(j))
-        '''
 
 
     for j in range(7):
@@ -331,7 +326,6 @@ for i in range(16):
             features_t.remove('dow_ly3w_{}_mean'.format(j))
             features_t.remove('dow_ly8w_{}_mean'.format(j))
             
-            """
             features_t.remove('item_dow_4_{}_mean'.format(j))
             features_t.remove('item_dow_13_{}_mean'.format(j))
             features_t.remove('item_dow_26_{}_mean'.format(j))
@@ -346,7 +340,6 @@ for i in range(16):
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
             features_t.remove('s_f_dow_52_{}_mean'.format(j))
-            """
 
 
           
