@@ -13,7 +13,9 @@ import math
 import gc
 import sklearn.metrics as skl_metrics
 
-from load_data import load_input_data, add_missing_days, add_missing_days_nopromo
+# import math
+# import sklearn.metrics as skl_metrics
+# from sklearn.metrics import mean_squared_error
 
 from logging import StreamHandler, DEBUG, Formatter, FileHandler, getLogger
 
@@ -38,6 +40,7 @@ logger.addHandler(handler)
 
 logger.info('start')
 
+##########################################################################
 
 if len(sys.argv) == 1:
     param_1 = "Full Run"
@@ -45,15 +48,43 @@ else:
     param_1 = sys.argv[1]
     print("input parameter = ", param_1)
 
-df_train, df_test = load_input_data(param_1)
+if param_1 == "1s":
+    df_train = pd.read_csv(
+        '../input/train_1s.csv', usecols=[1, 2, 3, 4, 5],
+        dtype={'onpromotion': bool},
+        converters={'unit_sales': lambda u: np.log1p(
+            float(u)) if float(u) > 0 else 0},
+        parse_dates=["date"],
+    )
 
+    df_test = pd.read_csv(
+        "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
+        dtype={'onpromotion': bool},
+        parse_dates=["date"]  # , date_parser=parser
+    ).set_index(
+        ['store_nbr', 'item_nbr', 'date']
+    )
+
+else:
+    df_train = pd.read_csv(
+        '../input/train.csv', usecols=[1, 2, 3, 4, 5],
+        dtype={'onpromotion': bool},
+        converters={'unit_sales': lambda u: np.log1p(
+            float(u)) if float(u) > 0 else 0},
+        parse_dates=["date"],
+        skiprows=range(1, 23398768)  # 2014-05-06
+    )
+
+    df_test = pd.read_csv(
+        "../input/test.csv", usecols=[0, 1, 2, 3, 4],
+        dtype={'onpromotion': bool},
+        parse_dates=["date"]  # , date_parser=parser
+    ).set_index(
+        ['store_nbr', 'item_nbr', 'date']
+    )
+
+    
 items = pd.read_csv("../input/items.csv",)
-
-t2014 = date(2014, 8, 6)
-t2015 = date(2015, 8, 5)
-t2016 = date(2016, 8, 3)
-t2017 = date(2017, 5, 31)
-train_week_2017 = 9
 
 logger.info('Load data successful')
 
@@ -69,25 +100,20 @@ def get_timespan(df, dt, minus, periods, freq='D'):
 
 def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
-        "family": df_2017_nbr.family,
-        "store_nbr": df_2017_nbr.store_nbr,
+        "class": df_2017_nbr['class'],
         "date": (t2017), 
-        "s_f_day_1_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
-        "s_f_mean_7_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
-        "s_f_mean_21_2017": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
-        "s_f_mean_42_2017": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
-        "s_f_mean_91_2017": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
-        "s_f_mean_182_2017": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
-        "s_f_mean_364_2017": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
+        "class_ly_sum": get_timespan(df_2017, t2017, 364, 364).sum(axis=1).values,
+        "class_l2y_sum": get_timespan(df_2017, t2017, 728, 364).sum(axis=1).values
     })
-  
-    for i in range(7):
-        X['s_f_dow_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
-        X['s_f_dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
-        X['s_f_dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
-        X['s_f_dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
 
+    for i in range(16):
+        X['class_ly_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 364-i, 1).values.ravel()
+        X['class_l2y_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 728-i, 1).values.ravel()  
 
+    for i in range(16):
+        X['class_ly_1w_{}_sum'.format(i)] = get_timespan(df_2017, t2017, (364-(int(i/7))*7), 7).sum(axis=1).values        
+        X['class_l2y_1w_{}_sum'.format(i)] = get_timespan(df_2017, t2017, (728-(int(i/7))*7), 7).sum(axis=1).values        
+ 
     if is_train:
         y = df_2017[
             pd.date_range(t2017, periods=16)
@@ -96,17 +122,17 @@ def prepare_dataset(t2017, is_train=True):
     return X
 
 ###############################################################################
-# Aggregate to s-f(store-family) level
+# Aggregate to class level
 
-df_train_store_items = pd.merge(df_train, items, on =['item_nbr'], how = 'inner')
+df_train_item_class = pd.merge(df_train, items, on =['item_nbr'], how = 'inner')
 
-df_train_store_family = df_train_store_items[['family', 'date', 'store_nbr', 'unit_sales', 'item_nbr']]\
-                        .groupby(['family','store_nbr','date'])\
+df_train_class = df_train_item_class[['class', 'date', 'unit_sales', 'item_nbr']]\
+                        .groupby(['class','date'])\
                         .agg({'unit_sales': 'sum', 'item_nbr':'count'}).reset_index()
-df_train_store_family["item_avg_sales"] = df_train_store_family["unit_sales"] / df_train_store_family["item_nbr"]
+df_train_class["item_avg_sales"] = df_train_class["unit_sales"] / df_train_class["item_nbr"]
 
-df_2017 = df_train_store_family.set_index(
-    ["family", "store_nbr", "date"])[["item_avg_sales"]].unstack(
+df_2017 = df_train_class.set_index(
+    ["class", "date"])[["item_avg_sales"]].unstack(
         level=-1).fillna(0)
 
 df_2017.columns = df_2017.columns.get_level_values(1)
@@ -114,33 +140,24 @@ df_2017.columns = df_2017.columns.get_level_values(1)
 df_2017_nbr = pd.DataFrame(df_2017.copy())
 df_2017_nbr.reset_index(inplace = True)
 
-df_2017 = add_missing_days_nopromo(df_2017, param_1)
+    
+df_2017[pd.datetime(2016, 12, 25)] = 0
+df_2017[pd.datetime(2015, 12, 25)] = 0
+df_2017[pd.datetime(2014, 12, 25)] = 0
+if param_1 == "1s":
+    df_2017[pd.datetime(2017, 1, 1)] = 0
+    df_2017[pd.datetime(2016, 1, 1)] = 0
+    df_2017[pd.datetime(2015, 1, 1)] = 0    
+    df_2017[pd.datetime(2015, 7, 7)] = 0
+#    promo_2017[pd.datetime(2015, 7, 7)] = 0
 
+    
 ##########################################################################
 logger.info('Preparing traing dataset...')
 
 X_l, y_l = [], []
 
-# Add train data on Aug 2014 and Aug 2015
-logger.info('Preparing 2014 training dataset...')
-for i in range(4):
-    delta = timedelta(days=7 * i)
-    X_tmp, y_tmp = prepare_dataset(
-        t2014 + delta
-    )
-    X_l.append(X_tmp)
-    y_l.append(y_tmp)
-
-logger.info('Preparing 2015 training dataset...')
-for i in range(4):
-    delta = timedelta(days=7 * i)
-    X_tmp, y_tmp = prepare_dataset(
-        t2015 + delta
-    )
-    X_l.append(X_tmp)
-    y_l.append(y_tmp)
-
-logger.info('Preparing 2016 training dataset...')
+t2016 = date(2016, 8, 3)
 for i in range(4):
     delta = timedelta(days=7 * i)
     X_tmp, y_tmp = prepare_dataset(
@@ -149,8 +166,9 @@ for i in range(4):
     X_l.append(X_tmp)
     y_l.append(y_tmp)
 
-# Always load 9 weeks of data. if val, 2 weeks will be removed in 100_model. 
-logger.info('Preparing 2017 training dataset...')
+train_week_2017 = 9
+
+t2017 = date(2017, 5, 31)
 for i in range(train_week_2017):
     delta = timedelta(days=7 * i)
     X_tmp, y_tmp = prepare_dataset(
@@ -191,11 +209,11 @@ val_out = X_val
 
 
 if param_1 == "1s":
-    train_out.to_pickle('../data/storefamily_train_1s.p')
-    val_out.to_pickle('../data/storefamily_val_1s.p')
-    X_test.to_pickle('../data/storefamily_test_1s.p')
+    train_out.to_pickle('../data/class_train_1s.p')
+    val_out.to_pickle('../data/class_val_1s.p')
+    X_test.to_pickle('../data/class_test_1s.p')
     
 else:
-    train_out.to_pickle('../data/storefamily_train.p')
-    val_out.to_pickle('../data/storefamily_val.p')
-    X_test.to_pickle('../data/storefamily_test.p')
+    train_out.to_pickle('../data/class_train.p')
+    val_out.to_pickle('../data/class_val.p')
+    X_test.to_pickle('../data/class_test.p')

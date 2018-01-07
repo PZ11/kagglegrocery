@@ -308,7 +308,7 @@ for i in range(16):
 
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
-
+            #features_t.remove('l2y_1d_d{}'.format(j))
         '''
             features_t.remove('class_ly_1d_d{}'.format(j))
             features_t.remove('class_l2y_1d_d{}'.format(j))
@@ -330,10 +330,7 @@ for i in range(16):
             features_t.remove('dow_ly3w_{}_mean'.format(j))
             features_t.remove('dow_ly8w_{}_mean'.format(j))
             
-            features_t.remove('item_dow_01_{}_mean'.format(j))
-            features_t.remove('item_dow_02_{}_mean'.format(j))            
-            features_t.remove('item_dow_04_{}_mean'.format(j))
-            features_t.remove('item_dow_08_{}_mean'.format(j))
+            features_t.remove('item_dow_4_{}_mean'.format(j))
             features_t.remove('item_dow_13_{}_mean'.format(j))
             features_t.remove('item_dow_26_{}_mean'.format(j))
             features_t.remove('item_dow_52_{}_mean'.format(j))
@@ -346,7 +343,10 @@ for i in range(16):
             features_t.remove('s_f_dow_4_{}_mean'.format(j))
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
-            features_t.remove('s_f_dow_52_{}_mean'.format(j))          
+            features_t.remove('s_f_dow_52_{}_mean'.format(j))
+
+            features_t.remove('____dow_08_median_{}'.format(j))
+            features_t.remove('____dow_13_median_{}'.format(j))            
 
      
     X_train = X_train_allF[features_t]
