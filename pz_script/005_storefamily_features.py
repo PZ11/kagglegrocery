@@ -42,16 +42,24 @@ logger.info('start')
 
 ##########################################################################
 
+
 if len(sys.argv) == 1:
     param_1 = "Full Run"
 else:
     param_1 = sys.argv[1]
     print("input parameter = ", param_1)
 
+dtype_dict={"id":np.uint32,
+            "store_nbr":np.uint8,
+            "item_nbr":np.uint32,
+            "unit_sales":np.float32,
+            "onpromotion": bool
+           }
+
 if param_1 == "1s":
     df_train = pd.read_csv(
         '../input/train_1s.csv', usecols=[1, 2, 3, 4, 5],
-        dtype={'onpromotion': bool},
+        dtype=dtype_dict,
         converters={'unit_sales': lambda u: np.log1p(
             float(u)) if float(u) > 0 else 0},
         parse_dates=["date"],
@@ -68,12 +76,14 @@ if param_1 == "1s":
 else:
     df_train = pd.read_csv(
         '../input/train.csv', usecols=[1, 2, 3, 4, 5],
-        dtype={'onpromotion': bool},
+        dtype=dtype_dict,
         converters={'unit_sales': lambda u: np.log1p(
             float(u)) if float(u) > 0 else 0},
         parse_dates=["date"],
-        skiprows=range(1, 23398768)  # 2014-05-06
+        #skiprows=range(1, 23398768)  # 2014-05-06
     )
+
+    df_train['unit_sales'] = df_train['unit_sales'].astype(np.float32)
 
     df_test = pd.read_csv(
         "../input/test.csv", usecols=[0, 1, 2, 3, 4],
@@ -83,8 +93,10 @@ else:
         ['store_nbr', 'item_nbr', 'date']
     )
 
-    
-items = pd.read_csv("../input/items.csv",)
+
+items = pd.read_csv(
+    "../input/items.csv",
+)
 
 logger.info('Load data successful')
 
@@ -146,14 +158,18 @@ df_2017_nbr = pd.DataFrame(df_2017.copy())
 df_2017_nbr.reset_index(inplace = True)
 
     
+    
 df_2017[pd.datetime(2016, 12, 25)] = 0
 df_2017[pd.datetime(2015, 12, 25)] = 0
 df_2017[pd.datetime(2014, 12, 25)] = 0
+df_2017[pd.datetime(2013, 12, 25)] = 0
 if param_1 == "1s":
     df_2017[pd.datetime(2017, 1, 1)] = 0
     df_2017[pd.datetime(2016, 1, 1)] = 0
     df_2017[pd.datetime(2015, 1, 1)] = 0    
     df_2017[pd.datetime(2015, 7, 7)] = 0
+    df_2017[pd.datetime(2014, 1, 1)] = 0
+    df_2017[pd.datetime(2013, 1, 1)] = 0
 #    promo_2017[pd.datetime(2015, 7, 7)] = 0
 
     
@@ -162,6 +178,28 @@ logger.info('Preparing traing dataset...')
 
 X_l, y_l = [], []
 
+# Add train data on Aug 2014 and Aug 2015
+logger.info('Preparing 2014 training dataset...')
+t2014 = date(2014, 8, 6)
+for i in range(4):
+    delta = timedelta(days=7 * i)
+    X_tmp, y_tmp = prepare_dataset(
+        t2014 + delta
+    )
+    X_l.append(X_tmp)
+    y_l.append(y_tmp)
+
+logger.info('Preparing 2015 training dataset...')
+t2015 = date(2015, 8, 5)
+for i in range(4):
+    delta = timedelta(days=7 * i)
+    X_tmp, y_tmp = prepare_dataset(
+        t2015 + delta
+    )
+    X_l.append(X_tmp)
+    y_l.append(y_tmp)
+
+logger.info('Preparing 2016 training dataset...')
 t2016 = date(2016, 8, 3)
 for i in range(4):
     delta = timedelta(days=7 * i)
@@ -171,8 +209,9 @@ for i in range(4):
     X_l.append(X_tmp)
     y_l.append(y_tmp)
 
+# Always load 9 weeks of data. if val, 2 weeks will be removed in 100_model. 
 train_week_2017 = 9
-
+logger.info('Preparing 2017 training dataset...')
 t2017 = date(2017, 5, 31)
 for i in range(train_week_2017):
     delta = timedelta(days=7 * i)

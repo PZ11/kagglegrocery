@@ -78,7 +78,7 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     train_out = pd.read_pickle('../data/storeitem_train_1s.p')
     val_out = pd.read_pickle('../data/storeitem_val_1s.p')
     X_test_out = pd.read_pickle('../data/storeitem_test_1s.p')
-    """
+
     item_train_out = pd.read_pickle('../data/item_train_1s.p')
     item_val_out = pd.read_pickle('../data/item_val_1s.p')
     item_X_test_out = pd.read_pickle('../data/item_test_1s.p')
@@ -91,10 +91,12 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     s_f_val_out = pd.read_pickle('../data/storefamily_val_1s.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test_1s.p')
 
+    """
     class_train_out = pd.read_pickle('../data/class_train_1s.p')
     class_val_out = pd.read_pickle('../data/class_val_1s.p')
     class_X_test_out = pd.read_pickle('../data/class_test_1s.p')
     """
+    
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -107,7 +109,7 @@ else:
     train_out = pd.read_pickle('../data/storeitem_train.p')
     val_out = pd.read_pickle('../data/storeitem_val.p')
     X_test_out = pd.read_pickle('../data/storeitem_test.p')
-    """
+
     item_train_out = pd.read_pickle('../data/item_train.p')
     item_val_out = pd.read_pickle('../data/item_val.p')
     item_X_test_out = pd.read_pickle('../data/item_test.p')
@@ -120,6 +122,7 @@ else:
     s_f_val_out = pd.read_pickle('../data/storefamily_val.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test.p')
 
+    """
     class_train_out = pd.read_pickle('../data/class_train.p')
     class_val_out = pd.read_pickle('../data/class_val.p')
     class_X_test_out = pd.read_pickle('../data/class_test.p')
@@ -174,6 +177,7 @@ X_test_out = pd.merge(X_test_out, class_X_test_out, how='inner', on=['item_nbr',
 del items_c,class_train_out, class_val_out, class_X_test_out
 gc.collect()
 
+"""
 
 ########################################
 # Merge store-family features
@@ -223,7 +227,6 @@ print(train_out.groupby(['date']).size())
 del store_train_out, store_val_out, store_X_test_out
 gc.collect()
 
-"""
 ###############################################################################
 logger.info('Preparing traing dataset...')
     
@@ -302,14 +305,11 @@ for i in range(16):
 
 
     for j in range(16):
-        features_t.remove('ly_1d_d{}'.format(j))
-        features_t.remove('l2y_1d_d{}'.format(j))
-            
-        '''
+
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
-            features_t.remove('l2y_1d_d{}'.format(j))
-
+            #features_t.remove('l2y_1d_d{}'.format(j))
+        '''
             features_t.remove('class_ly_1d_d{}'.format(j))
             features_t.remove('class_l2y_1d_d{}'.format(j))
             features_t.remove('class_ly_1w_{}_sum'.format(j))
@@ -318,7 +318,6 @@ for i in range(16):
             features_t.remove('class_ratio_ly_1d_d{}'.format(j))
             features_t.remove('class_ratio_ly_1w_d{}'.format(j))
         '''
-
 
     for j in range(7):
         if j != i%7:
@@ -331,7 +330,6 @@ for i in range(16):
             features_t.remove('dow_ly3w_{}_mean'.format(j))
             features_t.remove('dow_ly8w_{}_mean'.format(j))
             
-            """
             features_t.remove('item_dow_4_{}_mean'.format(j))
             features_t.remove('item_dow_13_{}_mean'.format(j))
             features_t.remove('item_dow_26_{}_mean'.format(j))
@@ -346,9 +344,7 @@ for i in range(16):
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
             features_t.remove('s_f_dow_52_{}_mean'.format(j))
-            """
-
-
+  
           
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
@@ -475,7 +471,6 @@ else:
     submission = df_test[["id"]].join(df_preds, how="left").fillna(0)
     
     submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
-#    submission.to_csv('../submit/T043_tmp.csv', float_format='%.4f', index=None)
 
     # PZ, Check overral result
     print("SUM =",  submission.unit_sales.sum())
