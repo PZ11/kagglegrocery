@@ -10,16 +10,15 @@ Run all Store submission: .py a 045
 
 
 """
-from datetime import date, timedelta
+from datetime import date
 
 import pandas as pd
 import numpy as np
 import lightgbm as lgb
 import sys
-import math
+
 import gc
-import sklearn.metrics as skl_metrics
-from sklearn.metrics import mean_squared_error
+
 
 from nwrmsle_eval import eval_test
 
@@ -54,7 +53,7 @@ logger.info('start')
 # 1s : validate one store data
 # 1ss: submit one store
 # val: validate all data
-# No parameter: submit all data 
+# No parameter: submit all data
 
 if len(sys.argv) == 1:
     param_1 = "Full Run"
@@ -74,7 +73,7 @@ val_filename = '../data/V' + param_2 + '.p'
 logger.info(submit_filename)
 logger.info(val_filename)
 
-if  ((param_1 == "1ss") or (param_1 == "1s")):
+if ((param_1 == "1ss") or (param_1 == "1s")):
     train_out = pd.read_pickle('../data/storeitem_train_1s.p')
     val_out = pd.read_pickle('../data/storeitem_val_1s.p')
     X_test_out = pd.read_pickle('../data/storeitem_test_1s.p')
@@ -96,7 +95,7 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     class_val_out = pd.read_pickle('../data/class_val_1s.p')
     class_X_test_out = pd.read_pickle('../data/class_test_1s.p')
     """
-    
+
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -104,7 +103,7 @@ if  ((param_1 == "1ss") or (param_1 == "1s")):
     ).set_index(
         ['store_nbr', 'item_nbr', 'date']
     )
-    
+
 else:
     train_out = pd.read_pickle('../data/storeitem_train.p')
     val_out = pd.read_pickle('../data/storeitem_val.p')
@@ -140,19 +139,15 @@ else:
 if ((param_1 == "val") or (param_1 == "1s")):
     train_out = train_out.loc[train_out["date"] < date(2017, 7, 19), ]
 
-items = pd.read_csv(
-    "../input/items.csv",
-)
+items = pd.read_csv("../input/items.csv",)
 
-items_val = pd.read_csv(
-    "../input/items.csv",
-).set_index("item_nbr")
+items_val = pd.read_csv("../input/items.csv",).set_index("item_nbr")
 items_val = items_val.reindex(val_out['item_nbr'])
 
 logger.info('Load data successful')
 
 ###############################################################################
-# Delete index columns before merge 
+# Delete index columns before merge
 del train_out["index"]
 
 """
@@ -204,9 +199,15 @@ gc.collect()
 # Merge item features
 del item_train_out["index"]
 
-train_out = pd.merge(train_out, item_train_out, how='inner', on=['item_nbr','date'])
-val_out = pd.merge(val_out, item_val_out, how='inner', on=['item_nbr','date'])
-X_test_out = pd.merge(X_test_out, item_X_test_out, how='inner', on=['item_nbr','date'])
+# Add parishable column as part of training
+items["perishable"] = items["perishable"].astype(bool)
+item_train_out = pd.merge(item_train_out, items[["item_nbr", "perishable"]], on = ['item_nbr'])
+item_val_out = pd.merge(item_val_out, items[["item_nbr", "perishable"]], on = ['item_nbr'])
+item_X_test_out = pd.merge(item_X_test_out, items[["item_nbr", "perishable"]], on = ['item_nbr'])
+
+train_out = pd.merge(train_out, item_train_out, how='inner', on=['item_nbr', 'date'])
+val_out = pd.merge(val_out, item_val_out, how='inner', on=['item_nbr', 'date'])
+X_test_out = pd.merge(X_test_out, item_X_test_out, how='inner', on=['item_nbr', 'date'])
 
 del item_train_out, item_val_out, item_X_test_out
 gc.collect()
@@ -229,7 +230,6 @@ gc.collect()
 
 ###############################################################################
 logger.info('Preparing traing dataset...')
-    
 
 all_columns = train_out.columns.tolist()
 

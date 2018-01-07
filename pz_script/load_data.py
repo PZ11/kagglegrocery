@@ -50,7 +50,10 @@ def add_missing_days(df_2017, promo_2017,param_1):
     df_2017[pd.datetime(2014, 12, 25)] = 0
     df_2017[pd.datetime(2013, 12, 25)] = 0
     promo_2017[pd.datetime(2016, 12, 25)] = 0
-    
+    promo_2017[pd.datetime(2015, 12, 25)] = 0
+    promo_2017[pd.datetime(2014, 12, 25)] = 0
+    promo_2017[pd.datetime(2013, 12, 25)] = 0
+
     if param_1 == "1s":
         df_2017[pd.datetime(2017, 1, 1)] = 0
         df_2017[pd.datetime(2016, 1, 1)] = 0
@@ -60,6 +63,10 @@ def add_missing_days(df_2017, promo_2017,param_1):
         df_2017[pd.datetime(2013, 1, 1)] = 0
         promo_2017[pd.datetime(2015, 7, 7)] = 0
         promo_2017[pd.datetime(2017, 1, 1)] = 0
+        promo_2017[pd.datetime(2016, 1, 1)] = 0
+        promo_2017[pd.datetime(2015, 1, 1)] = 0
+        promo_2017[pd.datetime(2014, 1, 1)] = 0
+        promo_2017[pd.datetime(2013, 1, 1)] = 0
 
     return df_2017, promo_2017
 

@@ -1,7 +1,9 @@
-python 003_item_features.py $1 $2
+python 002_storeitem_features.py $1
 wait
-python 004_store_features.py $1 $2
+python 003_item_features.py $1
 wait
-python 005_storefamily_features.py $1 $2
+python 004_store_features.py $1
+wait
+python 005_storefamily_features.py $1
 wait
 python 100_model_train.py $1 $2
