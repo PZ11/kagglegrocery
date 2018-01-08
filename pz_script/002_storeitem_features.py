@@ -71,9 +71,9 @@ def prepare_dataset(t2017, is_train=True):
         "item_nbr": df_2017_nbr.item_nbr,
         "store_nbr": df_2017_nbr.store_nbr,
         "date": (t2017), 
-        "day__01": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
-        "mean_03": get_timespan(df_2017, t2017, 3, 3).mean(axis=1).values,
-        "mean_07": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
+        "day_1": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
+        "mean_3": get_timespan(df_2017, t2017, 3, 3).mean(axis=1).values,
+        "mean_7": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
         "mean_14": get_timespan(df_2017, t2017, 14, 14).mean(axis=1).values,
         "mean_30": get_timespan(df_2017, t2017, 30, 30).mean(axis=1).values,
         "mean_60": get_timespan(df_2017, t2017, 60, 60).mean(axis=1).values,
@@ -87,14 +87,14 @@ def prepare_dataset(t2017, is_train=True):
 
         "mean_ly_n16d": get_timespan(df_2017, t2017, 364, 16).mean(axis=1).values,
 
-        "mean_ly_07":  get_timespan(df_2017, t2017, 371, 7 ).mean(axis=1).values,
+        "mean_ly_7":  get_timespan(df_2017, t2017, 371, 7 ).mean(axis=1).values,
         "mean_ly_14": get_timespan(df_2017, t2017, 378, 14).mean(axis=1).values,
         "mean_ly_30": get_timespan(df_2017, t2017, 394, 30).mean(axis=1).values,
         "mean_ly_21": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
 
-        "promo_14": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
-        "promo_60": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
-        "promo_140": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values,
+        "promo_sum_14": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
+        "promo_sum_60": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
+        "promo_sum_140": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values,
       
     })
 
@@ -102,18 +102,23 @@ def prepare_dataset(t2017, is_train=True):
         X['ly_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 364-i, 1).values.ravel()
         
     for i in range(7):
-        X['dow_01_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 7-i,1).values.ravel()
-        X['dow_04_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
-        X['dow_08_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 56-i, 8, freq='7D').mean(axis=1).values
+        X['dow_1_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 7-i,1).values.ravel()
+        X['dow_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
+        X['dow_8_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 56-i, 8, freq='7D').mean(axis=1).values
         X['dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
         X['dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
         X['dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
         X['dow_ly3w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
         X['dow_ly8w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
-        
+
     for i in range(16):
         X["promo_{}".format(i)] = promo_2017[
             t2017 + timedelta(days=i)].values.astype(np.uint8)
+        
+    #for i in range(16):
+    #    for j in range(7):
+    #        X["promo_{}_d{}".format(i,j)] = promo_2017[
+    #            t2017  + timedelta(days=i) + timedelta(days=j-3)].values.astype(np.uint8)
 
     if is_train:
         y = df_2017[

@@ -30,7 +30,7 @@ def load_input_data(param_1):
         parse_dates=["date"],
     )
     
-    df_train['unit_sales'] = df_train['unit_sales'].astype(np.float32)
+    #df_train['unit_sales'] = df_train['unit_sales'].astype(np.float32)
 
     df_test = pd.read_csv(TEST_DATA,
         usecols=[0, 1, 2, 3, 4],
@@ -49,10 +49,6 @@ def add_missing_days(df_2017, promo_2017,param_1):
     df_2017[pd.datetime(2015, 12, 25)] = 0
     df_2017[pd.datetime(2014, 12, 25)] = 0
     df_2017[pd.datetime(2013, 12, 25)] = 0
-    promo_2017[pd.datetime(2016, 12, 25)] = 0
-    promo_2017[pd.datetime(2015, 12, 25)] = 0
-    promo_2017[pd.datetime(2014, 12, 25)] = 0
-    promo_2017[pd.datetime(2013, 12, 25)] = 0
 
     if param_1 == "1s":
         df_2017[pd.datetime(2017, 1, 1)] = 0
@@ -62,11 +58,7 @@ def add_missing_days(df_2017, promo_2017,param_1):
         df_2017[pd.datetime(2014, 1, 1)] = 0
         df_2017[pd.datetime(2013, 1, 1)] = 0
         promo_2017[pd.datetime(2015, 7, 7)] = 0
-        promo_2017[pd.datetime(2017, 1, 1)] = 0
-        promo_2017[pd.datetime(2016, 1, 1)] = 0
-        promo_2017[pd.datetime(2015, 1, 1)] = 0
-        promo_2017[pd.datetime(2014, 1, 1)] = 0
-        promo_2017[pd.datetime(2013, 1, 1)] = 0
+
 
     return df_2017, promo_2017
 

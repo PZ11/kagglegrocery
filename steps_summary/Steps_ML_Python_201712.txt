@@ -120,7 +120,8 @@ Mark: c-@ (Ctrl+shift+2)
 sudo apt update
 
 ## Install all other packages 
-## https://github.com/tkm2261/analytics_ansible/blob/master/roles/common/tasks/main.yml
+## https://
+hub.com/tkm2261/analytics_ansible/blob/master/roles/common/tasks/main.yml
 	  apt: name={{ item }} state=latest update_cache=yes
 	  become: yes
 	  with_items:
@@ -181,6 +182,11 @@ zyp@ubuntu:~/kaggle/FavoritaGrocery/script$ git remote -v
 zyp@ubuntu:~/kaggle/FavoritaGrocery/script$ 
 git remote set-url origin https://PZ11:DCMPzhang01@bitbucket.org/PZ11/favoritagrocery.git
 
+#######################################
+## Download gitk to check the git tree
+sudo apt install gitk
+
+
 
 ########################################################################
 ## Step to install 7z
@@ -223,6 +229,40 @@ practice/data/
 practice/logs
 pz_script/data/
 pz_script/result_tmp
+
+####################### Clone to different folder 
+## Try to get the old version of T110
+
+zyp@ubuntu:~/kaggle/T110$ git clone https://PZ11:DCMPzhang01@bitbucket.org/PZ11/kagglegrocery.git
+
+zyp@ubuntu:~/kaggle/T110$ cd kagglegrocery/
+zyp@ubuntu:~/kaggle/T110/kagglegrocery$ git fetch && git checkout 7ba0fff
+
+
+## Copy file to local folder and test it 
+zyp@ubuntu:~/kaggle/T110/kagglegrocery/pz_script$ SRC
+zyp@ubuntu:~/kaggle/kagglegrocery/pz_script$ cd ../T110
+zyp@ubuntu:~/kaggle/kagglegrocery/T110$ cp ~/kaggle/T110/kagglegrocery/pz_script/*.py .
+
+
+#####################################################################
+# config jupyter notebook remotely. 
+
+zyp@zyp-MS-7850:/$ which jupyter
+/home/zyp/anaconda3/bin/jupyter
+
+zyp@zyp-MS-7850:~/anaconda3$ find . -name "jupyter_notebook*"
+
+## No need config jupyter-notebook-config.py, just start like below
+http://192.168.2.14:8888/?token=7d2d73f6a7566e976d05d633e65ee09f884bdd2f94eec7ed
+
+
+
+
+
+
+
+
 
 
 

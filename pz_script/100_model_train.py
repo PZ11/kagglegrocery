@@ -90,11 +90,6 @@ if ((param_1 == "1ss") or (param_1 == "1s")):
     s_f_val_out = pd.read_pickle('../data/storefamily_val_1s.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test_1s.p')
 
-    """
-    class_train_out = pd.read_pickle('../data/class_train_1s.p')
-    class_val_out = pd.read_pickle('../data/class_val_1s.p')
-    class_X_test_out = pd.read_pickle('../data/class_test_1s.p')
-    """
 
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
@@ -121,11 +116,6 @@ else:
     s_f_val_out = pd.read_pickle('../data/storefamily_val.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test.p')
 
-    """
-    class_train_out = pd.read_pickle('../data/class_train.p')
-    class_val_out = pd.read_pickle('../data/class_val.p')
-    class_X_test_out = pd.read_pickle('../data/class_test.p')
-    """
     df_test = pd.read_csv(
         "../input/test.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -150,29 +140,6 @@ logger.info('Load data successful')
 # Delete index columns before merge
 del train_out["index"]
 
-"""
-########################################
-# Merge class features
-del class_train_out["index"]
-
-items_c = items.copy()
-del items_c["family"], items_c["perishable"]
-
-
-class_train_out = pd.merge(class_train_out, items_c, how = 'inner', on=['class'] )
-class_val_out = pd.merge(class_val_out, items_c, how = 'inner', on=['class'] )
-class_X_test_out = pd.merge(class_X_test_out, items_c, how = 'inner', on = ['class'] )
-
-del class_train_out['class'], class_val_out['class'], class_X_test_out['class']
-
-train_out = pd.merge(train_out, class_train_out, how='inner', on=['item_nbr','date'])
-val_out = pd.merge(val_out, class_val_out, how='inner', on=['item_nbr','date'])
-X_test_out = pd.merge(X_test_out, class_X_test_out, how='inner', on=['item_nbr','date'])
-
-del items_c,class_train_out, class_val_out, class_X_test_out
-gc.collect()
-
-"""
 
 ########################################
 # Merge store-family features
@@ -278,18 +245,7 @@ train_week_2017 = 7
 if param_1 != "val":
     train_week_2017 = 9
 
-'''
-for j in range(16):
-    X_train_allF['class_ratio_ly_1d_d{}'.format(j)] = X_train_allF['class_ly_1d_d{}'.format(j)] / X_train_allF['class_ly_sum']
-    X_train_allF['class_ratio_ly_1w_d{}'.format(j)] = X_train_allF['class_ly_1w_{}_sum'.format(j)] / X_train_allF['class_ly_sum']
-
-    X_val_allF['class_ratio_ly_1d_d{}'.format(j)] = X_val_allF['class_ly_1d_d{}'.format(j)] / X_val_allF['class_ly_sum']
-    X_val_allF['class_ratio_ly_1w_d{}'.format(j)] = X_val_allF['class_ly_1w_{}_sum'.format(j)] / X_val_allF['class_ly_sum']
-
-    X_test_allF['class_ratio_ly_1d_d{}'.format(j)] = X_test_allF['class_ly_1d_d{}'.format(j)] / X_test_allF['class_ly_sum']
-    X_test_allF['class_ratio_ly_1w_d{}'.format(j)] = X_test_allF['class_ly_1w_{}_sum'.format(j)] / X_test_allF['class_ly_sum']
-'''
-   
+  
 features_all = X_train_allF.columns.tolist()
 
 for i in range(16):
@@ -303,28 +259,20 @@ for i in range(16):
 
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
+            #for k in range(7):
+            #    features_t.remove("promo_{}_d{}".format(j,k))
 
-        '''
-            features_t.remove('class_ly_1d_d{}'.format(j))
-            features_t.remove('class_l2y_1d_d{}'.format(j))
-            features_t.remove('class_ly_1w_{}_sum'.format(j))
-            features_t.remove('class_l2y_1w_{}_sum'.format(j))
-
-            features_t.remove('class_ratio_ly_1d_d{}'.format(j))
-            features_t.remove('class_ratio_ly_1w_d{}'.format(j))
-        '''
 
     for j in range(7):
         if j != i%7:
-            features_t.remove('dow_01_{}_mean'.format(j))
-            features_t.remove('dow_04_{}_mean'.format(j))
-            features_t.remove('dow_08_{}_mean'.format(j))
+            features_t.remove('dow_1_{}_mean'.format(j))
+            features_t.remove('dow_4_{}_mean'.format(j))
+            features_t.remove('dow_8_{}_mean'.format(j))
             features_t.remove('dow_13_{}_mean'.format(j))
             features_t.remove('dow_26_{}_mean'.format(j))
             features_t.remove('dow_52_{}_mean'.format(j))
             features_t.remove('dow_ly3w_{}_mean'.format(j))
-            features_t.remove('dow_ly8w_{}_mean'.format(j))
-            
+            features_t.remove('dow_ly8w_{}_mean'.format(j))            
            
             features_t.remove('item_dow_04_{}_mean'.format(j))
             features_t.remove('item_dow_13_{}_mean'.format(j))
