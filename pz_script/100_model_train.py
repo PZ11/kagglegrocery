@@ -256,12 +256,8 @@ for i in range(16):
 
 
     for j in range(16):
-
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
-            for k in range(7):
-                features_t.remove("promo_{}_d{}".format(j,k))
-
 
     for j in range(7):
         if j != i%7:
@@ -287,8 +283,10 @@ for i in range(16):
             features_t.remove('s_f_dow_4_{}_mean'.format(j))
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
-            features_t.remove('s_f_dow_52_{}_mean'.format(j))          
-
+            features_t.remove('s_f_dow_52_{}_mean'.format(j))
+            
+            features_t.remove('____dow_08_median_{}'.format(j))
+            features_t.remove('____dow_13_median_{}'.format(j))  
      
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]

@@ -61,8 +61,8 @@ def eval_test(test_e):
 
     print("WMAPE =",  abs(np.log1p(test_e.error).sum() - np.log1p(test_e.unit_sales).sum()) /  np.log1p(test_e.unit_sales).sum())
             
-    print("SUM =",  np.log1p(test_e.unit_sales).sum())
-    print("MEAN =", np.log1p(test_e.unit_sales).mean())
+    print("SUM =",  np.log1p(test_e.pred_sales).sum())
+    print("MEAN =", np.log1p(test_e.pred_sales).mean())
 
     print( mean_squared_error(np.log1p(test_e.unit_sales),np.log1p(test_e.pred_sales)))    
     print(result)
@@ -72,5 +72,5 @@ def eval_test(test_e):
     print((np.log1p(test_p1.pred_sales).sum() - np.log1p(test_p1.unit_sales).sum()) /  np.log1p(test_p1.unit_sales).sum()) 
     print((np.log1p(test_p2.pred_sales).sum() - np.log1p(test_p2.unit_sales).sum()) /  np.log1p(test_p2.unit_sales).sum())
     print(abs(np.log1p(test_e.error).sum() - np.log1p(test_e.unit_sales).sum()) /  np.log1p(test_e.unit_sales).sum()) 
-    print(np.log1p(test_e.unit_sales).sum())
-    print(np.log1p(test_e.unit_sales).mean())
+    print(np.log1p(test_e.pred_sales).sum())
+    print(np.log1p(test_e.pred_sales).mean())
