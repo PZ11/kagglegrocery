@@ -199,11 +199,6 @@ gc.collect()
 # Merge item features
 del item_train_out["index"]
 
-# Add parishable column as part of training
-items["perishable"] = items["perishable"].astype(bool)
-item_train_out = pd.merge(item_train_out, items[["item_nbr", "perishable"]], on = ['item_nbr'])
-item_val_out = pd.merge(item_val_out, items[["item_nbr", "perishable"]], on = ['item_nbr'])
-item_X_test_out = pd.merge(item_X_test_out, items[["item_nbr", "perishable"]], on = ['item_nbr'])
 
 train_out = pd.merge(train_out, item_train_out, how='inner', on=['item_nbr', 'date'])
 val_out = pd.merge(val_out, item_val_out, how='inner', on=['item_nbr', 'date'])
@@ -330,10 +325,8 @@ for i in range(16):
             features_t.remove('dow_ly3w_{}_mean'.format(j))
             features_t.remove('dow_ly8w_{}_mean'.format(j))
             
-            features_t.remove('item_dow_01_{}_mean'.format(j))
-            features_t.remove('item_dow_02_{}_mean'.format(j))            
+           
             features_t.remove('item_dow_04_{}_mean'.format(j))
-            features_t.remove('item_dow_08_{}_mean'.format(j))
             features_t.remove('item_dow_13_{}_mean'.format(j))
             features_t.remove('item_dow_26_{}_mean'.format(j))
             features_t.remove('item_dow_52_{}_mean'.format(j))

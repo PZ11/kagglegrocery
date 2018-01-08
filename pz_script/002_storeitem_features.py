@@ -93,13 +93,8 @@ def prepare_dataset(t2017, is_train=True):
         "mean_ly_21": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
 
         "promo_14": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
-        "promo_28": get_timespan(promo_2017, t2017, 28, 28).sum(axis=1).values,
-        "promo_56": get_timespan(promo_2017, t2017, 56, 56).sum(axis=1).values,
-        "promo_91": get_timespan(promo_2017, t2017, 91, 91).sum(axis=1).values,
+        "promo_60": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
         "promo_140": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values,
-        "promo_364": get_timespan(promo_2017, t2017, 364, 364).sum(axis=1).values,
-        
-
       
     })
 

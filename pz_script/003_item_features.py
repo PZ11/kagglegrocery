@@ -70,27 +70,21 @@ def get_timespan(df, dt, minus, periods, freq='D'):
 def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
         "item_nbr": df_2017_nbr.item_nbr,
-        "date": (t2017), 
-        "item_day__01_2017":  get_timespan(df_2017, t2017,   1, 1).values.ravel(),
-        "item_mean_03_2017":  get_timespan(df_2017, t2017,   3,  3).mean(axis=1).values,
-        "item_mean_07_2017":  get_timespan(df_2017, t2017,   7,  7).mean(axis=1).values,
-        "item_mean_14_2017":  get_timespan(df_2017, t2017,  14, 14).mean(axis=1).values,
-        "item_mean_21_2017":  get_timespan(df_2017, t2017,  21, 21).mean(axis=1).values,
-        "item_mean_42_2017":  get_timespan(df_2017, t2017,  42, 42).mean(axis=1).values,
-        "item_mean_91_2017":  get_timespan(df_2017, t2017,  91, 91).mean(axis=1).values,
+        "date": (t2017),       
+        "item_day_01_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
+        "item_mean_07_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
+        "item_mean_21_2017": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
+        "item_mean_42_2017": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
+        "item_mean_91_2017": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
         "item_mean_182_2017": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
         "item_mean_364_2017": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
     })
   
     for i in range(7):
-        X['item_dow_01_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 7-i, 1).values.ravel()
-        X['item_dow_02_{}_mean'.format(i)] = get_timespan(df_2017, t2017,  14-i,  2, freq='7D').mean(axis=1).values        
-        X['item_dow_04_{}_mean'.format(i)] = get_timespan(df_2017, t2017,  28-i,  4, freq='7D').mean(axis=1).values
-        X['item_dow_08_{}_mean'.format(i)] = get_timespan(df_2017, t2017,  56-i,  8, freq='7D').mean(axis=1).values        
-        X['item_dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017,  91-i, 13, freq='7D').mean(axis=1).values
+        X['item_dow_04_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
+        X['item_dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
         X['item_dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
-        X['item_dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
-
+        X['item_dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values     
 
     if is_train:
         y = df_2017[
