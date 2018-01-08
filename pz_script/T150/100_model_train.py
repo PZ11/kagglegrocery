@@ -259,8 +259,8 @@ for i in range(16):
 
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
-            for k in range(7):
-                features_t.remove("promo_{}_d{}".format(j,k))
+            #for k in range(7):
+            #    features_t.remove("promo_{}_d{}".format(j,k))
 
 
     for j in range(7):
