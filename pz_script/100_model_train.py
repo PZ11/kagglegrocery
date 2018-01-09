@@ -201,6 +201,29 @@ print(train_out.groupby(['date']).size())
 del store_train_out, store_val_out, store_X_test_out
 gc.collect()
 
+#######################################
+# Merge Item Family category features
+
+items_cat = items.copy()
+items_cat['cat'] = True
+items_cat = items_cat[['item_nbr', 'family', 'cat']]
+
+items_cat = items_cat.set_index(['item_nbr', 'family'])[['cat']].unstack(
+    level = -1).fillna(False)
+items_cat = items_cat.reset_index()
+items_cat.columns =  items_cat.columns.get_level_values(1)
+items_cat = items_cat.reset_index(inplace=False)
+
+del items_cat['index']
+items_cat.columns.values[0] = 'item_nbr'
+
+# Add perishable 
+items_cat = pd.merge(items_cat, items[['item_nbr','perishable']], on = 'item_nbr', how = 'inner')
+
+train_out = pd.merge(train_out, items_cat, on = 'item_nbr', how = 'inner')
+val_out = pd.merge(val_out, items_cat, on = 'item_nbr', how = 'inner')
+X_test_out = pd.merge(X_test_out, items_cat, on = 'item_nbr', how = 'inner')
+
 ###############################################################################
 logger.info('Preparing traing dataset...')
 
