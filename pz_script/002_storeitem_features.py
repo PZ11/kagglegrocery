@@ -95,13 +95,6 @@ def prepare_dataset(t2017, is_train=True):
         "promo_sum_14": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
         "promo_sum_60": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
         "promo_sum_140": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values,
-
-        "____meidan_07": get_timespan(df_2017, t2017, 7, 7).median(axis=1).values,
-        "____meidan_14": get_timespan(df_2017, t2017, 14, 14).median(axis=1).values,
-        "____meidan_30": get_timespan(df_2017, t2017, 30, 30).median(axis=1).values,
-        "____meidan_60": get_timespan(df_2017, t2017, 60, 60).median(axis=1).values,
-        "____meidan_21": get_timespan(df_2017, t2017, 21, 21).median(axis=1).values,
-        "____meidan_42": get_timespan(df_2017, t2017, 42, 42).median(axis=1).values,
         
     })
 
@@ -118,10 +111,7 @@ def prepare_dataset(t2017, is_train=True):
         X['dow_ly3w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
         X['dow_ly8w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
 
-        X['____dow_08_median_{}'.format(i)] = get_timespan(df_2017, t2017, 56-i, 8, freq='7D').median(axis=1).values        
-        X['____dow_13_median_{}'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').median(axis=1).values
 
-        
     for i in range(16):
         X["promo_{}".format(i)] = promo_2017[
             t2017 + timedelta(days=i)].values.astype(np.uint8)
