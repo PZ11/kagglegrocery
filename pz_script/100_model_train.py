@@ -10,8 +10,8 @@ Run all Store submission: .py a 045
 
 
 """
-from datetime import date
 
+from datetime import date, timedelta
 import pandas as pd
 import numpy as np
 import lightgbm as lgb
@@ -136,6 +136,54 @@ items_val = items_val.reindex(val_out['item_nbr'])
 
 logger.info('Load data successful')
 
+
+###############################################################################
+# Load Weather Data
+
+dtype_weather={"TEMP":np.float32,
+                              "VISIB":np.float32,
+                              "PRCP": np.float32
+               }
+
+weather = pd.read_csv('../input/Weather_20180107.csv',dtype=dtype_weather,)
+weather["date"] = pd.to_datetime(weather['YEARMODA'],format='%Y%m%d')
+
+del weather['YEARMODA']
+
+weather_m1 = weather.copy()
+weather_m1["date"] = weather["date"] - timedelta(days=1)
+weather_m1 = weather_m1.rename(columns={'TEMP': 'TEMP_M1', 'VISIB': 'VISIB_M1', 'PRCP': 'PRCP_M1'})
+
+
+weather_m2 = weather.copy()
+weather_m2["date"] = weather["date"] - timedelta(days=2)
+weather_m2 = weather_m2.rename(columns={'TEMP': 'TEMP_M2', 'VISIB': 'VISIB_M2', 'PRCP': 'PRCP_M2'})
+
+weather_m3 = weather.copy()
+weather_m3["date"] = weather["date"] - timedelta(days=3)
+weather_m3 = weather_m3.rename(columns={'TEMP': 'TEMP_M3', 'VISIB': 'VISIB_M3', 'PRCP': 'PRCP_M3'})
+
+weather_p1 = weather.copy()
+weather_p1["date"] = weather["date"] - timedelta(days=1)
+weather_p1 = weather_p1.rename(columns={'TEMP': 'TEMP_P1', 'VISIB': 'VISIB_P1', 'PRCP': 'PRCP_P1'})
+
+weather_p2 = weather.copy()
+weather_p2["date"] = weather["date"] - timedelta(days=2)
+weather_p2 = weather_p2.rename(columns={'TEMP': 'TEMP_P2', 'VISIB': 'VISIB_P2', 'PRCP': 'PRCP_P2'})
+
+weather_p3 = weather.copy()
+weather_p3["date"] = weather["date"] - timedelta(days=3)
+weather_p3 = weather_p3.rename(columns={'TEMP': 'TEMP_P3', 'VISIB': 'VISIB_P3', 'PRCP': 'PRCP_P3'})
+
+
+weather = pd.merge(weather, weather_m1, on = 'date', how = 'inner')
+weather = pd.merge(weather, weather_m2, on = 'date', how = 'inner')
+weather = pd.merge(weather, weather_m3, on = 'date', how = 'inner')
+weather = pd.merge(weather, weather_p1, on = 'date', how = 'inner')
+weather = pd.merge(weather, weather_p2, on = 'date', how = 'inner')
+weather = pd.merge(weather, weather_p3, on = 'date', how = 'inner')
+
+
 ###############################################################################
 # Delete index columns before merge
 del train_out["index"]
@@ -199,7 +247,7 @@ y_columns = ['day'+str(i) for i in range(1, 17)]
 x_columns = [item for item in all_columns if item not in y_columns]
 
 features_all = x_columns
-features_all.remove("date") 
+#features_all.remove("date") 
 features_all.remove("item_nbr") 
 features_all.remove("store_nbr") 
 
@@ -227,15 +275,16 @@ params = {
     'num_leaves': 31,
     'objective': 'regression',
     'min_data_in_leaf': 300,
-    'learning_rate': 0.2,
-    'feature_fraction': 1,
+    'learning_rate': 0.1,
+    'feature_fraction': 0.8,
     'bagging_fraction': 0.8,
-    'bagging_freq': 3,
-    'metric': 'rmse',
-    'num_threads': 6
+    'bagging_freq': 2,
+    'metric': 'l2',
+    'num_threads': 4
 }
 
-MAX_ROUNDS = 2000
+
+MAX_ROUNDS = 500
 val_pred = []
 test_pred = []
 cate_vars = []
@@ -289,10 +338,23 @@ for i in range(16):
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
             features_t.remove('s_f_dow_52_{}_mean'.format(j))          
 
-     
-    X_train = X_train_allF[features_t]
-    X_val = X_val_allF[features_t]
-    X_test = X_test_allF[features_t]
+
+
+    X_train_allF["date"] = pd.to_datetime(X_train_allF['date'],format='%Y-%m-%d')
+    X_val_allF["date"] = pd.to_datetime(X_val_allF['date'],format='%Y-%m-%d')
+    X_test_allF["date"] = pd.to_datetime(X_test_allF['date'],format='%Y-%m-%d')
+
+    X_train = pd.merge(X_train_allF[features_t], weather, on=['date'], how='left')
+    X_val = pd.merge(X_val_allF[features_t], weather, on=['date'], how='left')
+    X_test = pd.merge(X_test_allF[features_t], weather, on=['date'], how='left')
+
+    print(X_train.shape)
+
+    del X_train['date'], X_val['date'], X_test['date']
+
+#    X_train = X_train_allF[features_t]
+#    X_val = X_val_allF[features_t]
+#    X_test = X_test_allF[features_t]
 
 
     
@@ -310,7 +372,7 @@ for i in range(16):
 
         bst = lgb.train(
             params, dtrain, num_boost_round=MAX_ROUNDS,
-            valid_sets=[dtrain, dval], early_stopping_rounds=100,
+            valid_sets=[dtrain, dval], early_stopping_rounds=50,
             verbose_eval=100
         )
 
@@ -318,7 +380,7 @@ for i in range(16):
 
         bst = lgb.train(
             params, dtrain, num_boost_round=MAX_ROUNDS,
-            valid_sets=[dtrain], early_stopping_rounds=100, verbose_eval=100
+            valid_sets=[dtrain], early_stopping_rounds=50, verbose_eval=100
         )
 
     logger.info("\n".join(("%s: %.2f" % x) for x in sorted(

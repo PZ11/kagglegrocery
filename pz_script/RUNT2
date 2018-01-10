@@ -6,6 +6,6 @@ wait
 wait
 #python 005_storefamily_features.py 
 wait
-python 100_model_train.py a 210
+python 100_model_train.py a $1
 wait
-python 100_model_train.py val 210
+python 100_model_train.py val $1
