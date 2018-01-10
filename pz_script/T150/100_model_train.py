@@ -1,6 +1,5 @@
 
 """
-
 This is an upgraded version of Ceshine's LGBM starter script, simply adding
 more average features and weekly average features on it.
 
@@ -9,9 +8,10 @@ Run 1 Store submission  : .py 1ss 045
 Run all Store validation: .py val 045
 Run all Store submission: .py a 045
 
-"""
 
-from datetime import date, timedelta
+"""
+from datetime import date
+
 import pandas as pd
 import numpy as np
 import lightgbm as lgb
@@ -65,21 +65,13 @@ else:
     param_1 = sys.argv[1]
     param_2 = sys.argv[2]
 
-print_param  = "input parameter = " + param_1 + "Test/val number = " + param_2
+print("input parameter = ", param_1)
+print("Test/val number = ", param_2)
 submit_filename = '../submit/T' + param_2 + '.csv.gz'
 val_filename = '../data/V' + param_2 + '.p'
 
-logger.info(print_param )
-
 logger.info(submit_filename)
 logger.info(val_filename)
-
-
-w_train_out = pd.read_pickle('../data/weather_train.p')
-w_val_out = pd.read_pickle('../data/weather_val.p')
-w_test_out = pd.read_pickle('../data/weather_test.p')
-
-del w_train_out['ID'], w_val_out['ID'], w_test_out['ID']
 
 if ((param_1 == "1ss") or (param_1 == "1s")):
     train_out = pd.read_pickle('../data/storeitem_train_1s.p')
@@ -142,57 +134,7 @@ items = pd.read_csv("../input/items.csv",)
 items_val = pd.read_csv("../input/items.csv",).set_index("item_nbr")
 items_val = items_val.reindex(val_out['item_nbr'])
 
-
-
 logger.info('Load data successful')
-
-
-###############################################################################
-# Load Weather Data
-
-dtype_weather={"TEMP":np.float32,
-                              "VISIB":np.float32,
-                              "PRCP": np.float32
-               }
-
-weather = pd.read_csv('../input/Weather_20180107.csv',dtype=dtype_weather,)
-weather["date"] = pd.to_datetime(weather['YEARMODA'],format='%Y%m%d')
-
-del weather['YEARMODA']
-
-weather_m1 = weather.copy()
-weather_m1["date"] = weather["date"] - timedelta(days=1)
-weather_m1 = weather_m1.rename(columns={'TEMP': 'TEMP_M1', 'VISIB': 'VISIB_M1', 'PRCP': 'PRCP_M1'})
-
-
-weather_m2 = weather.copy()
-weather_m2["date"] = weather["date"] - timedelta(days=2)
-weather_m2 = weather_m2.rename(columns={'TEMP': 'TEMP_M2', 'VISIB': 'VISIB_M2', 'PRCP': 'PRCP_M2'})
-
-weather_m3 = weather.copy()
-weather_m3["date"] = weather["date"] - timedelta(days=3)
-weather_m3 = weather_m3.rename(columns={'TEMP': 'TEMP_M3', 'VISIB': 'VISIB_M3', 'PRCP': 'PRCP_M3'})
-
-weather_p1 = weather.copy()
-weather_p1["date"] = weather["date"] - timedelta(days=1)
-weather_p1 = weather_p1.rename(columns={'TEMP': 'TEMP_P1', 'VISIB': 'VISIB_P1', 'PRCP': 'PRCP_P1'})
-
-weather_p2 = weather.copy()
-weather_p2["date"] = weather["date"] - timedelta(days=2)
-weather_p2 = weather_p2.rename(columns={'TEMP': 'TEMP_P2', 'VISIB': 'VISIB_P2', 'PRCP': 'PRCP_P2'})
-
-weather_p3 = weather.copy()
-weather_p3["date"] = weather["date"] - timedelta(days=3)
-weather_p3 = weather_p3.rename(columns={'TEMP': 'TEMP_P3', 'VISIB': 'VISIB_P3', 'PRCP': 'PRCP_P3'})
-
-
-weather = pd.merge(weather, weather_m1, on = 'date', how = 'inner')
-weather = pd.merge(weather, weather_m2, on = 'date', how = 'inner')
-weather = pd.merge(weather, weather_m3, on = 'date', how = 'inner')
-weather = pd.merge(weather, weather_p1, on = 'date', how = 'inner')
-weather = pd.merge(weather, weather_p2, on = 'date', how = 'inner')
-weather = pd.merge(weather, weather_p3, on = 'date', how = 'inner')
-
 
 ###############################################################################
 # Delete index columns before merge
@@ -242,13 +184,11 @@ val_out = pd.merge(val_out, store_val_out, how='inner', on=['store_nbr','date'])
 X_test_out = pd.merge(X_test_out, store_X_test_out, how='inner', on=['store_nbr','date'])
 
 
+
 print(train_out.groupby(['date']).size())
+
 del store_train_out, store_val_out, store_X_test_out
 gc.collect()
-
-
-#######################################
-# Merge Family category features
 
 ###############################################################################
 logger.info('Preparing traing dataset...')
@@ -259,11 +199,7 @@ y_columns = ['day'+str(i) for i in range(1, 17)]
 x_columns = [item for item in all_columns if item not in y_columns]
 
 features_all = x_columns
-<<<<<<< HEAD
-#features_all.remove("date") 
-=======
-
->>>>>>> 45c0c324b5758ad2f6b4bae5d696deea1a56a6c5
+features_all.remove("date") 
 features_all.remove("item_nbr") 
 features_all.remove("store_nbr") 
 
@@ -299,7 +235,6 @@ params = {
     'num_threads': 4
 }
 
-
 MAX_ROUNDS = 500
 val_pred = []
 test_pred = []
@@ -313,23 +248,20 @@ if param_1 != "val":
   
 features_all = X_train_allF.columns.tolist()
 
-
 for i in range(16):
     print("=" * 70)
     logger.info("Step %d" % (i+1))
     print("=" * 70)
     features_t = features_all.copy()
 
-    features_weather = w_train_out.columns.tolist()
-    
-   
+
     for j in range(16):
+
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
-            for k in range(7):
-                features_weather.remove("TEMP_{}_d{}".format(j,k))
-                features_weather.remove("VISIB_{}_d{}".format(j,k))
-                features_weather.remove("PRCP_{}_d{}".format(j,k))
+            #for k in range(7):
+            #    features_t.remove("promo_{}_d{}".format(j,k))
+
 
     for j in range(7):
         if j != i%7:
@@ -355,40 +287,15 @@ for i in range(16):
             features_t.remove('s_f_dow_4_{}_mean'.format(j))
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
-            features_t.remove('s_f_dow_52_{}_mean'.format(j))            
+            features_t.remove('s_f_dow_52_{}_mean'.format(j))          
 
-<<<<<<< HEAD
+     
+    X_train = X_train_allF[features_t]
+    X_val = X_val_allF[features_t]
+    X_test = X_test_allF[features_t]
 
 
-    X_train_allF["date"] = pd.to_datetime(X_train_allF['date'],format='%Y-%m-%d')
-    X_val_allF["date"] = pd.to_datetime(X_val_allF['date'],format='%Y-%m-%d')
-    X_test_allF["date"] = pd.to_datetime(X_test_allF['date'],format='%Y-%m-%d')
-
-    X_train = pd.merge(X_train_allF[features_t], weather, on=['date'], how='left')
-    X_val = pd.merge(X_val_allF[features_t], weather, on=['date'], how='left')
-    X_test = pd.merge(X_test_allF[features_t], weather, on=['date'], how='left')
-
-    print(X_train.shape)
-
-    del X_train['date'], X_val['date'], X_test['date']
-
-#    X_train = X_train_allF[features_t]
-#    X_val = X_val_allF[features_t]
-#    X_test = X_test_allF[features_t]
-=======
-    X_train_allF["date"] = pd.to_datetime(X_train_allF['date'],format='%Y-%m-%d')
-    X_val_allF["date"] = pd.to_datetime(X_val_allF['date'],format='%Y-%m-%d')
-    X_test_allF["date"] = pd.to_datetime(X_test_allF['date'],format='%Y-%m-%d')
->>>>>>> 45c0c324b5758ad2f6b4bae5d696deea1a56a6c5
-
-    X_train = pd.merge(X_train_allF[features_t], w_train_out[features_weather], on=['date'], how='left').fillna(0)
-    X_val = pd.merge(X_val_allF[features_t], w_val_out[features_weather], on=['date'], how='left').fillna(0)
-    X_test = pd.merge(X_test_allF[features_t], w_test_out[features_weather], on=['date'], how='left').fillna(0)
-
-    del X_train['date'], X_val['date'], X_test['date']
     
-    print(X_train.shape)
-
     dtrain = lgb.Dataset(
         X_train, label=y_train[:, i],
         categorical_feature=cate_vars,
@@ -426,7 +333,6 @@ for i in range(16):
         val_pred.append(bst.predict(
             X_val, num_iteration=bst.best_iteration or MAX_ROUNDS))
 
-del X_train_allF, X_val_allF
 del X_train, y_train
 del dtrain
 gc.collect()
@@ -463,7 +369,7 @@ if ((param_1 == "val") or (param_1 == "1s")):
     del valid, pred
     del X_val, y_val
     del bst, dval
-
+    del X_train_allF, X_val_allF
     gc.collect()
 
     test_e.to_pickle(val_filename)
@@ -530,7 +436,3 @@ else:
 
     submission.to_csv(submit_filename,
                       float_format='%.4f', index=None, compression='gzip')
-
-
-
-    

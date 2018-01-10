@@ -1,6 +1,6 @@
 python 002_storeitem_features.py $1
 wait
-python 003_item_features.py $1
+#python 003_item_features.py $1
 wait
 python 004_store_features.py $1
 wait

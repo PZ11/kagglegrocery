@@ -95,7 +95,7 @@ def prepare_dataset(t2017, is_train=True):
         "promo_sum_14": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
         "promo_sum_60": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
         "promo_sum_140": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values,
-        
+      
     })
 
     for i in range(16):
@@ -111,11 +111,15 @@ def prepare_dataset(t2017, is_train=True):
         X['dow_ly3w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
         X['dow_ly8w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
 
-
     for i in range(16):
         X["promo_{}".format(i)] = promo_2017[
             t2017 + timedelta(days=i)].values.astype(np.uint8)
         
+    #for i in range(16):
+    #    for j in range(7):
+    #        X["promo_{}_d{}".format(i,j)] = promo_2017[
+    #            t2017  + timedelta(days=i) + timedelta(days=j-3)].values.astype(np.uint8)
+
     if is_train:
         y = df_2017[
             pd.date_range(t2017, periods=16)
