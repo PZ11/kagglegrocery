@@ -227,15 +227,15 @@ params = {
     'num_leaves': 31,
     'objective': 'regression',
     'min_data_in_leaf': 300,
-    'learning_rate': 0.1,
-    'feature_fraction': 0.8,
+    'learning_rate': 0.2,
+    'feature_fraction': 1,
     'bagging_fraction': 0.8,
-    'bagging_freq': 2,
-    'metric': 'l2',
-    'num_threads': 4
+    'bagging_freq': 3,
+    'metric': 'rmse',
+    'num_threads': 6
 }
 
-MAX_ROUNDS = 500
+MAX_ROUNDS = 2000
 val_pred = []
 test_pred = []
 cate_vars = []
@@ -310,7 +310,7 @@ for i in range(16):
 
         bst = lgb.train(
             params, dtrain, num_boost_round=MAX_ROUNDS,
-            valid_sets=[dtrain, dval], early_stopping_rounds=50,
+            valid_sets=[dtrain, dval], early_stopping_rounds=100,
             verbose_eval=100
         )
 
@@ -318,7 +318,7 @@ for i in range(16):
 
         bst = lgb.train(
             params, dtrain, num_boost_round=MAX_ROUNDS,
-            valid_sets=[dtrain], early_stopping_rounds=50, verbose_eval=100
+            valid_sets=[dtrain], early_stopping_rounds=100, verbose_eval=100
         )
 
     logger.info("\n".join(("%s: %.2f" % x) for x in sorted(

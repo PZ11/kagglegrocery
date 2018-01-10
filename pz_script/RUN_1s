@@ -1,0 +1,11 @@
+python 002_storeitem_features.py  1s
+wait
+python 003_item_features.py  1s
+wait
+python 004_store_features.py 1s
+wait
+python 005_storefamily_features.py 1s 
+wait
+python 100_model_train.py 1s  210 
+wait
+python 100_model_train.py 1ss 210 

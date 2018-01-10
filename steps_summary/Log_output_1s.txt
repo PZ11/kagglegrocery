@@ -1,0 +1,162 @@
+#######################################
+test dataset uses  2.17529296875  MB after changes
+Eval All, Number of rows in test is 57024
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 17820
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-30 00:00:00
+Eval P2, Number of rows in test is 39204
+Eval P2, Forecast Period From: 2017-07-31 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5492505821376493
+Eval P1  Weighted NWRMSLE =  0.519671476735916
+Eval P2  Weighted NWRMSLE =  0.5621813934036791
+All Bias = -0.0008246010576347862
+P1 Bias = 0.013989675352342253
+P2 Bias = -0.00715912643931309
+WMAPE = 0.618209099418762
+SUM = 46153.44242077904
+MEAN = 0.8093687293206201
+0.300235599577
+0.5492505821376493
+0.519671476735916
+0.5621813934036791
+-0.0008246010576347862
+0.013989675352342253
+-0.00715912643931309
+0.618209099418762
+46153.44242077904
+0.8093687293206201
+
+#######################################
+##### T110 Result -- 1s
+======================================================================
+2018-01-08 12:00:52,643 __main__ 302 [INFO]    [<module>] Step 16 
+======================================================================
+[LightGBM] [Info] Total Bins 12310
+[LightGBM] [Info] Number of data: 67716, number of used features: 78
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.273732	valid_1's l2: 0.348969
+Early stopping, best iteration is:
+[139]	training's l2: 0.266415	valid_1's l2: 0.3484
+[LightGBM] [Info] Finished loading 139 models
+2018-01-08 12:00:56,336 __main__ 382 [INFO]    [<module>] mean_60_2017: 121523.81
+dow_8_1_mean: 13026.90
+mean_42_2017: 5088.96
+mean_91_2017: 4615.28
+mean_7_2017: 4159.64
+dow_13_1_mean: 2790.54
+promo_15: 2269.65
+item_mean_7_2017: 1751.36
+mean_21_2017: 1695.38
+mean_3_2017: 1593.46
+promo_14: 1533.66
+dow_52_1_mean: 1351.11
+mean_14_2017: 1300.60
+dow_4_1_mean: 984.21
+dow_26_1_mean: 785.69
+mean_140_2017: 697.87
+day_1_2017: 688.60
+s_f_mean_42_2017: 601.90
+dow_ly8w_1_mean: 559.79
+s_f_day_1_2017: 536.27
+mean_30_2017: 528.60
+promo_60_2017: 500.86
+store_dow_52_1_mean: 455.91
+item_dow_52_1_mean: 439.16
+s_f_mean_21_2017: 438.77
+mean_182_2017: 407.05
+store_mean_182_2017: 396.21
+store_mean_7_2017: 389.68
+mean_364_2017: 381.99
+promo_140_2017: 370.12
+mean_ly_n16d_2017: 353.87
+store_mean_364_2017: 353.20
+mean_ly_30_2017: 330.60
+store_mean_21_2017: 313.47
+dow_1_1_mean: 272.49
+dow_ly3w_1_mean: 267.72
+mean_ly_21_2017: 254.89
+s_f_dow_4_1_mean: 237.30
+item_dow_26_1_mean: 235.57
+s_f_mean_7_2017: 235.26
+store_dow_4_1_mean: 234.88
+mean_ly_7_2017: 231.13
+mean_ly_14_2017: 229.95
+s_f_mean_182_2017: 229.84
+promo_14_2017: 226.35
+s_f_dow_26_1_mean: 216.75
+store_mean_42_2017: 186.06
+s_f_mean_91_2017: 185.68
+s_f_dow_52_1_mean: 174.66
+ly_1d_d15: 158.41
+item_mean_182_2017: 140.92
+store_dow_26_1_mean: 127.62
+store_day_1_2017: 126.08
+item_mean_21_2017: 117.36
+s_f_mean_364_2017: 117.15
+item_day_1_2017: 105.24
+item_dow_4_1_mean: 94.01
+s_f_dow_13_1_mean: 92.24
+item_dow_13_1_mean: 86.97
+item_mean_91_2017: 80.24
+store_dow_13_1_mean: 71.41
+promo_13: 70.50
+item_mean_364_2017: 66.99
+store_mean_91_2017: 63.53
+promo_0: 61.56
+promo_9: 49.72
+item_mean_42_2017: 41.57
+promo_12: 29.05
+promo_8: 28.48
+promo_7: 25.99
+promo_10: 12.82
+promo_4: 6.97
+promo_5: 6.45
+promo_2: 4.30
+promo_3: 3.38
+promo_11: 3.25
+promo_1: 1.37
+promo_6: 0.00 
+2018-01-08 12:00:56,430 __main__ 402 [INFO]    [<module>] validate accuracy ... 
+Index         456192
+store_nbr     456192
+item_nbr      456192
+level_3       456192
+unit_sales    456192
+pred_sales    456192
+date          456192
+dtype: int64
+test dataset uses  3.04541015625  MB after changes
+Index         456192
+unit_sales    456192
+pred_sales    456192
+date          456192
+perishable    456192
+dtype: int64
+test dataset uses  2.17529296875  MB after changes
+Eval All, Number of rows in test is 57024
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 17820
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-30 00:00:00
+Eval P2, Number of rows in test is 39204
+Eval P2, Forecast Period From: 2017-07-31 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5492505821376493
+Eval P1  Weighted NWRMSLE =  0.519671476735916
+Eval P2  Weighted NWRMSLE =  0.5621813934036791
+All Bias = -0.0008246010576347862
+P1 Bias = 0.013989675352342253
+P2 Bias = -0.00715912643931309
+WMAPE = 0.618209099418762
+SUM = 46153.44242077904
+MEAN = 0.8093687293206201
+0.300235599577
+0.5492505821376493
+0.519671476735916
+0.5621813934036791
+-0.0008246010576347862
+0.013989675352342253
+-0.00715912643931309
+0.618209099418762
+46153.44242077904
+0.8093687293206201
+zyp@ubuntu:~/kaggle/kagglegrocery/T110$
+
