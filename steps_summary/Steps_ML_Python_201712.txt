@@ -254,9 +254,53 @@ zyp@zyp-MS-7850:/$ which jupyter
 zyp@zyp-MS-7850:~/anaconda3$ find . -name "jupyter_notebook*"
 
 ## No need config jupyter-notebook-config.py, just start like below
+jupyter notebook --ip 192.168.174.130 --port 8888
 http://192.168.2.14:8888/?token=7d2d73f6a7566e976d05d633e65ee09f884bdd2f94eec7ed
 
 
+
+
+############################################################################
+############## GIT Branches
+# I restore code from previous Head and modified. 
+# Now I can not push it up to bitbucket
+
+
+# Link
+https://stackoverflow.com/questions/5772192/how-can-i-reconcile-detached-head-with-master-origin
+
+# Check current branch
+git branch -a
+
+	zyp@ubuntu:~/kaggle/kagglegrocery$ git branch -a
+	* (HEAD detached from 1d1cf3d)
+	  master
+	  remotes/origin/master
+# discard current work
+git checkout master
+
+# Keep current work 
+git branch temp
+git checkout temp
+# These 2 command can combined like below 
+git checkout -b weather_branch
+
+	zyp@ubuntu:~/kaggle/kagglegrocery$ git checkout -b weather_branch
+	M	.gitignore
+	Switched to a new branch 'weather_branch'
+	zyp@ubuntu:~/kaggle/kagglegrocery$ 
+		
+############## Update master point to new branch
+## (these two commands can be abbreviated as git checkout -B master temp)
+zyp@ubuntu:~/kaggle/kagglegrocery$ git branch -f master weather_branch
+zyp@ubuntu:~/kaggle/kagglegrocery$ git checkout master
+zyp@ubuntu:~/kaggle/kagglegrocery$ git push origin master
+
+## Push weather_branch
+git push origin weather_branch
+
+## delete the temporary branch:
+git branch -d weather_branch
 
 
 

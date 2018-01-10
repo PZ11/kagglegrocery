@@ -306,15 +306,6 @@ for i in range(16):
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
             features_t.remove('s_f_dow_52_{}_mean'.format(j))            
 
-
-    X_train = pd.merge(X_train_allF[features_t], weather, on=['date'], how='left')
-    X_val = pd.merge(X_val_allF[features_t], weather, on=['date'], how='left')
-    X_test = pd.merge(X_test_allF[features_t], weather, on=['date'], how='left')
-
-    print(X_train.shape)
-
-    del X_train['date'], X_val['date'], X_test['date']
-
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
     X_test = X_test_allF[features_t]
