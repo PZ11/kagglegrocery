@@ -1,6 +1,5 @@
 
 """
-
 This is an upgraded version of Ceshine's LGBM starter script, simply adding
 more average features and weekly average features on it.
 
@@ -9,9 +8,10 @@ Run 1 Store submission  : .py 1ss 045
 Run all Store validation: .py val 045
 Run all Store submission: .py a 045
 
-"""
 
-from datetime import date, timedelta
+"""
+from datetime import date
+
 import pandas as pd
 import numpy as np
 import lightgbm as lgb
@@ -65,16 +65,13 @@ else:
     param_1 = sys.argv[1]
     param_2 = sys.argv[2]
 
-print_param  = "input parameter = " + param_1 + "Test/val number = " + param_2
+print("input parameter = ", param_1)
+print("Test/val number = ", param_2)
 submit_filename = '../submit/T' + param_2 + '.csv.gz'
 val_filename = '../data/V' + param_2 + '.p'
 
-logger.info(print_param )
-
 logger.info(submit_filename)
 logger.info(val_filename)
-
-
 
 if ((param_1 == "1ss") or (param_1 == "1s")):
     train_out = pd.read_pickle('../data/storeitem_train_1s.p')
@@ -93,6 +90,9 @@ if ((param_1 == "1ss") or (param_1 == "1s")):
     s_f_val_out = pd.read_pickle('../data/storefamily_val_1s.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test_1s.p')
 
+    class_train_out = pd.read_pickle('../data/class_train_1s.p')
+    class_val_out = pd.read_pickle('../data/class_val_1s.p')
+    class_X_test_out = pd.read_pickle('../data/class_test_1s.p')
 
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
@@ -119,6 +119,10 @@ else:
     s_f_val_out = pd.read_pickle('../data/storefamily_val.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test.p')
 
+    class_train_out = pd.read_pickle('../data/class_train.p')
+    class_val_out = pd.read_pickle('../data/class_val.p')
+    class_X_test_out = pd.read_pickle('../data/class_test.p')
+
     df_test = pd.read_csv(
         "../input/test.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -136,7 +140,6 @@ items = pd.read_csv("../input/items.csv",)
 
 items_val = pd.read_csv("../input/items.csv",).set_index("item_nbr")
 items_val = items_val.reindex(val_out['item_nbr'])
-
 
 logger.info('Load data successful')
 
@@ -188,27 +191,32 @@ val_out = pd.merge(val_out, store_val_out, how='inner', on=['store_nbr','date'])
 X_test_out = pd.merge(X_test_out, store_X_test_out, how='inner', on=['store_nbr','date'])
 
 
+
 print(train_out.groupby(['date']).size())
+
 del store_train_out, store_val_out, store_X_test_out
 gc.collect()
 
+########################################
+# Merge class features
+del class_train_out["index"]
+
+items_c = items.copy()
+del items_c["family"], items_c["perishable"]
 
 
-###############################################################################
-# Load Weather Data 
-w_train_out = pd.read_pickle('../data/weather_train.p')
-w_val_out = pd.read_pickle('../data/weather_val.p')
-w_test_out = pd.read_pickle('../data/weather_test.p')
+class_train_out = pd.merge(class_train_out, items_c, how = 'inner', on=['class'] )
+class_val_out = pd.merge(class_val_out, items_c, how = 'inner', on=['class'] )
+class_X_test_out = pd.merge(class_X_test_out, items_c, how = 'inner', on = ['class'] )
 
-del w_train_out['ID'], w_val_out['ID'], w_test_out['ID']
+del class_train_out['class'], class_val_out['class'], class_X_test_out['class']
 
-print(train_out.shape)
-train_out = pd.merge(train_out, w_train_out, on=['date'], how='left').fillna(0)
+train_out = pd.merge(train_out, class_train_out, how='inner', on=['item_nbr','date'])
+val_out = pd.merge(val_out, class_val_out, how='inner', on=['item_nbr','date'])
+X_test_out = pd.merge(X_test_out, class_X_test_out, how='inner', on=['item_nbr','date'])
 
-print(train_out.shape)
-
-val_out = pd.merge(val_out, w_val_out, on=['date'], how='left').fillna(0)
-X_test_out = pd.merge(X_test_out, w_test_out, on=['date'], how='left').fillna(0)
+del items_c,class_train_out, class_val_out, class_X_test_out
+gc.collect()
 
 
 ###############################################################################
@@ -220,7 +228,6 @@ y_columns = ['day'+str(i) for i in range(1, 17)]
 x_columns = [item for item in all_columns if item not in y_columns]
 
 features_all = x_columns
-
 features_all.remove("date") 
 features_all.remove("item_nbr") 
 features_all.remove("store_nbr") 
@@ -254,9 +261,8 @@ params = {
     'bagging_fraction': 0.8,
     'bagging_freq': 2,
     'metric': 'l2',
-    'num_threads': 6
+    'num_threads': 4
 }
-
 
 MAX_ROUNDS = 500
 val_pred = []
@@ -271,22 +277,21 @@ if param_1 != "val":
   
 features_all = X_train_allF.columns.tolist()
 
-
 for i in range(16):
     print("=" * 70)
     logger.info("Step %d" % (i+1))
     print("=" * 70)
     features_t = features_all.copy()
 
+
     for j in range(16):
 
         if j != i:
             features_t.remove('ly_1d_d{}'.format(j))
-            features_t.remove('TEMP_d{}'.format(j))
-            features_t.remove('VISIB_d{}'.format(j))
-            features_t.remove('PRCP_d{}'.format(j))
+            #for k in range(7):
+            #    features_t.remove("promo_{}_d{}".format(j,k))
 
-           
+
     for j in range(7):
         if j != i%7:
             features_t.remove('dow_1_{}_mean'.format(j))
@@ -311,15 +316,22 @@ for i in range(16):
             features_t.remove('s_f_dow_4_{}_mean'.format(j))
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
-            features_t.remove('s_f_dow_52_{}_mean'.format(j))            
+            features_t.remove('s_f_dow_52_{}_mean'.format(j))          
+
+            features_t.remove('__class_dow_01_{}_mean'.format(j))          
+            features_t.remove('__class_dow_03_{}_mean'.format(j))
+            features_t.remove('__class_dow_06_{}_mean'.format(j))
+            features_t.remove('__class_dow_13_{}_mean'.format(j))
+            features_t.remove('__class_dow_26_{}_mean'.format(j))
+            features_t.remove('__class_dow_52_{}_mean'.format(j))
 
 
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
     X_test = X_test_allF[features_t]
-    
-    print(X_train.shape)
 
+
+    
     dtrain = lgb.Dataset(
         X_train, label=y_train[:, i],
         categorical_feature=cate_vars,
@@ -357,7 +369,6 @@ for i in range(16):
         val_pred.append(bst.predict(
             X_val, num_iteration=bst.best_iteration or MAX_ROUNDS))
 
-del X_train_allF, X_val_allF
 del X_train, y_train
 del dtrain
 gc.collect()
@@ -394,7 +405,7 @@ if ((param_1 == "val") or (param_1 == "1s")):
     del valid, pred
     del X_val, y_val
     del bst, dval
-
+    del X_train_allF, X_val_allF
     gc.collect()
 
     test_e.to_pickle(val_filename)
@@ -461,7 +472,3 @@ else:
 
     submission.to_csv(submit_filename,
                       float_format='%.4f', index=None, compression='gzip')
-
-
-
-    
