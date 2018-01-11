@@ -114,6 +114,18 @@ items_val = items_val.reindex(val_out['item_nbr'])
 
 logger.info('Load data successful')
 
+###############################################################################
+# Load item-store features 
+
+ratio_s_i_1 = pd.read_csv('../input/2017_ratio_01.csv')
+ratio_s_i_2 = pd.read_csv('../input/2017_ratio_02.csv')
+
+train_out = pd.merge(train_out, ratio_s_i_1, on = ['store_nbr', 'item_nbr'], how = 'left').fillna(0)
+train_out = pd.merge(train_out, ratio_s_i_2, on = ['store_nbr', 'item_nbr'], how = 'left').fillna(0)
+val_out = pd.merge(val_out, ratio_s_i_1, on = ['store_nbr', 'item_nbr'], how = 'left').fillna(0)
+val_out = pd.merge(val_out, ratio_s_i_2, on = ['store_nbr', 'item_nbr'], how = 'left').fillna(0)
+X_test_out = pd.merge(X_test_out, ratio_s_i_1, on = ['store_nbr', 'item_nbr'], how = 'left').fillna(0)
+X_test_out = pd.merge(X_test_out, ratio_s_i_2, on = ['store_nbr', 'item_nbr'], how = 'left').fillna(0)
 
 ###############################################################################
 # Delete index columns before merge

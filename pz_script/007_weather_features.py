@@ -69,20 +69,15 @@ def prepare_dataset(t2017):
          "ID": weather_temp.ID,
         "date": (t2017),
     })
+    
+    for i in range(16):
+        X["TEMP_d{}".format(i)] = get_timespan(weather_temp, t2017, i, 1).values.ravel()
 
     for i in range(16):
-        for j in range(7):
-            X["TEMP_{}_d{}".format(i,j)] = get_timespan(weather_temp, t2017, i+j-3, 1).values.ravel()
-
-
-    for i in range(16):
-        for j in range(7):
-            X["VISIB_{}_d{}".format(i,j)] = get_timespan(weather_visib, t2017, i+j-3, 1).values.ravel()
-
+        X["VISIB_d{}".format(i)] = get_timespan(weather_visib, t2017, i, 1).values.ravel()
             
     for i in range(16):
-        for j in range(7):
-            X["PRCP_{}_d{}".format(i,j)] = get_timespan(weather_prcp, t2017, i+j-3, 1).values.ravel()
+        X["PRCP_d{}".format(i)] = get_timespan(weather_prcp, t2017, i, 1).values.ravel()
 
     return X
 

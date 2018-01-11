@@ -140,7 +140,6 @@ items_val = items_val.reindex(val_out['item_nbr'])
 
 logger.info('Load data successful')
 
-
 ###############################################################################
 # Delete index columns before merge
 del train_out["index"]
@@ -194,8 +193,23 @@ del store_train_out, store_val_out, store_X_test_out
 gc.collect()
 
 
-#######################################
-# Merge Family category features
+
+###############################################################################
+# Load Weather Data 
+w_train_out = pd.read_pickle('../data/weather_train.p')
+w_val_out = pd.read_pickle('../data/weather_val.p')
+w_test_out = pd.read_pickle('../data/weather_test.p')
+
+del w_train_out['ID'], w_val_out['ID'], w_test_out['ID']
+
+print(train_out.shape)
+train_out = pd.merge(train_out, w_train_out, on=['date'], how='left').fillna(0)
+
+print(train_out.shape)
+
+val_out = pd.merge(val_out, w_val_out, on=['date'], how='left').fillna(0)
+X_test_out = pd.merge(X_test_out, w_test_out, on=['date'], how='left').fillna(0)
+
 
 ###############################################################################
 logger.info('Preparing traing dataset...')
@@ -263,7 +277,16 @@ for i in range(16):
     logger.info("Step %d" % (i+1))
     print("=" * 70)
     features_t = features_all.copy()
-   
+
+    for j in range(16):
+
+        if j != i:
+            features_t.remove('ly_1d_d{}'.format(j))
+            features_t.remove('TEMP_d{}'.format(j))
+            features_t.remove('VISIB_d{}'.format(j))
+            features_t.remove('PRCP_d{}'.format(j))
+
+           
     for j in range(7):
         if j != i%7:
             features_t.remove('dow_1_{}_mean'.format(j))
