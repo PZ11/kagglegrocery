@@ -1,4 +1,4 @@
-#python 002_storeitem_features.py 
+python 002_storeitem_features.py 
 wait
 #python 003_item_features.py 
 wait

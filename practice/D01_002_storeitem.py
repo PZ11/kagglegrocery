@@ -13,7 +13,7 @@ import math
 import gc
 import sklearn.metrics as skl_metrics
 
-from load_data import load_input_data, add_missing_days
+from load_data_debug import load_input_data, add_missing_days
 
 from logging import StreamHandler, DEBUG, Formatter, FileHandler, getLogger
 
@@ -49,11 +49,9 @@ df_train, df_test = load_input_data(param_1)
 
 items = pd.read_csv("../input/items.csv",).set_index("item_nbr")
 
-t2014 = date(2014, 8, 6)
-t2015 = date(2015, 8, 5)
-t2016 = date(2016, 8, 3)
+
 t2017 = date(2017, 5, 31)
-train_week_2017 = 9
+train_week_2017 = 6
 
 logger.info('Load data successful')
 
@@ -65,57 +63,28 @@ def get_timespan(df, dt, minus, periods, freq='D'):
     return df[pd.date_range
               (dt - timedelta(days=minus), periods=periods, freq=freq)]
 
-
 def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
         "item_nbr": df_2017_nbr.item_nbr,
         "store_nbr": df_2017_nbr.store_nbr,
         "date": (t2017), 
-        "day_1": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
-        "mean_3": get_timespan(df_2017, t2017, 3, 3).mean(axis=1).values,
-        "mean_7": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
-        "mean_14": get_timespan(df_2017, t2017, 14, 14).mean(axis=1).values,
-        "mean_30": get_timespan(df_2017, t2017, 30, 30).mean(axis=1).values,
-        "mean_60": get_timespan(df_2017, t2017, 60, 60).mean(axis=1).values,
-        "mean_140": get_timespan(df_2017, t2017, 140, 140).mean(axis=1).values,
-
-        "mean_21": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
-        "mean_42": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
-        "mean_91": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
-        "mean_182": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
-        "mean_364": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
-
-        "mean_ly_n16d": get_timespan(df_2017, t2017, 364, 16).mean(axis=1).values,
-
-        "mean_ly_7":  get_timespan(df_2017, t2017, 371, 7 ).mean(axis=1).values,
-        "mean_ly_14": get_timespan(df_2017, t2017, 378, 14).mean(axis=1).values,
-        "mean_ly_30": get_timespan(df_2017, t2017, 394, 30).mean(axis=1).values,
-        "mean_ly_21": get_timespan(df_2017, t2017, 385, 21).mean(axis=1).values,
-
-        "promo_sum_14": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
-        "promo_sum_60": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
-        "promo_sum_140": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values,
-        
+        "day_1_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
+        "mean_3_2017": get_timespan(df_2017, t2017, 3, 3).mean(axis=1).values,
+        "mean_7_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
+        "mean_14_2017": get_timespan(df_2017, t2017, 14, 14).mean(axis=1).values,
+        "mean_30_2017": get_timespan(df_2017, t2017, 30, 30).mean(axis=1).values,
+        "mean_60_2017": get_timespan(df_2017, t2017, 60, 60).mean(axis=1).values,
+        "mean_140_2017": get_timespan(df_2017, t2017, 140, 140).mean(axis=1).values,
+        "promo_14_2017": get_timespan(promo_2017, t2017, 14, 14).sum(axis=1).values,
+        "promo_60_2017": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
+        "promo_140_2017": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values
     })
-
-    for i in range(16):
-        X['ly_1d_d{}'.format(i)] = get_timespan(df_2017, t2017, 364-i, 1).values.ravel()
-        
     for i in range(7):
-        X['dow_1_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 7-i,1).values.ravel()
-        X['dow_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
-        X['dow_8_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 56-i, 8, freq='7D').mean(axis=1).values
-        X['dow_13_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 91-i, 13, freq='7D').mean(axis=1).values
-        X['dow_26_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 182-i, 26, freq='7D').mean(axis=1).values
-        X['dow_52_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 52, freq='7D').mean(axis=1).values        
-        X['dow_ly3w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
-        X['dow_ly8w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
-
-
+        X['mean_4_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 28-i, 4, freq='7D').mean(axis=1).values
+        X['mean_20_dow{}_2017'.format(i)] = get_timespan(df_2017, t2017, 140-i, 20, freq='7D').mean(axis=1).values
     for i in range(16):
         X["promo_{}".format(i)] = promo_2017[
             t2017 + timedelta(days=i)].values.astype(np.uint8)
-        
     if is_train:
         y = df_2017[
             pd.date_range(t2017, periods=16)
@@ -123,11 +92,10 @@ def prepare_dataset(t2017, is_train=True):
         return X, y
     return X
 
-
 ###############################################################################
 
 
-df_2017 = df_train.loc[df_train.date >= pd.datetime(2013, 5, 1)]
+df_2017 = df_train.loc[df_train.date >= pd.datetime(2017,1, 1)]
 
 del df_train
 gc.collect()
@@ -160,39 +128,6 @@ df_2017, promo_2017 = add_missing_days(df_2017, promo_2017, param_1)
 logger.info('Preparing traing dataset...')
 
 X_l, y_l = [], []
-
-# Add train data on Aug 2014 and Aug 2015
-logger.info('Preparing 2014 training dataset...')
-for i in range(4):
-    delta = timedelta(days=7 * i)
-    X_tmp, y_tmp = prepare_dataset(
-        t2014 + delta
-    )
-
-    X_l.append(X_tmp)
-    y_l.append(y_tmp)
-
-logger.info('Preparing 2015 training dataset...')
-for i in range(4):
-    delta = timedelta(days=7 * i)
-    X_tmp, y_tmp = prepare_dataset(
-        t2015 + delta
-    )
-
-    X_l.append(X_tmp)
-    y_l.append(y_tmp)
-
-
-logger.info('Preparing 2016 training dataset...')
-for i in range(4):
-    delta = timedelta(days=7 * i)
-    X_tmp, y_tmp = prepare_dataset(
-        t2016 + delta
-    )
-
-    X_l.append(X_tmp)
-    y_l.append(y_tmp)
-
 
 # Always load 9 weeks of data. if val, 2 weeks will be removed in 100_model. 
 logger.info('Preparing 2017 training dataset...')
