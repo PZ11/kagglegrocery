@@ -245,7 +245,7 @@ params = {
     'bagging_fraction': 0.8,
     'bagging_freq': 2,
     'metric': 'l2',
-    'num_threads': 4
+    'num_threads': 6
 }
 
 
@@ -305,6 +305,7 @@ for i in range(16):
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
             features_t.remove('s_f_dow_52_{}_mean'.format(j))            
+
 
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]

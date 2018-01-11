@@ -123,12 +123,31 @@ def prepare_dataset(t2017, is_train=True):
         return X, y
     return X
 
+##############################################################################
+# Find non-zero train set for each year 
+df_train_maxdate = df_train[['item_nbr','store_nbr','date']].groupby(['item_nbr','store_nbr'])\
+    ['date'].max().to_frame('max_date')
+    
+df_train_maxdate.reset_index(inplace=True)
+df_train_maxdate['date'] = df_train_maxdate['max_date']
+del df_train_maxdate['max_date']
 
+df_train_2017 = df_train_maxdate.loc[ (df_train_maxdate['date'] >'2017-05-31'),]
+df_train_2016 = df_train_maxdate.loc[ (df_train_maxdate['date'] >'2016-08-03'),]
+df_train_2015 = df_train_maxdate.loc[ (df_train_maxdate['date'] >'2015-08-05'),]
+df_train_2014 = df_train_maxdate.loc[ (df_train_maxdate['date'] >'2014-08-06'),]
+
+print(df_train_2014.shape) 
+
+del df_train_maxdate
+gc.collect()
 ###############################################################################
 
 
 df_2017 = df_train.loc[df_train.date >= pd.datetime(2013, 5, 1)]
+
 del df_train
+gc.collect()
 
 promo_2017_train = df_2017.set_index(
     ["store_nbr", "item_nbr", "date"])[["onpromotion"]].unstack(
@@ -138,7 +157,9 @@ promo_2017_test = df_test[["onpromotion"]].unstack(level=-1).fillna(False)
 promo_2017_test.columns = promo_2017_test.columns.get_level_values(1)
 promo_2017_test = promo_2017_test.reindex(promo_2017_train.index).fillna(False)
 promo_2017 = pd.concat([promo_2017_train, promo_2017_test], axis=1)
+
 del promo_2017_test, promo_2017_train
+gc.collect()
 
 df_2017 = df_2017.set_index(
     ["store_nbr", "item_nbr", "date"])[["unit_sales"]].unstack(
@@ -164,6 +185,7 @@ for i in range(4):
     X_tmp, y_tmp = prepare_dataset(
         t2014 + delta
     )
+
     X_l.append(X_tmp)
     y_l.append(y_tmp)
 
@@ -173,8 +195,10 @@ for i in range(4):
     X_tmp, y_tmp = prepare_dataset(
         t2015 + delta
     )
+
     X_l.append(X_tmp)
     y_l.append(y_tmp)
+
 
 logger.info('Preparing 2016 training dataset...')
 for i in range(4):
@@ -182,8 +206,10 @@ for i in range(4):
     X_tmp, y_tmp = prepare_dataset(
         t2016 + delta
     )
+
     X_l.append(X_tmp)
     y_l.append(y_tmp)
+
 
 # Always load 9 weeks of data. if val, 2 weeks will be removed in 100_model. 
 logger.info('Preparing 2017 training dataset...')
@@ -192,13 +218,15 @@ for i in range(train_week_2017):
     X_tmp, y_tmp = prepare_dataset(
         t2017 + delta
     )
+
     X_l.append(X_tmp)
     y_l.append(y_tmp)
-
 
 X_train = pd.concat(X_l, axis=0)
 y_train = np.concatenate(y_l, axis=0)
 del X_l, y_l
+
+print("total Train set: ", X_train.shape)
 
 delta = timedelta(0)
 
@@ -214,6 +242,24 @@ df_y_train = pd.DataFrame(data = y_train, columns = y_columns)
 X_train.reset_index(inplace = True)
 X_train.reindex(index = df_y_train.index)
 train_out = pd.concat([X_train, df_y_train], axis = 1)
+
+print(train_out.shape)
+
+train_out_2017 = train_out.loc[ train_out["date"] >= date(2017,1,1),]
+train_out_2017 = pd.merge(train_out_2017, df_train_2017[['item_nbr', 'store_nbr']], on=['item_nbr', 'store_nbr'], how='inner')
+
+train_out_2016 = train_out.loc[ (train_out["date"] >= date(2016,1,1)) & (train_out["date"] <= date(2017,1,1)),]
+train_out_2016 = pd.merge(train_out_2016, df_train_2016[['item_nbr', 'store_nbr']], on=['item_nbr', 'store_nbr'], how='inner')
+
+train_out_2015 = train_out.loc[(train_out["date"] >= date(2015,1,1)) & (train_out["date"] <= date(2016,1,1)),]
+train_out_2015 = pd.merge(train_out_2015, df_train_2015[['item_nbr', 'store_nbr']], on=['item_nbr', 'store_nbr'], how='inner')
+
+train_out_2014 = train_out.loc[(train_out["date"] >= date(2014,1,1)) & (train_out["date"] <= date(2015,1,1)),]
+train_out_2014 = pd.merge(train_out_2014, df_train_2014[['item_nbr', 'store_nbr']], on=['item_nbr', 'store_nbr'], how='inner')
+
+train_out = pd.concat([train_out_2014, train_out_2015, train_out_2016, train_out_2017], axis = 0)
+
+print(train_out.shape)
 
 df_y_val = pd.DataFrame(data = y_val, columns = y_columns)
 X_val.reset_index(inplace = True)
