@@ -90,10 +90,6 @@ if ((param_1 == "1ss") or (param_1 == "1s")):
     s_f_val_out = pd.read_pickle('../data/storefamily_val_1s.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test_1s.p')
 
-    class_train_out = pd.read_pickle('../data/class_train_1s.p')
-    class_val_out = pd.read_pickle('../data/class_val_1s.p')
-    class_X_test_out = pd.read_pickle('../data/class_test_1s.p')
-
     df_test = pd.read_csv(
         "../input/test_1s.csv", usecols=[0, 1, 2, 3, 4],
         dtype={'onpromotion': bool},
@@ -118,10 +114,6 @@ else:
     s_f_train_out = pd.read_pickle('../data/storefamily_train.p')
     s_f_val_out = pd.read_pickle('../data/storefamily_val.p')
     s_f_X_test_out = pd.read_pickle('../data/storefamily_test.p')
-
-    class_train_out = pd.read_pickle('../data/class_train.p')
-    class_val_out = pd.read_pickle('../data/class_val.p')
-    class_X_test_out = pd.read_pickle('../data/class_test.p')
 
     df_test = pd.read_csv(
         "../input/test.csv", usecols=[0, 1, 2, 3, 4],
@@ -195,27 +187,6 @@ X_test_out = pd.merge(X_test_out, store_X_test_out, how='inner', on=['store_nbr'
 print(train_out.groupby(['date']).size())
 
 del store_train_out, store_val_out, store_X_test_out
-gc.collect()
-
-########################################
-# Merge class features
-del class_train_out["index"]
-
-items_c = items.copy()
-del items_c["family"], items_c["perishable"]
-
-
-class_train_out = pd.merge(class_train_out, items_c, how = 'inner', on=['class'] )
-class_val_out = pd.merge(class_val_out, items_c, how = 'inner', on=['class'] )
-class_X_test_out = pd.merge(class_X_test_out, items_c, how = 'inner', on = ['class'] )
-
-del class_train_out['class'], class_val_out['class'], class_X_test_out['class']
-
-train_out = pd.merge(train_out, class_train_out, how='inner', on=['item_nbr','date'])
-val_out = pd.merge(val_out, class_val_out, how='inner', on=['item_nbr','date'])
-X_test_out = pd.merge(X_test_out, class_X_test_out, how='inner', on=['item_nbr','date'])
-
-del items_c,class_train_out, class_val_out, class_X_test_out
 gc.collect()
 
 
@@ -317,14 +288,6 @@ for i in range(16):
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
             features_t.remove('s_f_dow_52_{}_mean'.format(j))          
-
-            features_t.remove('__class_dow_01_{}_mean'.format(j))          
-            features_t.remove('__class_dow_03_{}_mean'.format(j))
-            features_t.remove('__class_dow_06_{}_mean'.format(j))
-            features_t.remove('__class_dow_13_{}_mean'.format(j))
-            features_t.remove('__class_dow_26_{}_mean'.format(j))
-            features_t.remove('__class_dow_52_{}_mean'.format(j))
-
 
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
@@ -428,7 +391,8 @@ if ((param_1 == "val") or (param_1 == "1s")):
     print("test dataset uses ",new_mem_test/ 1024**2," MB after changes")
 
 
-    eval_test(test)
+    outstring = eval_test(test)
+    logger.info(outstring)
 
 ##########################################################################
 # Submit

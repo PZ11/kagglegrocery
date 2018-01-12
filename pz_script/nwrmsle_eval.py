@@ -74,3 +74,10 @@ def eval_test(test_e):
     print(abs(np.log1p(test_e.error).sum() - np.log1p(test_e.unit_sales).sum()) /  np.log1p(test_e.unit_sales).sum()) 
     print(np.log1p(test_e.pred_sales).sum())
     print(np.log1p(test_e.pred_sales).mean())
+
+    outstring =  '\n' + str(mean_squared_error(np.log1p(test_e.unit_sales),np.log1p(test_e.pred_sales))) + '\n'
+    outstring = outstring + str(result) + '\n'
+    outstring = outstring + str(result_p1) + '\n'
+    outstring = outstring + str(result_p2) + '\n'
+    return outstring
+    

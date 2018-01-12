@@ -96,6 +96,20 @@ def prepare_dataset(t2017, is_train=True):
         "promo_sum_60": get_timespan(promo_2017, t2017, 60, 60).sum(axis=1).values,
         "promo_sum_140": get_timespan(promo_2017, t2017, 140, 140).sum(axis=1).values,
         
+        "sum_ty_p2_7d": get_timespan(df_2017, t2017, 14 , 7).mean(axis=1).values,
+        "sum_ty_p2_14d": get_timespan(df_2017, t2017, 28 , 14).mean(axis=1).values,
+        "sum_ty_p2_30d": get_timespan(df_2017, t2017, 60 , 30).mean(axis=1).values,
+        "sum_ty_p2_60d": get_timespan(df_2017, t2017, 120 , 60).mean(axis=1).values,
+
+        "sum_ly_p7d": get_timespan(df_2017, t2017, 371 , 7).mean(axis=1).values,        
+        "sum_ly_p14d": get_timespan(df_2017, t2017, 378 , 14).mean(axis=1).values,
+        "sum_ly_p30d": get_timespan(df_2017, t2017, 394 , 30).mean(axis=1).values,
+        "sum_ly_p60d": get_timespan(df_2017, t2017, 424 , 60).mean(axis=1).values,
+        
+        "sum_ly_n16d": get_timespan(df_2017, t2017, 364 , 16).mean(axis=1).values,
+        "sum_ly_p16d": get_timespan(df_2017, t2017, 380 , 16).mean(axis=1).values,
+        "sum_ly_n7d": get_timespan(df_2017, t2017, 364 , 7).mean(axis=1).values,
+        
     })
 
     for i in range(16):
@@ -122,6 +136,27 @@ def prepare_dataset(t2017, is_train=True):
         ].values
         return X, y
     return X
+
+def calc_ratio(df):
+    
+    df['___ratio_tyly_7d'] = df['mean_7'] / df['sum_ly_p7d']
+    df['___ratio_tyly_14d'] = df['mean_14'] / df['sum_ly_p14d']
+    df['___ratio_tyly_30d'] = df['mean_30'] / df['sum_ly_p30d']
+    df['___ratio_tyly_60d'] = df['mean_60'] / df['sum_ly_p60d']
+
+    df['___ratio_ty_p_7d'] = df['mean_7'] / df['sum_ty_p2_7d']
+    df['___ratio_ty_p_14d'] = df['mean_14'] / df['sum_ty_p2_14d']
+    df['___ratio_ty_p_30d'] = df['mean_30'] / df['sum_ty_p2_30d']
+    df['___ratio_ty_p_60d'] = df['mean_60'] / df['sum_ty_p2_60d']
+
+    df['___ratio_ly_p_16d'] = df['sum_ly_n16d'] / df['sum_ly_p16d']
+    df['___ratio_ly_p_7d'] = df['sum_ly_n7d'] / df['sum_ly_p7d']
+
+    del df['sum_ty_p2_7d'], df['sum_ty_p2_14d'], df['sum_ty_p2_30d'], df['sum_ty_p2_60d']
+    del df['sum_ly_p14d'], df['sum_ly_p30d'], df['sum_ly_p60d']
+    del df['sum_ly_n16d'], df['sum_ly_p16d'], df['sum_ly_n7d'], df['sum_ly_p7d']
+
+    return df
 
 
 ###############################################################################
@@ -216,6 +251,10 @@ delta = timedelta(0)
 X_val, y_val = prepare_dataset(date(2017, 7, 26))
 X_test = prepare_dataset(date(2017, 8, 16), is_train=False)
 
+X_train = calc_ratio(X_train).fillna(0)
+X_val = calc_ratio(X_val).fillna(0)
+X_test = calc_ratio(X_test).fillna(0)
+
 ##########################################################################
 logger.info('Save Store Item Features ...')
 
@@ -226,7 +265,11 @@ X_train.reset_index(inplace = True)
 X_train.reindex(index = df_y_train.index)
 train_out = pd.concat([X_train, df_y_train], axis = 1)
 
-print(train_out.shape)
+train_shape = train_out.shape
+logger.info(train_shape)
+train_info = train_out.info()
+logger.info(train_info)
+
 
 df_y_val = pd.DataFrame(data = y_val, columns = y_columns)
 X_val.reset_index(inplace = True)
