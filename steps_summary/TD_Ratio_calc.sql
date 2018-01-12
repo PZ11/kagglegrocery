@@ -1,3 +1,32 @@
+
+
+##############################################################################
+############## Set forecast to zero on the missing record for Wed Promo ######
+##############################################################################
+
+
+replace view g_wed_promo
+AS 	
+sel s.store_nbr, s.item_nbr , 
+	count(*) as wed_cnt,  sum(onpromotion) as sum_promo
+from  pzhang.g_train  s
+inner join pzhang.g_calendar c
+on s.salesdate = c.salesdate
+where  s.salesdate >= '2017-01-02'
+	and daynumber  = 1 
+	having wed_cnt = sum_promo
+	group by 1 ,2 
+;
+
+
+	sel id , store_nbr,  item_nbr, salesdate    from pzhang.g_test where
+	 (store_nbr,  item_nbr)
+	in ( select store_nbr,  item_nbr from g_wed_promo) 
+	and salesdate in ( '2017-08-16', '2017-08-23', '2017-08-30' ) 
+	and onpromotion = 0 
+;
+
+##############################################################################
 drop table g_ratio_ty_lm_2017 ; 
 drop table g_ratio_ly_tm_2017 ; 
 

@@ -84,14 +84,7 @@ def calc_ratio(df):
 
 def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
-        
-        "sum_ty_p2_7d": get_timespan(df_2017, t2017, 14 , 7).mean(axis=1).values,
-        "sum_ty_p2_21d": get_timespan(df_2017, t2017, 42 , 21).mean(axis=1).values,
-        "sum_ty_p2_42d": get_timespan(df_2017, t2017, 84 , 42).mean(axis=1).values,
 
-        "sum_ly_p7d": get_timespan(df_2017, t2017, 371 , 7).mean(axis=1).values,        
-        "sum_ly_p21d": get_timespan(df_2017, t2017, 385 , 21).mean(axis=1).values,
-         
         "item_nbr": df_2017_nbr.item_nbr,
         "date": (t2017),       
         "item_day_01": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
@@ -208,10 +201,10 @@ X_val.reindex(index = df_y_val.index)
 #val_out = pd.concat([X_val, df_y_val], axis = 1)
 val_out = X_val
 
-
-X_train = calc_ratio(X_train).fillna(0)
-X_val = calc_ratio(X_val).fillna(0)
-X_test = calc_ratio(X_test).fillna(0)
+# Comment on T290
+#X_train = calc_ratio(X_train).fillna(0)
+#X_val = calc_ratio(X_val).fillna(0)
+#X_test = calc_ratio(X_test).fillna(0)
 
 ##########################################################################
 # output

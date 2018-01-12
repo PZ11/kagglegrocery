@@ -38,7 +38,12 @@ train_small = train.loc[(train.store_nbr==1 ),]
 test = pd.read_csv('../input/test.csv', dtype=dtypes, parse_dates=['date'])
 logger.info('load test data')
 
-test_small = test.loc[(train.store_nbr==1),]
+
+# Fixed test small data on T300. It become much slower
+# test_small = test.loc[(train.store_nbr==1),]
+
+test_small = test.loc[(test.store_nbr==1),]
+
 
 #Write File
 test_small.to_csv('../input/test_1s.csv', index=False)
