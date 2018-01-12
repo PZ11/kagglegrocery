@@ -139,18 +139,18 @@ def prepare_dataset(t2017, is_train=True):
 
 def calc_ratio(df):
     
-    df['___ratio_tyly_7d'] = df['mean_7'] / df['sum_ly_p7d']
-    df['___ratio_tyly_14d'] = df['mean_14'] / df['sum_ly_p14d']
-    df['___ratio_tyly_30d'] = df['mean_30'] / df['sum_ly_p30d']
-    df['___ratio_tyly_60d'] = df['mean_60'] / df['sum_ly_p60d']
+    df['ratio_tyly_7d'] = df['mean_7'] / df['sum_ly_p7d']
+    df['ratio_tyly_14d'] = df['mean_14'] / df['sum_ly_p14d']
+    df['ratio_tyly_30d'] = df['mean_30'] / df['sum_ly_p30d']
+    df['ratio_tyly_60d'] = df['mean_60'] / df['sum_ly_p60d']
 
-    df['___ratio_ty_p_7d'] = df['mean_7'] / df['sum_ty_p2_7d']
-    df['___ratio_ty_p_14d'] = df['mean_14'] / df['sum_ty_p2_14d']
-    df['___ratio_ty_p_30d'] = df['mean_30'] / df['sum_ty_p2_30d']
-    df['___ratio_ty_p_60d'] = df['mean_60'] / df['sum_ty_p2_60d']
+    df['ratio_ty_p_7d'] = df['mean_7'] / df['sum_ty_p2_7d']
+    df['ratio_ty_p_14d'] = df['mean_14'] / df['sum_ty_p2_14d']
+    df['ratio_ty_p_30d'] = df['mean_30'] / df['sum_ty_p2_30d']
+    df['ratio_ty_p_60d'] = df['mean_60'] / df['sum_ty_p2_60d']
 
-    df['___ratio_ly_p_16d'] = df['sum_ly_n16d'] / df['sum_ly_p16d']
-    df['___ratio_ly_p_7d'] = df['sum_ly_n7d'] / df['sum_ly_p7d']
+    df['ratio_ly_p_16d'] = df['sum_ly_n16d'] / df['sum_ly_p16d']
+    df['ratio_ly_p_7d'] = df['sum_ly_n7d'] / df['sum_ly_p7d']
 
     del df['sum_ty_p2_7d'], df['sum_ty_p2_14d'], df['sum_ty_p2_30d'], df['sum_ty_p2_60d']
     del df['sum_ly_p14d'], df['sum_ly_p30d'], df['sum_ly_p60d']

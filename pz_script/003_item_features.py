@@ -67,17 +67,41 @@ def get_timespan(df, dt, minus, periods, freq='D'):
 
 
 
+def calc_ratio(df):
+    
+    df['____ratio_tyly_7d'] = df['item_mean_07'] / df['sum_ly_p7d']
+    df['____ratio_tyly_21d'] = df['item_mean_21'] / df['sum_ly_p21d']
+
+    df['____ratio_ty_p_7d'] = df['item_mean_07'] / df['sum_ty_p2_7d']
+    df['____ratio_ty_p_21d'] = df['item_mean_21'] / df['sum_ty_p2_21d']
+    df['____ratio_ty_p_42d'] = df['item_mean_42'] / df['sum_ty_p2_42d']
+
+    del df['sum_ty_p2_7d'], df['sum_ty_p2_21d'], df['sum_ty_p2_42d']
+    del df['sum_ly_p7d'], df['sum_ly_p21d']
+
+    return df
+
+
 def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
+        
+        "sum_ty_p2_7d": get_timespan(df_2017, t2017, 14 , 7).mean(axis=1).values,
+        "sum_ty_p2_21d": get_timespan(df_2017, t2017, 42 , 21).mean(axis=1).values,
+        "sum_ty_p2_42d": get_timespan(df_2017, t2017, 84 , 42).mean(axis=1).values,
+
+        "sum_ly_p7d": get_timespan(df_2017, t2017, 371 , 7).mean(axis=1).values,        
+        "sum_ly_p21d": get_timespan(df_2017, t2017, 385 , 21).mean(axis=1).values,
+         
         "item_nbr": df_2017_nbr.item_nbr,
         "date": (t2017),       
-        "item_day_01_2017": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
-        "item_mean_07_2017": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
-        "item_mean_21_2017": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
-        "item_mean_42_2017": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
-        "item_mean_91_2017": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
-        "item_mean_182_2017": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
-        "item_mean_364_2017": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
+        "item_day_01": get_timespan(df_2017, t2017, 1, 1).values.ravel(),
+        "item_mean_07": get_timespan(df_2017, t2017, 7, 7).mean(axis=1).values,
+        "item_mean_21": get_timespan(df_2017, t2017, 21, 21).mean(axis=1).values,
+        "item_mean_42": get_timespan(df_2017, t2017, 42, 42).mean(axis=1).values,
+        "item_mean_91": get_timespan(df_2017, t2017, 91, 91).mean(axis=1).values,
+        "item_mean_182": get_timespan(df_2017, t2017, 182, 182).mean(axis=1).values,
+        "item_mean_364": get_timespan(df_2017, t2017, 364, 364).mean(axis=1).values,
+
     })
   
     for i in range(7):
@@ -168,7 +192,7 @@ X_val, y_val = prepare_dataset(date(2017, 7, 26))
 X_test = prepare_dataset(date(2017, 8, 16), is_train=False)
 
 ##########################################################################
-logger.info('Save Store Item Features ...')
+logger.info('Save Item Features ...')
 
 y_columns = ["day" + str(i) for i in range(1, 17)]
 
@@ -183,6 +207,11 @@ X_val.reset_index(inplace = True)
 X_val.reindex(index = df_y_val.index)
 #val_out = pd.concat([X_val, df_y_val], axis = 1)
 val_out = X_val
+
+
+X_train = calc_ratio(X_train).fillna(0)
+X_val = calc_ratio(X_val).fillna(0)
+X_test = calc_ratio(X_test).fillna(0)
 
 ##########################################################################
 # output
