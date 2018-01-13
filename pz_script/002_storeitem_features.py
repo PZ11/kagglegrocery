@@ -229,6 +229,20 @@ for i in range(4):
     y_l.append(y_tmp)
 
 
+
+
+logger.info('REPEAT 2016 training dataset...')
+for i in range(4):
+    delta = timedelta(days=7 * i)
+    X_tmp, y_tmp = prepare_dataset(
+        t2016 + delta
+    )
+
+    X_l.append(X_tmp)
+    y_l.append(y_tmp)
+
+
+
 # Always load 9 weeks of data. if val, 2 weeks will be removed in 100_model. 
 logger.info('Preparing 2017 training dataset...')
 for i in range(train_week_2017):
