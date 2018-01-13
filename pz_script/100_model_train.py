@@ -416,9 +416,17 @@ else:
     
     submission["unit_sales"] = np.clip(np.expm1(submission["unit_sales"]), 0, 1000)
 
+    submission.to_csv("../submit/BEFORE_MERGE.csv",
+              float_format='%.4f', index=None, compression='gzip')
+        
     # PZ, Check overral result
     print("SUM =",  submission.unit_sales.sum())
     print("MEAN =",  submission.unit_sales.mean())
+ 
+ 
+    logmessage ="Before Merged SUM = " +  str( submission.unit_sales.sum())  + '\n'
+    logger.info(logmessage)
+    
 
     ##########################################################################
     df_prev = submission
@@ -431,8 +439,47 @@ else:
     submission = t_new[['id', 'unit_sales']]
     del t_new
 
-    print("Merged  SUM =",  submission.unit_sales.sum())
-    print("Merged  MEAN =",  submission.unit_sales.mean())
+    logger.info("Merge with zero repeat Wed promo")
+    logmessage ="Merged  SUM = " +  str( submission.unit_sales.sum())  + '\n'
+    logger.info(logmessage)
 
+    ##########################################################################
+    df_prev = submission
+
+    df_sub = pd.read_csv('../input/zero_promo_testset.csv')
+    df_sub['unit_sales'] = 0
+
+    t_new = pd.merge(df_prev, df_sub, on=['id'], how='left')
+    t_new['unit_sales'] = t_new.unit_sales_y.combine_first(t_new.unit_sales_x)
+
+    submission = t_new[['id', 'unit_sales']]
+    del t_new
+
+    logger.info("Merge with zero prev 30D no sales")
+    logmessage ="Merged  SUM = " +  str( submission.unit_sales.sum())  + '\n'
+    logger.info(logmessage)
+    
+    ##########################################################################
+    df_prev = submission
+    
+    df_sub = pd.read_csv('../input/zero_continue16dpromo_testset.csv')
+    df_sub['unit_sales'] = 0
+
+
+    t_new = pd.merge(df_prev, df_sub, on=['id'], how='left')
+    t_new['unit_sales'] = t_new.unit_sales_y.combine_first(t_new.unit_sales_x)
+
+    submission = t_new[['id', 'unit_sales']]
+    del t_new
+
+    logger.info("Merge with zero continued 16D promo")
+    logmessage ="Merged  SUM = " +  str( submission.unit_sales.sum())  + '\n'
+    logger.info(logmessage)
+
+    ##########################################################################
+    
     submission.to_csv(submit_filename,
-                      float_format='%.4f', index=None, compression='gzip')
+                  float_format='%.4f', index=None, compression='gzip')
+
+
+    

@@ -26,6 +26,54 @@ where  s.salesdate >= '2017-01-02'
 	and onpromotion = 0 
 ;
 
+
+
+##############################################################################
+CREATE TABLE pzhang. g_continue_promo_s_i
+as ( 
+	sel 
+	item_nbr, store_nbr, min(salesdate) as startdate, max(salesdate) as enddate 
+	from  pzhang.g_test
+	where (item_nbr, store_nbr) in (
+		sel a.item_nbr, a.store_nbr
+		from 
+		(
+			sel  item_nbr, store_nbr, sum(onpromotion) as sum_promo 	 
+			from  pzhang.g_test s
+			inner join pzhang.g_calendar c
+			on s.salesdate = c.salesdate
+			where s.salesdate > '2017-08-15' 
+			having sum_promo between 11 and 15 
+			group by 1, 2 
+		) a , 
+		(
+			sel  item_nbr, store_nbr, sum(onpromotion) as sum_promo 	 
+			from  pzhang.g_test s
+			inner join pzhang.g_calendar c
+			on s.salesdate = c.salesdate
+			where s.salesdate between '2017-08-16'  and '2017-08-18'
+			having sum_promo >=  2 
+			group by 1, 2 
+		) b 
+		where a.store_nbr = b.store_nbr
+		and a.item_nbr = b.item_nbr 
+	)  
+	and onpromotion = 1 
+	group by 1,2 
+) WITH DATA 
+primary index (	item_nbr, store_nbr )  
+;
+
+SELECT t.id, t. store_nbr, t. item_nbr, salesdate   FROM  pzhang.g_test t
+INNER JOIN pzhang. g_continue_promo_s_i p
+ON t.store_nbr = p.store_nbr
+		and t.item_nbr = p.item_nbr 
+		and t.salesdate between p.startdate and p.enddate 
+ORDER BY t. store_nbr, t. item_nbr, salesdate 
+
+WHERE t.onpromotion = 0 
+
+##############################################################################
 ##############################################################################
 drop table g_ratio_ty_lm_2017 ; 
 drop table g_ratio_ly_tm_2017 ; 
