@@ -13,7 +13,7 @@ import math
 import gc
 import sklearn.metrics as skl_metrics
 
-from debug_load_data import load_input_csv_noln_2016, add_missing_days
+from load_data_debug import load_input_data_debug, add_missing_days
 
 from logging import StreamHandler, DEBUG, Formatter, FileHandler, getLogger
 
@@ -45,7 +45,7 @@ else:
     param_1 = sys.argv[1]
     print("input parameter = ", param_1)
 
-df_train, df_test = load_input_csv_noln_2016(param_1)
+df_train, df_test = load_input_data_debug(param_1)
 
 items = pd.read_csv("../input/items.csv",).set_index("item_nbr")
 
