@@ -125,6 +125,8 @@ def prepare_dataset(t2017, is_train=True):
         X['dow_ly3w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 364-i, 3, freq='7D').mean(axis=1).values
         X['dow_ly8w_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 392-i, 7, freq='7D').mean(axis=1).values
 
+        X['dow_p2_4_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 56-i, 4, freq='7D').mean(axis=1).values
+        X['dow_p2_8_{}_mean'.format(i)] = get_timespan(df_2017, t2017, 112-i, 8, freq='7D').mean(axis=1).values
 
     for i in range(16):
         X["promo_{}".format(i)] = promo_2017[
@@ -151,6 +153,12 @@ def calc_ratio(df):
 
     df['ratio_ly_p_16d'] = df['sum_ly_n16d'] / df['sum_ly_p16d']
     df['ratio_ly_p_7d'] = df['sum_ly_n7d'] / df['sum_ly_p7d']
+
+    for i in range(7):
+        df['____ratio_dow_4_{}_mean'.format(i)] = df['dow_4_{}_mean'.format(i)] / df['dow_p2_4_{}_mean'.format(i)] 
+        df['____ratio_dow_8_{}_mean'.format(i)] = df['dow_8_{}_mean'.format(i)] / df['dow_p2_8_{}_mean'.format(i)] 
+
+        del df['dow_p2_4_{}_mean'.format(i)] , df['dow_p2_8_{}_mean'.format(i)] 
 
     del df['sum_ty_p2_7d'], df['sum_ty_p2_14d'], df['sum_ty_p2_30d'], df['sum_ty_p2_60d']
     del df['sum_ly_p14d'], df['sum_ly_p30d'], df['sum_ly_p60d']

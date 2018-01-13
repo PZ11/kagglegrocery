@@ -1,9 +1,9 @@
 python 020_storeitem_features.py $1
 wait
-#python 030_item_features.py $1
+python 030_item_features.py $1
 wait
-# python 040_store_features.py $1
+python 040_store_features.py $1
 wait
-# python 050_storefamily_features.py $1
+python 050_store_family_features.py $1
 wait
 python 100_model_train.py $1 $2

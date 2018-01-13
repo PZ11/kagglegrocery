@@ -1,4 +1,52 @@
 
+
+##############################################################################
+############## Set Forecast to Zero when no sales in less than 30 days ######
+##############################################################################
+sel  item_nbr, store_nbr, 
+	max(s.salesdate) as max_date, min(s.salesdate) ,
+	max(s.salesdate) -  min(s.salesdate) + 1  as daycount, 
+	count(*) as recordcount ,
+	average(unit_sales) as avg_sales,
+	sum(onpromotion) as promo_wks,
+	count(distinct daynumber) as dow 
+from  pzhang.g_train s,
+pzhang.g_calendar c
+where (s.salesdate) > '2017-05-01' 
+and s.salesdate = c.salesdate
+having 
+ -- daycount *1.0/ recordcount >5 and 
+max_date between '2017-07-15' and  '2017-08-03'
+and avg_sales > 5
+and ( item_nbr <> 1696029 or store_nbr <> 3 ) 
+and ( item_nbr <> 583985 or store_nbr <> 47 ) 
+group by 1,2 
+order by 7 desc
+;
+
+sel  item_nbr, store_nbr, 
+	max(s.salesdate) as max_date, min(s.salesdate) ,
+	max(s.salesdate) -  min(s.salesdate) + 1  as daycount, 
+	count(*) as recordcount ,
+	average(unit_sales) as avg_sales,
+	sum(onpromotion) as promo_wks,
+	count(distinct daynumber) as dow 
+from  pzhang.g_train s,
+pzhang.g_calendar c
+where (s.salesdate) > '2017-05-01' 
+and s.salesdate = c.salesdate
+having 
+--daycount <> recordcount and 
+max_date between '2017-08-04' and  '2017-08-09'
+and ( item_nbr <> 1239986 or store_nbr <>51 ) 
+and ( item_nbr <> 633735 or store_nbr <> 14 ) 
+and avg_sales > 50
+group by 1,2 
+order by 7 desc
+;
+
+
+
 ##############################################################################
 ############## Set PromoFlag to zero on Continue Promos ######
 ##############################################################################

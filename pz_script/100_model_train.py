@@ -287,7 +287,11 @@ for i in range(16):
             features_t.remove('s_f_dow_4_{}_mean'.format(j))
             features_t.remove('s_f_dow_13_{}_mean'.format(j))
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
-            features_t.remove('s_f_dow_52_{}_mean'.format(j))          
+            features_t.remove('s_f_dow_52_{}_mean'.format(j))  
+
+            features_t.remove('____ratio_dow_4_{}_mean'.format(j))  
+            features_t.remove('____ratio_dow_8_{}_mean'.format(j))  
+
 
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
@@ -429,6 +433,8 @@ else:
     
 
     ##########################################################################
+    logger.info("0. Merge with zero prev 30D no sales")
+
     df_prev = submission
 
     df_sub = pd.read_csv('../input/sub_zero_30d.csv')
@@ -439,11 +445,13 @@ else:
     submission = t_new[['id', 'unit_sales']]
     del t_new
 
-    logger.info("Merge with zero repeat Wed promo")
+
     logmessage ="Merged  SUM = " +  str( submission.unit_sales.sum())  + '\n'
     logger.info(logmessage)
 
     ##########################################################################
+    logger.info("1. Merge with zero repeat Wed promo")
+
     df_prev = submission
 
     df_sub = pd.read_csv('../input/zero_promo_testset.csv')
@@ -455,11 +463,13 @@ else:
     submission = t_new[['id', 'unit_sales']]
     del t_new
 
-    logger.info("Merge with zero prev 30D no sales")
+
     logmessage ="Merged  SUM = " +  str( submission.unit_sales.sum())  + '\n'
     logger.info(logmessage)
     
     ##########################################################################
+    logger.info("2. Merge with zero continued 16D promo")
+
     df_prev = submission
     
     df_sub = pd.read_csv('../input/zero_continue16dpromo_testset.csv')
@@ -472,7 +482,28 @@ else:
     submission = t_new[['id', 'unit_sales']]
     del t_new
 
-    logger.info("Merge with zero continued 16D promo")
+    logmessage ="Merged  SUM = " +  str( submission.unit_sales.sum())  + '\n'
+    logger.info(logmessage)
+
+    ##########################################################################
+    logger.info("3. Merge with zero prev 15D no sales")
+
+    df_prev = submission
+
+    df_sub = pd.read_csv('../input/sub_zero_30d.csv')
+
+    df_sub = pd.read_csv('../input/output_ZeroForecastInLess30Ds.csv')
+    df_sub['unit_sales'] = 0
+    df_sub = pd.merge(df_sub, df_test, on=['store_nbr', 'item_nbr'],  how = 'inner')
+
+
+    t_new = pd.merge(df_prev, df_sub, on=['id'], how='left')
+    t_new['unit_sales'] = t_new.unit_sales_y.combine_first(t_new.unit_sales_x)
+
+    submission = t_new[['id', 'unit_sales']]
+    del t_new
+
+
     logmessage ="Merged  SUM = " +  str( submission.unit_sales.sum())  + '\n'
     logger.info(logmessage)
 
