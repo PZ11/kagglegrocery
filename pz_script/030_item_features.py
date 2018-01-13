@@ -167,17 +167,6 @@ for i in range(4):
 
 
 
-logger.info('REPEAT 2016 training dataset...')
-for i in range(4):
-    delta = timedelta(days=7 * i)
-    X_tmp, y_tmp = prepare_dataset(
-        t2016 + delta
-    )
-
-    X_l.append(X_tmp)
-    y_l.append(y_tmp)
-
-
 logger.info('Preparing 2017 training dataset...')
 for i in range(train_week_2017):
     delta = timedelta(days=7 * i)
