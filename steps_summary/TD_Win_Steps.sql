@@ -1,4 +1,47 @@
 
+##############################################################################
+############## Set PromoFlag to zero on Continue Promos ######
+##############################################################################
+
+ 				
+sel item_nbr, store_nbr				
+from 				
+( 				
+-- promo week is more than 60% of total 				
+sel  item_nbr, store_nbr, 				
+	max(salesdate) as max_date, 			
+	min(salesdate) as min_date  ,			
+	max(salesdate) -  min(salesdate) + 1  as daycount, 			
+	count(*) as recordcount ,			
+	average(unit_sales) as avg_sales,			
+	sum(onpromotion) as promo_wks			
+from  pzhang.g_train s				
+-- where (s.salesdate) > '2017-01-01' 				
+having 				
+--and max_date > '2017-07-15'				
+promo_wks > recordcount * 0.5				
+group by 1,2  				
+) a				
+				
+UNION 				
+				
+sel item_nbr, store_nbr				
+from 				
+( 				
+-- New SKU after May 51				
+sel  item_nbr, store_nbr, 				
+	max(salesdate) as max_date, 			
+	min(salesdate) as min_date  ,			
+	max(salesdate) -  min(salesdate) + 1  as daycount, 			
+	count(*) as recordcount ,			
+	average(unit_sales) as avg_sales,			
+	sum(onpromotion) as promo_wks			
+from  pzhang.g_train s				
+-- where (s.salesdate) > '2017-01-01' 				
+having 				
+min_date > '2017-05-01'				
+group by 1,2  				
+) b				
 
 ##############################################################################
 ############## Set forecast to zero on the missing record for Wed Promo ######

@@ -40,7 +40,7 @@ logger.info('load test data')
 
 
 # Fixed test small data on T300. It become much slower
-# test_small = test.loc[(train.store_nbr==1),]
+#test_small = test.loc[(train.store_nbr==1),]
 
 test_small = test.loc[(test.store_nbr==1),]
 
