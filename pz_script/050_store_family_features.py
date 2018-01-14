@@ -70,17 +70,6 @@ def get_timespan(df, dt, minus, periods, freq='D'):
 def prepare_dataset(t2017, is_train=True):
     X = pd.DataFrame({
 
-        "sum_ty_p2_7d": get_timespan(df_2017, t2017, 14 , 7).mean(axis=1).values,
-        "sum_ty_p2_14d": get_timespan(df_2017, t2017, 28 , 14).mean(axis=1).values,
-        "sum_ty_p2_30d": get_timespan(df_2017, t2017, 60 , 30).mean(axis=1).values,
-        "sum_ty_p2_60d": get_timespan(df_2017, t2017, 120 , 60).mean(axis=1).values,
-
-        "sum_ly_p7d": get_timespan(df_2017, t2017, 371 , 7).mean(axis=1).values,        
-        "sum_ly_p14d": get_timespan(df_2017, t2017, 378 , 14).mean(axis=1).values,
-        "sum_ly_p30d": get_timespan(df_2017, t2017, 394 , 30).mean(axis=1).values,
-        "sum_ly_p60d": get_timespan(df_2017, t2017, 424 , 60).mean(axis=1).values,
-
-
         "family": df_2017_nbr.family,
         "store_nbr": df_2017_nbr.store_nbr,
         "date": (t2017), 
@@ -107,25 +96,6 @@ def prepare_dataset(t2017, is_train=True):
         ].values
         return X, y
     return X
-
-
-def calc_ratio(df):
-    
-    df['____s_f_ratio_tyly_7d'] = df['s_f_mean_7'] / df['sum_ly_p7d']
-    df['____s_f_ratio_tyly_14d'] = df['s_f_mean_14'] / df['sum_ly_p14d']
-    df['____s_f_ratio_tyly_30d'] = df['s_f_mean_30'] / df['sum_ly_p30d']
-    df['____s_f_ratio_tyly_60d'] = df['s_f_mean_60'] / df['sum_ly_p60d']
-
-    df['____s_f_ratio_ty_p_7d'] = df['s_f_mean_7'] / df['sum_ty_p2_7d']
-    df['____s_f_ratio_ty_p_14d'] = df['s_f_mean_14'] / df['sum_ty_p2_14d']
-    df['____s_f_ratio_ty_p_30d'] = df['s_f_mean_30'] / df['sum_ty_p2_30d']
-    df['____s_f_ratio_ty_p_60d'] = df['s_f_mean_60'] / df['sum_ty_p2_60d']
-
-
-    del df['sum_ty_p2_7d'], df['sum_ty_p2_14d'], df['sum_ty_p2_30d'], df['sum_ty_p2_60d']
-    del df['sum_ly_p14d'], df['sum_ly_p30d'], df['sum_ly_p60d'], df['sum_ly_p7d']
-
-    return df
 
 ###############################################################################
 # Aggregate to s-f(store-family) level
@@ -200,10 +170,6 @@ delta = timedelta(0)
 
 X_val, y_val = prepare_dataset(date(2017, 7, 26))
 X_test = prepare_dataset(date(2017, 8, 16), is_train=False)
-
-X_train = calc_ratio(X_train).fillna(0)
-X_val = calc_ratio(X_val).fillna(0)
-X_test = calc_ratio(X_test).fillna(0)
 
 ##########################################################################
 logger.info('Save Store Item Features ...')

@@ -289,9 +289,6 @@ for i in range(16):
             features_t.remove('s_f_dow_26_{}_mean'.format(j))
             features_t.remove('s_f_dow_52_{}_mean'.format(j))  
 
-            features_t.remove('____ratio_dow_4_{}_mean'.format(j))  
-            features_t.remove('____ratio_dow_8_{}_mean'.format(j))  
-
 
     X_train = X_train_allF[features_t]
     X_val = X_val_allF[features_t]
@@ -494,6 +491,13 @@ else:
 
     df_sub = pd.read_csv('../input/output_ZeroForecastInLess30Ds.csv')
     df_sub['unit_sales'] = 0
+
+
+    df_test = pd.read_csv(
+        "../input/test.csv", usecols=[0, 1, 2, 3, 4],
+        dtype={'onpromotion': bool},
+        parse_dates=["date"]  # , date_parser=parser
+    )
     df_sub = pd.merge(df_sub, df_test, on=['store_nbr', 'item_nbr'],  how = 'inner')
 
 
