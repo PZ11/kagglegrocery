@@ -306,6 +306,8 @@ git branch -d weather_branch
 
 ############################################################################
 ######## Expand Linux Space 
+df -h
+sudo fdisk -l
 
 # Use linux Disk tool to mount unused disk 
 #Create Soft link
