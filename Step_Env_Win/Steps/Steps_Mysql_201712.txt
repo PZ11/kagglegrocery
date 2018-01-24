@@ -1,0 +1,46 @@
+
+## Download and install MySQL 
+## Start mysql service manually, did not choose auto restart
+## See the status is "running" on "MySQL Workbench"
+## Modify ODBC Connection 
+## "Teradata SQL Assistant" is running on 32bit ODBC Only, while MySQL ODBC connection is under 64 bit. 
+
+
+## Install TD SQL Assistant  16.10 #################################
+## Install MySQL 32bit Connection 
+
+######## MY SQL Query 
+show databases; 
+show tables ; 
+DESCRIBE  world.city ; 
+
+CREATE TABLE world.train (
+name VARCHAR(20), 
+owner VARCHAR(20),
+species VARCHAR(20),
+sex CHAR(1), 
+birth DATE, 
+death DATE);
+
+DROP TABLE world.train ; 
+
+CREATE TABLE world.train (
+date DATE,
+store_nbr SMALLINT,
+item_nbr INTEGER,
+unit_sales DECIMAL(18,3) 
+);
+
+SELECT * FROM world.train; 
+DELETE FROM world.train ; 
+
+##########################################################################
+## Install Pentaho 8.0 Evaluation Version 
+
+## Copy MySQL JDBC Driver file: mysql-connector-java-5.1.45-bin.jar to
+C:\Pentaho\design-tools\data-integration\lib
+
+## Start spoon, load train data, 2.5hour to load 125M rows 
+
+##########################################################################
+
