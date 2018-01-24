@@ -1,0 +1,744 @@
+zyp@ubuntu:~/kaggle/kagglegrocery/win01$ python lgb.py
+Preparing dataset...
+Training and predicting models...
+==================================================
+Step 1
+==================================================
+/home/zyp/anaconda3/lib/python3.6/site-packages/lightgbm/basic.py:1030: UserWarning: Using categorical_feature in Dataset.
+  warnings.warn('Using categorical_feature in Dataset.')
+[LightGBM] [Info] Total Bins 115999
+[LightGBM] [Info] Number of data: 1005090, number of used features: 633
+Training until validation scores don't improve for 125 rounds.
+[50]	training's l2: 0.412228	valid_1's l2: 0.402628
+[100]	training's l2: 0.310591	valid_1's l2: 0.306535
+[150]	training's l2: 0.291769	valid_1's l2: 0.290055
+[200]	training's l2: 0.286096	valid_1's l2: 0.285965
+[250]	training's l2: 0.282753	valid_1's l2: 0.28398
+[300]	training's l2: 0.280449	valid_1's l2: 0.282853
+[350]	training's l2: 0.278647	valid_1's l2: 0.282145
+[400]	training's l2: 0.277182	valid_1's l2: 0.281787
+[450]	training's l2: 0.275847	valid_1's l2: 0.281492
+[500]	training's l2: 0.274652	valid_1's l2: 0.281256
+[550]	training's l2: 0.273506	valid_1's l2: 0.281064
+[600]	training's l2: 0.272366	valid_1's l2: 0.280823
+[650]	training's l2: 0.271349	valid_1's l2: 0.2807
+[700]	training's l2: 0.270361	valid_1's l2: 0.280578
+[750]	training's l2: 0.269396	valid_1's l2: 0.280437
+[800]	training's l2: 0.26848	valid_1's l2: 0.280341
+[850]	training's l2: 0.267588	valid_1's l2: 0.280271
+[900]	training's l2: 0.266725	valid_1's l2: 0.280201
+[950]	training's l2: 0.265902	valid_1's l2: 0.280124
+[1000]	training's l2: 0.265086	valid_1's l2: 0.280066
+[1050]	training's l2: 0.264256	valid_1's l2: 0.27998
+[1100]	training's l2: 0.263446	valid_1's l2: 0.27996
+[1150]	training's l2: 0.262644	valid_1's l2: 0.279908
+[1200]	training's l2: 0.261872	valid_1's l2: 0.279893
+[1250]	training's l2: 0.261111	valid_1's l2: 0.279866
+[1300]	training's l2: 0.260352	valid_1's l2: 0.279829
+[1350]	training's l2: 0.25962	valid_1's l2: 0.279794
+[1400]	training's l2: 0.258894	valid_1's l2: 0.279755
+[1450]	training's l2: 0.258176	valid_1's l2: 0.279706
+[1500]	training's l2: 0.257478	valid_1's l2: 0.279663
+[1550]	training's l2: 0.256745	valid_1's l2: 0.279612
+[1600]	training's l2: 0.256047	valid_1's l2: 0.279606
+[1650]	training's l2: 0.255351	valid_1's l2: 0.2796
+[1700]	training's l2: 0.254674	valid_1's l2: 0.279589
+[1750]	training's l2: 0.253987	valid_1's l2: 0.279574
+[1800]	training's l2: 0.25331	valid_1's l2: 0.279575
+[1850]	training's l2: 0.252635	valid_1's l2: 0.279564
+[1900]	training's l2: 0.251978	valid_1's l2: 0.279536
+[1950]	training's l2: 0.251317	valid_1's l2: 0.279522
+[2000]	training's l2: 0.250658	valid_1's l2: 0.279504
+[2050]	training's l2: 0.250022	valid_1's l2: 0.279501
+[2100]	training's l2: 0.249364	valid_1's l2: 0.279474
+[2150]	training's l2: 0.248725	valid_1's l2: 0.279436
+[2200]	training's l2: 0.248101	valid_1's l2: 0.279407
+[2250]	training's l2: 0.247473	valid_1's l2: 0.279389
+[2300]	training's l2: 0.246848	valid_1's l2: 0.279402
+[2350]	training's l2: 0.246223	valid_1's l2: 0.279399
+Early stopping, best iteration is:
+[2268]	training's l2: 0.247265	valid_1's l2: 0.279375
+[LightGBM] [Info] Finished loading 2268 models
+mean_140_decay: 3059323.52
+mean_30_decay: 3016931.31
+mean_7_decay: 2635261.99
+mean_60_decay: 2515302.05
+mean_14_decay: 1733791.00
+mean_7: 491173.14
+promo_0: 439005.92
+mean_20_dow0_2017: 207429.48
+mean_4_dow0_2017: 174352.58
+median_7: 131292.92
+day_1_2017: 107306.60
+no_promo_mean_60_decay: 61905.68
+no_promo_mean_7_decay: 58900.79
+no_promo_mean_140_decay: 57575.29
+no_promo_mean_3_decay: 54259.11
+item_promo_0: 45062.35
+no_promo_mean_3: 44683.14
+no_promo_mean_60: 40509.77
+has_promo_mean_140: 35654.31
+has_promo_mean_60: 28459.18
+item_diff_30_mean: 28024.73
+no_promo_mean_7: 26450.26
+no_promo_mean_140: 24313.16
+std_14: 24141.85
+first_has_promo_day_in_last_7: 24102.68
+median_14: 24042.59
+no_promo_mean_30: 22563.26
+no_promo_mean_14_decay: 21278.88
+item_diff_14_mean: 21275.42
+store_nbr: 20434.45
+item_diff_7_mean: 20249.26
+std_7: 20073.33
+item_diff_60_mean: 19995.85
+last_has_sales_day_in_last_14: 18621.61
+has_promo_mean_30: 18022.83
+has_promo_mean_14: 17421.77
+diff_3_mean: 17172.32
+diff_7_mean: 15698.74
+min_3: 15690.02
+no_promo_mean_30_decay: 14351.35
+type: 14259.06
+item_day_1_2017: 13755.15
+std_3: 11953.01
+std_30: 11708.71
+promo_7: 11111.32
+diff_14_mean: 10868.08
+has_promo_mean_7: 10497.24
+item_diff_140_mean: 10443.11
+item_diff_3_mean: 9823.33
+family: 9711.47
+std_140: 9328.97
+day_14_2017: 8815.47
+diff_30_mean: 8633.25
+has_promo_mean_7_decay: 8467.70
+store_class_diff_7_mean_2: 8325.74
+mean_3_decay: 8125.51
+mean_20_dow4_2017: 8122.48
+day_7_2017: 8078.59
+last_has_sales_day_in_last_140: 7937.18
+store_class_diff_14_mean_2: 7646.27
+diff_60_mean: 7484.65
+mean_20_dow2_2017: 7484.02
+std_14_2: 7414.90
+std_30_2: 7407.69
+std_60_2: 7231.82
+std_60: 7150.28
+std_3_2: 6972.95
+first_has_sales_day_in_last_14: 6969.40
+std_140_2: 6954.45
+store_class_diff_140_mean_2: 6930.94
+std_7_2: 6873.41
+store_class_promo_0: 6855.04
+cluster: 6752.62
+first_has_sales_day_in_last_140: 6743.22
+diff_140_mean: 6697.69
+item_diff_7_mean_2: 6615.98
+diff_140_mean_2: 6570.58
+store_class_diff_7_mean: 6531.26
+item_has_promo_days_in_last_14: 6314.41
+no_promo_mean_14: 6224.20
+diff_14_mean_2: 6197.49
+store_class_diff_140_mean: 6100.70
+diff_30_mean_2: 6000.47
+item_nbr: 5995.76
+mean_4_dow2_2017: 5810.90
+median_60_2: 5794.19
+median_30_2: 5730.32
+max_7: 5634.09
+promo_14: 5629.07
+item_no_promo_mean_3: 5591.74
+store_class_diff_14_mean: 5574.52
+store_class_diff_30_mean_2: 5537.97
+diff_7_mean_2: 5369.69
+diff_3_mean_2: 5360.48
+diff_60_mean_2: 5341.66
+class: 5212.24
+store_class_promo_14: 5170.87
+item_diff_3_mean_2: 5162.65
+store_class_diff_3_mean: 5093.45
+store_class_diff_3_mean_2: 5090.04
+first_has_sales_day_in_last_30: 5048.92
+day_12_2017: 5022.76
+day_4_2017: 4982.80
+item_std_3_2: 4977.24
+mean_30_2: 4930.71
+day_5_2017: 4879.53
+item_std_3: 4878.45
+store_class_diff_30_mean: 4862.53
+item_diff_140_mean_2: 4823.70
+item_diff_30_mean_2: 4795.14
+item_no_promo_mean_3_decay: 4724.03
+item_std_14_2: 4615.48
+item_diff_60_mean_2: 4581.74
+item_diff_14_mean_2: 4551.81
+first_has_sales_day_in_last_7: 4491.61
+mean_4_dow3_2017: 4461.79
+store_class_diff_60_mean: 4425.40
+has_sales_days_in_last_140: 4418.03
+store_class_diff_60_mean_2: 4405.47
+store_class_promo_7: 4347.85
+item_std_7: 4334.05
+item_day_2_2017: 4331.59
+mean_20_dow1_2017: 4312.11
+day_2_2017: 4263.28
+mean_4_dow4_2017: 4246.04
+max_3: 4212.44
+max_14: 4150.86
+mean_4_dow1_2017: 4054.91
+mean_4_dow6_2017: 4045.03
+item_std_30: 4026.10
+first_has_promo_day_in_last_140: 4008.19
+first_has_promo_day_in_after_15_days: 3956.38
+day_6_2017: 3897.45
+max_30: 3862.63
+item_std_7_2: 3857.87
+mean_20_dow6_2017: 3817.29
+item_has_promo_mean_14: 3800.73
+max_140: 3765.21
+first_has_promo_day_in_last_14: 3709.86
+day_3_2017: 3699.28
+item_has_promo_mean_7: 3682.31
+item_std_14: 3678.10
+mean_4_dow5_2017: 3629.22
+day_13_2017: 3589.09
+city: 3552.97
+item_min_3: 3478.52
+max_14_2: 3465.01
+mean_3: 3412.36
+has_sales_days_in_last_60: 3370.65
+item_std_140: 3366.42
+median_3: 3364.95
+item_mean_20_dow4_2017: 3330.81
+item_has_promo_mean_30: 3299.22
+item_std_140_2: 3230.03
+mean_20_dow5_2017: 3226.27
+min_7: 3203.09
+item_first_has_promo_day_in_last_140: 3181.17
+max_3_2: 3173.21
+has_sales_days_in_last_14: 3169.28
+median_7_2: 3158.45
+store_class_std_3: 3153.82
+day_15_2017: 3153.29
+day_9_2017: 3140.61
+item_std_60_2: 3108.00
+item_day_5_2017: 3053.43
+store_class_has_promo_mean_3: 3043.23
+day_11_2017: 3016.64
+item_std_60: 2990.92
+max_140_2: 2983.66
+item_promo_140_2017: 2921.53
+promo_-7: 2896.95
+mean_7_decay_2: 2877.39
+store_class_has_promo_days_in_last_140: 2875.86
+store_class_std_3_2: 2857.16
+median_30: 2838.21
+max_7_2: 2824.69
+mean_20_dow3_2017: 2787.66
+item_std_30_2: 2753.97
+store_class_no_promo_mean_30: 2724.79
+mean_60_2: 2721.32
+item_has_promo_mean_3: 2719.25
+mean_3_decay_2: 2676.13
+mean_14_2: 2662.04
+store_class_has_promo_mean_7: 2659.44
+store_class_promo_-14: 2644.19
+store_class_promo_140_2017: 2615.51
+max_60_2: 2598.71
+item_no_promo_mean_7: 2581.58
+item_has_promo_days_in_last_140: 2569.53
+day_10_2017: 2566.32
+item_min_30_2: 2551.31
+item_promo_60_2017: 2519.26
+store_class_promo_60_2017: 2512.93
+max_30_2: 2484.72
+item_has_promo_mean_140: 2478.31
+item_has_promo_mean_60: 2429.78
+mean_14_decay_2: 2418.87
+first_has_sales_day_in_last_60: 2398.53
+store_class_no_promo_mean_60: 2395.29
+store_class_no_promo_mean_14: 2389.43
+item_min_140_2: 2378.68
+item_min_140: 2365.99
+max_60: 2352.58
+has_sales_days_in_last_30: 2352.22
+last_has_promo_day_in_after_15_days: 2322.71
+median_60: 2316.68
+item_promo_-1: 2271.39
+item_promo_7: 2264.99
+store_class_no_promo_mean_140: 2262.96
+item_promo_14_2017_aft: 2236.54
+mean_3_2: 2225.32
+state: 2208.37
+item_no_promo_mean_7_decay: 2204.74
+item_promo_-14: 2192.91
+store_class_std_7: 2173.29
+store_class_promo_14_2017_aft: 2171.16
+day_8_2017: 2143.52
+has_promo_days_in_last_140: 2126.25
+item_day_6_2017: 2077.29
+item_min_60: 2077.02
+has_promo_mean_3: 2053.34
+median_14_2: 2001.93
+has_sales_days_in_last_7: 1992.27
+item_promo_14_2017: 1990.05
+item_min_60_2: 1984.80
+store_class_no_promo_mean_3: 1972.85
+item_promo_14: 1949.24
+item_day_4_2017: 1942.71
+item_median_3: 1932.28
+store_class_no_promo_mean_7: 1930.08
+item_promo_-7: 1929.49
+median_3_2: 1925.27
+mean_7_2: 1921.44
+has_promo_mean_14_decay: 1920.49
+item_min_30: 1895.14
+store_class_promo_14_2017: 1851.70
+item_promo_7_2017_aft: 1840.43
+store_class_std_7_2: 1826.93
+item_first_has_promo_day_in_last_60: 1825.62
+item_first_has_promo_day_in_last_30: 1803.95
+store_class_promo_-7: 1798.82
+store_class_std_14_2: 1793.40
+item_no_promo_mean_14: 1784.93
+item_has_promo_mean_14_decay: 1763.35
+last_has_sales_day_in_last_30: 1703.25
+store_class_first_has_promo_day_in_last_140: 1701.16
+item_first_has_promo_day_in_after_15_days: 1685.02
+store_class_no_promo_mean_140_decay: 1676.82
+store_class_promo_7_2017_aft: 1670.73
+item_has_promo_mean_7_decay: 1660.46
+store_class_no_promo_mean_30_decay: 1646.31
+item_min_14_2: 1643.84
+store_class_no_promo_mean_14_decay: 1641.08
+perishable: 1634.28
+mean_14: 1627.50
+item_day_7_2017: 1576.80
+has_promo_days_in_after_15_days: 1570.39
+store_class_has_promo_mean_14: 1562.41
+item_day_15_2017: 1550.65
+item_max_140: 1535.16
+item_min_7: 1526.69
+promo_7_2017_aft: 1520.26
+item_last_has_promo_day_in_after_15_days: 1503.30
+item_promo_-2: 1502.18
+item_promo_-10: 1485.83
+item_day_12_2017: 1468.31
+item_promo_-16: 1454.66
+mean_140_2: 1451.68
+store_class_std_60_2: 1445.07
+mean_60: 1443.26
+item_day_13_2017: 1443.05
+min_3_2: 1440.42
+item_promo_3_2017_aft: 1426.97
+item_has_promo_days_in_last_60: 1419.18
+item_has_promo_mean_30_decay: 1418.87
+item_day_14_2017: 1405.54
+store_class_has_promo_days_in_last_60: 1395.25
+mean_140: 1389.89
+store_class_std_30_2: 1381.75
+item_has_promo_mean_140_decay: 1381.00
+store_class_has_promo_mean_30: 1369.95
+item_day_11_2017: 1368.49
+item_has_promo_days_in_after_15_days: 1368.10
+item_mean_4_dow4_2017: 1366.31
+item_has_promo_days_in_last_30: 1350.72
+store_class_no_promo_mean_7_decay: 1350.06
+item_no_promo_mean_14_decay: 1341.26
+item_day_8_2017: 1340.00
+store_class_std_14: 1314.81
+item_max_140_2: 1301.88
+item_min_14: 1275.07
+store_class_last_has_promo_day_in_after_15_days: 1273.62
+mean_30_decay_2: 1273.56
+item_day_9_2017: 1272.96
+item_promo_-9: 1271.08
+store_class_promo_3_2017_aft: 1268.92
+store_class_day_12_2017: 1262.51
+item_mean_20_dow2_2017: 1262.51
+item_no_promo_mean_60: 1259.28
+item_no_promo_mean_140_decay: 1239.77
+store_class_no_promo_mean_60_decay: 1235.82
+promo_14_2017_aft: 1229.20
+first_has_promo_day_in_last_60: 1226.15
+item_day_10_2017: 1216.24
+has_promo_mean_3_decay: 1215.35
+item_mean_20_dow3_2017: 1209.20
+mean_30: 1207.54
+item_has_promo_mean_3_decay: 1205.01
+store_class_day_15_2017: 1197.89
+item_max_14_2: 1183.97
+item_promo_-12: 1182.78
+store_class_day_5_2017: 1182.77
+item_day_3_2017: 1177.95
+store_class_has_promo_mean_60: 1164.13
+store_class_promo_13: 1163.30
+store_class_promo_9: 1160.71
+store_class_day_14_2017: 1157.35
+item_mean_4_dow2_2017: 1142.68
+first_has_promo_day_in_last_30: 1136.32
+median_140: 1121.27
+store_class_std_30: 1096.54
+item_no_promo_mean_30_decay: 1094.94
+mean_140_decay_2: 1085.12
+item_no_promo_mean_30: 1080.47
+store_class_day_6_2017: 1066.25
+item_max_7: 1063.57
+store_class_day_2_2017: 1057.85
+store_class_has_promo_days_in_last_30: 1043.83
+store_class_min_140_2: 1036.30
+store_class_no_promo_mean_3_decay: 1034.58
+item_mean_20_dow5_2017: 1031.85
+item_promo_15: 1011.71
+median_140_2: 1002.01
+item_mean_20_dow0_2017: 1000.67
+item_promo_1: 1000.35
+store_class_std_140_2: 999.99
+item_mean_20_dow6_2017: 992.01
+item_has_sales_days_in_last_140: 984.37
+item_mean_4_dow0_2017: 982.72
+store_class_std_60: 978.79
+store_class_day_13_2017: 975.05
+store_class_day_7_2017: 974.58
+store_class_min_140: 965.46
+item_median_7: 964.99
+item_min_3_2: 959.48
+store_class_has_promo_mean_140: 952.66
+item_max_3_2: 948.81
+store_class_first_has_promo_day_in_last_60: 944.21
+item_max_60: 943.51
+item_max_30: 941.43
+store_class_day_8_2017: 934.35
+item_min_7_2: 930.17
+item_no_promo_mean_140: 929.83
+has_promo_mean_140_decay: 920.35
+store_class_std_140: 916.90
+item_first_has_promo_day_in_last_14: 915.29
+item_median_60_2: 914.77
+item_max_30_2: 909.85
+item_max_3: 887.53
+item_mean_4_dow3_2017: 883.41
+store_class_min_60_2: 880.55
+item_median_3_2: 879.94
+item_mean_4_dow1_2017: 869.87
+mean_60_decay_2: 860.39
+item_has_promo_mean_60_decay: 859.98
+store_class_day_1_2017: 855.80
+item_max_7_2: 854.96
+store_class_promo_15: 845.03
+has_promo_days_in_last_30: 844.78
+store_class_day_4_2017: 840.79
+item_mean_20_dow1_2017: 837.54
+store_class_first_has_promo_day_in_last_30: 830.18
+store_class_promo_-8: 826.98
+store_class_promo_-1: 819.56
+store_class_has_promo_days_in_after_15_days: 817.12
+store_class_has_promo_mean_7_decay: 807.11
+store_class_has_sales_days_in_last_140: 794.81
+last_has_promo_day_in_last_140: 792.27
+store_class_promo_-15: 792.27
+item_max_60_2: 789.09
+store_class_promo_2: 786.82
+store_class_day_9_2017: 782.98
+has_promo_days_in_last_60: 782.94
+item_mean_4_dow5_2017: 782.89
+store_class_min_3: 776.03
+store_class_first_has_promo_day_in_after_15_days: 768.69
+item_promo_-6: 765.02
+item_promo_-15: 762.87
+item_mean_3_decay: 762.23
+item_promo_13: 760.51
+item_median_140_2: 748.58
+store_class_has_promo_mean_3_decay: 747.07
+store_class_first_has_sales_day_in_last_140: 739.08
+store_class_promo_6: 738.56
+store_class_promo_-10: 737.99
+item_first_has_promo_day_in_last_7: 735.29
+min_14: 731.62
+store_class_day_11_2017: 729.54
+store_class_mean_4_dow0_2017: 728.74
+store_class_has_promo_mean_14_decay: 723.82
+store_class_promo_-12: 723.35
+store_class_mean_20_dow2_2017: 717.53
+item_median_30_2: 716.57
+has_promo_mean_30_decay: 715.93
+item_promo_9: 715.67
+item_max_14: 706.06
+store_class_promo_11: 699.45
+item_no_promo_mean_60_decay: 688.96
+store_class_promo_-5: 678.22
+has_promo_days_in_last_7: 675.89
+store_class_promo_8: 667.62
+item_promo_6: 666.80
+store_class_min_14_2: 657.75
+store_class_day_10_2017: 650.41
+promo_-15: 649.15
+store_class_mean_20_dow0_2017: 649.00
+item_promo_3: 647.65
+store_class_min_7: 644.45
+min_7_2: 643.36
+item_promo_-13: 641.57
+item_promo_-8: 626.76
+store_class_promo_-6: 625.79
+store_class_min_60: 620.95
+store_class_promo_-13: 613.25
+store_class_mean_20_dow4_2017: 612.23
+store_class_mean_4_dow2_2017: 607.58
+item_median_140: 605.00
+store_class_min_3_2: 601.96
+store_class_min_30_2: 595.88
+store_class_promo_4: 589.80
+store_class_median_3: 588.00
+store_class_min_7_2: 585.59
+store_class_promo_12: 582.20
+item_mean_4_dow6_2017: 580.14
+item_last_has_promo_day_in_last_14: 579.03
+item_promo_11: 576.45
+store_class_day_3_2017: 569.38
+store_class_has_promo_mean_30_decay: 567.86
+has_promo_mean_60_decay: 564.01
+item_promo_-5: 560.50
+store_class_promo_3: 560.04
+item_mean_60_2: 557.90
+promo_-8: 556.74
+store_class_promo_5: 556.69
+item_mean_3_decay_2: 555.45
+store_class_median_3_2: 548.06
+item_median_7_2: 546.12
+store_class_min_14: 542.42
+store_class_promo_10: 541.80
+item_promo_4: 539.82
+store_class_promo_-16: 531.26
+item_mean_30_2: 524.55
+item_median_60: 522.60
+item_promo_2: 522.31
+item_mean_3_2: 519.38
+item_last_has_promo_day_in_last_140: 513.97
+store_class_has_promo_mean_140_decay: 509.94
+store_class_max_3: 505.63
+promo_-14: 503.47
+store_class_promo_-3: 500.69
+item_mean_60: 500.44
+item_promo_-4: 491.62
+store_class_promo_-9: 486.61
+store_class_has_promo_mean_60_decay: 481.71
+item_promo_5: 469.31
+item_mean_140_2: 468.61
+store_class_promo_-4: 464.03
+item_median_14: 460.78
+store_class_mean_4_dow4_2017: 458.40
+store_class_promo_1: 457.96
+store_class_first_has_promo_day_in_last_14: 454.88
+store_class_promo_-2: 453.58
+has_promo_days_in_last_14: 451.48
+last_has_promo_day_in_last_14: 448.21
+store_class_max_140: 444.01
+item_mean_7: 440.85
+store_class_min_30: 439.72
+store_class_promo_-11: 435.37
+store_class_median_7: 433.37
+item_promo_-3: 429.72
+store_class_mean_20_dow3_2017: 429.38
+min_14_2: 427.40
+store_class_mean_20_dow6_2017: 426.16
+item_median_14_2: 421.05
+store_class_last_has_promo_day_in_last_14: 417.73
+store_class_mean_4_dow5_2017: 414.85
+item_promo_12: 411.35
+item_mean_3: 403.51
+item_mean_14_decay_2: 398.89
+store_class_mean_4_dow3_2017: 391.15
+store_class_mean_20_dow5_2017: 390.04
+store_class_max_3_2: 385.04
+promo_3_2017_aft: 383.87
+item_promo_-11: 379.07
+item_mean_7_decay_2: 378.60
+item_promo_8: 375.18
+item_mean_7_decay: 374.10
+store_class_mean_4_dow6_2017: 367.57
+item_mean_140: 360.95
+store_class_first_has_promo_day_in_last_7: 355.17
+store_class_max_7_2: 352.17
+item_mean_7_2: 349.42
+store_class_max_7: 344.34
+store_class_max_30_2: 344.29
+item_mean_14_2: 334.48
+store_class_has_promo_days_in_last_14: 330.14
+item_has_sales_days_in_last_60: 313.87
+store_class_mean_20_dow1_2017: 310.11
+store_class_mean_4_dow1_2017: 304.13
+item_first_has_sales_day_in_last_140: 303.92
+store_class_max_14_2: 303.01
+item_median_30: 299.31
+store_class_median_140_2: 288.29
+store_class_mean_3_2: 287.36
+store_class_max_30: 286.61
+item_mean_30_decay_2: 284.52
+store_class_max_60: 284.11
+item_mean_30: 277.03
+store_class_last_has_promo_day_in_last_140: 268.70
+item_mean_14: 258.06
+store_class_max_140_2: 257.76
+promo_140_2017: 256.20
+store_class_max_60_2: 254.43
+store_class_max_14: 251.40
+item_mean_14_decay: 246.46
+item_promo_10: 246.06
+store_class_mean_3_decay: 245.39
+item_mean_140_decay_2: 244.77
+item_has_promo_days_in_last_7: 233.49
+store_class_median_7_2: 226.40
+store_class_median_140: 220.38
+store_class_median_14_2: 218.03
+min_30: 215.29
+store_class_mean_3_decay_2: 205.50
+store_class_mean_3: 196.06
+store_class_median_14: 184.04
+store_class_mean_140_2: 183.31
+item_has_sales_days_in_last_30: 180.76
+item_mean_140_decay: 175.65
+promo_60_2017: 171.75
+last_has_sales_day_in_last_60: 171.32
+min_30_2: 162.91
+promo_9: 154.50
+store_class_mean_7_2: 150.98
+store_class_median_30_2: 149.11
+item_mean_60_decay_2: 147.50
+item_first_has_sales_day_in_last_60: 135.98
+store_class_mean_14_2: 134.75
+store_class_median_30: 132.59
+store_class_mean_7_decay: 130.46
+min_60_2: 128.38
+item_mean_30_decay: 128.23
+store_class_mean_7: 122.44
+promo_2: 121.49
+store_class_mean_14: 118.26
+promo_8: 110.25
+store_class_mean_140: 107.64
+item_mean_60_decay: 105.38
+store_class_median_60_2: 104.78
+promo_4: 102.46
+store_class_mean_7_decay_2: 99.00
+store_class_mean_60_2: 91.62
+promo_-5: 91.47
+min_60: 89.34
+promo_3: 85.82
+store_class_has_promo_days_in_last_7: 82.75
+store_class_has_sales_days_in_last_60: 82.36
+store_class_mean_30_2: 80.35
+promo_11: 76.86
+promo_6: 76.11
+store_class_mean_14_decay: 75.09
+promo_13: 74.11
+store_class_median_60: 67.27
+promo_-10: 64.60
+store_class_last_has_promo_day_in_last_30: 64.14
+promo_1: 63.21
+store_class_mean_30: 57.97
+store_class_mean_14_decay_2: 56.49
+store_class_mean_60: 55.92
+item_last_has_promo_day_in_last_30: 55.16
+item_first_has_sales_day_in_last_30: 53.40
+store_class_mean_30_decay_2: 51.19
+store_class_mean_60_decay: 43.89
+promo_14_2017: 38.86
+store_class_mean_140_decay: 37.89
+min_140_2: 36.26
+item_last_has_promo_day_in_last_60: 36.17
+last_has_promo_day_in_last_60: 35.63
+store_class_mean_30_decay: 35.55
+last_has_promo_day_in_last_30: 34.71
+promo_-13: 34.35
+min_140: 32.18
+store_class_mean_140_decay_2: 32.05
+promo_5: 27.49
+promo_-2: 27.26
+store_class_last_has_promo_day_in_last_60: 26.53
+store_class_has_sales_days_in_last_30: 21.34
+store_class_mean_60_decay_2: 21.12
+store_class_first_has_sales_day_in_last_60: 20.55
+promo_-3: 19.39
+promo_-6: 18.53
+store_class_has_sales_days_in_last_7: 14.83
+store_class_has_sales_days_in_last_14: 13.89
+store_class_first_has_sales_day_in_last_30: 13.53
+promo_-12: 13.17
+promo_-16: 12.92
+promo_12: 12.14
+store_class_last_has_promo_day_in_last_7: 10.92
+promo_-9: 10.00
+promo_-4: 8.39
+item_first_has_sales_day_in_last_14: 6.54
+promo_-11: 6.39
+store_class_last_has_sales_day_in_last_140: 3.75
+promo_10: 3.44
+last_has_promo_day_in_last_7: 0.00
+last_has_sales_day_in_last_7: 0.00
+promo_-1: 0.00
+promo_15: 0.00
+item_first_has_sales_day_in_last_7: 0.00
+item_has_sales_days_in_last_14: 0.00
+item_has_sales_days_in_last_7: 0.00
+item_last_has_promo_day_in_last_7: 0.00
+item_last_has_sales_day_in_last_14: 0.00
+item_last_has_sales_day_in_last_140: 0.00
+item_last_has_sales_day_in_last_30: 0.00
+item_last_has_sales_day_in_last_60: 0.00
+item_last_has_sales_day_in_last_7: 0.00
+store_class_first_has_sales_day_in_last_14: 0.00
+store_class_first_has_sales_day_in_last_7: 0.00
+store_class_last_has_sales_day_in_last_14: 0.00
+store_class_last_has_sales_day_in_last_30: 0.00
+store_class_last_has_sales_day_in_last_60: 0.00
+store_class_last_has_sales_day_in_last_7: 0.00
+==================================================
+Step 2
+==================================================
+[LightGBM] [Info] Total Bins 115999
+[LightGBM] [Info] Number of data: 1005090, number of used features: 633
+Training until validation scores don't improve for 125 rounds.
+[50]	training's l2: 0.413279	valid_1's l2: 0.418517
+[100]	training's l2: 0.328986	valid_1's l2: 0.336871
+[150]	training's l2: 0.31335	valid_1's l2: 0.322467
+[200]	training's l2: 0.307927	valid_1's l2: 0.317731
+[250]	training's l2: 0.304698	valid_1's l2: 0.315539
+[300]	training's l2: 0.30224	valid_1's l2: 0.314023
+[350]	training's l2: 0.300279	valid_1's l2: 0.313193
+[400]	training's l2: 0.298591	valid_1's l2: 0.312629
+[450]	training's l2: 0.29703	valid_1's l2: 0.312188
+[500]	training's l2: 0.295646	valid_1's l2: 0.31183
+[550]	training's l2: 0.294378	valid_1's l2: 0.311579
+[600]	training's l2: 0.293163	valid_1's l2: 0.311327
+[650]	training's l2: 0.292012	valid_1's l2: 0.31116
+[700]	training's l2: 0.290909	valid_1's l2: 0.311038
+[750]	training's l2: 0.289873	valid_1's l2: 0.310931
+[800]	training's l2: 0.288865	valid_1's l2: 0.310823
+[850]	training's l2: 0.28786	valid_1's l2: 0.310755
+[900]	training's l2: 0.286902	valid_1's l2: 0.31067
+[950]	training's l2: 0.285969	valid_1's l2: 0.310595
+[1000]	training's l2: 0.285057	valid_1's l2: 0.310579
+[1050]	training's l2: 0.284146	valid_1's l2: 0.310495
+[1100]	training's l2: 0.283273	valid_1's l2: 0.310461
+[1150]	training's l2: 0.282407	valid_1's l2: 0.310409
+[1200]	training's l2: 0.281569	valid_1's l2: 0.310402
+[1250]	training's l2: 0.28073	valid_1's l2: 0.310403
+[1300]	training's l2: 0.279909	valid_1's l2: 0.31035
+[1350]	training's l2: 0.27913	valid_1's l2: 0.310308
+[1400]	training's l2: 0.278322	valid_1's l2: 0.310273
+[1450]	training's l2: 0.277534	valid_1's l2: 0.310258
+[1500]	training's l2: 0.27673	valid_1's l2: 0.310223
+[1550]	training's l2: 0.275951	valid_1's l2: 0.310203
+[1600]	training's l2: 0.275176	valid_1's l2: 0.310166
+[1650]	training's l2: 0.274392	valid_1's l2: 0.310171
+[1700]  training's l2: 0.273651	valid_1's l2: 0.310143
+[1750]	training's l2: 0.272898	valid_1's l2: 0.310129
+^CTraceback (most recent call last):
+  File "lgb.py", line 247, in <module>
+    valid_sets=[dtrain, dval], early_stopping_rounds=125, verbose_eval=50
+  File "/home/zyp/anaconda3/lib/python3.6/site-packages/lightgbm/engine.py", line 199, in train
+    booster.update(fobj=fobj)
+  File "/home/zyp/anaconda3/lib/python3.6/site-packages/lightgbm/basic.py", line 1507, in update
+    ctypes.byref(is_finished)))
+KeyboardInterrupt
+zyp@ubuntu:~/kaggle
