@@ -1,0 +1,151 @@
+======================================================================
+2018-01-11 17:50:40,433 __main__ 282 [INFO]    [<module>] Step 16 
+======================================================================
+[LightGBM] [Info] Total Bins 19103
+[LightGBM] [Info] Number of data: 3316868, number of used features: 93
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.290988	valid_1's l2: 0.360062
+[200]	training's l2: 0.285153	valid_1's l2: 0.358628
+[300]	training's l2: 0.281685	valid_1's l2: 0.357523
+[400]	training's l2: 0.278984	valid_1's l2: 0.356763
+[500]	training's l2: 0.276894	valid_1's l2: 0.356399
+Did not meet early stopping. Best iteration is:
+[500]	training's l2: 0.276894	valid_1's l2: 0.356399
+[LightGBM] [Info] Finished loading 500 models
+2018-01-11 17:55:57,093 __main__ 362 [INFO]    [<module>] mean_60: 5302058.79
+mean_7: 1343290.50
+mean_14: 1105355.98
+mean_42: 823337.52
+mean_21: 265580.95
+dow_8_1_mean: 251166.32
+promo_15: 212872.30
+mean_30: 185416.04
+____class_mean_14_2017: 83224.86
+dow_52_1_mean: 71664.77
+dow_13_1_mean: 65598.38
+item_day_01_2017: 58930.65
+item_mean_21_2017: 57602.14
+mean_3: 56780.99
+mean_91: 56469.02
+day_1: 50568.60
+dow_26_1_mean: 39226.47
+promo_14: 34496.02
+____class_mean_21_2017: 26913.82
+store_day_1_2017: 26479.64
+promo_sum_14: 26204.94
+____class_day_01_2017: 25145.83
+promo_sum_60: 16932.18
+item_mean_07_2017: 16738.28
+s_f_day_1_2017: 15282.14
+ly_1d_d15: 13594.64
+store_mean_21_2017: 12597.66
+store_mean_7_2017: 12551.34
+item_dow_04_1_mean: 12477.14
+store_mean_42_2017: 11641.42
+____class_mean_07_2017: 11516.12
+store_mean_91_2017: 10829.35
+item_mean_91_2017: 10573.19
+dow_4_1_mean: 10339.18
+store_dow_13_1_mean: 10139.73
+mean_364: 9652.51
+____class_day_03_2017: 9637.29
+item_mean_42_2017: 9315.27
+item_dow_52_1_mean: 9296.95
+item_mean_364_2017: 9115.46
+promo_sum_140: 9097.35
+store_dow_4_1_mean: 8622.85
+____class_mean_364_2017: 8593.24
+store_mean_182_2017: 8189.76
+item_mean_182_2017: 7922.66
+item_dow_13_1_mean: 7620.74
+item_dow_26_1_mean: 7602.13
+s_f_mean_21_2017: 7381.58
+____class_mean_91_2017: 7089.08
+__class_dow_52_1_mean: 6788.25
+store_mean_364_2017: 6486.18
+____class_mean_182_2017: 6407.33
+promo_13: 6292.98
+__class_dow_13_1_mean: 5808.39
+mean_182: 5644.20
+s_f_dow_4_1_mean: 5421.58
+store_dow_26_1_mean: 5411.80
+__class_dow_26_1_mean: 5032.14
+promo_8: 4904.80
+mean_ly_14: 4769.15
+dow_1_1_mean: 4606.31
+____class_mean_42_2017: 4588.69
+__class_dow_06_1_mean: 4509.75
+__class_dow_03_1_mean: 4432.66
+mean_140: 4300.00
+store_dow_52_1_mean: 3988.85
+promo_9: 3692.72
+promo_0: 3672.26
+__class_dow_01_1_mean: 3619.75
+dow_ly8w_1_mean: 2409.74
+promo_1: 2360.77
+s_f_mean_42_2017: 2306.52
+mean_ly_n16d: 2276.72
+promo_12: 2073.41
+promo_10: 2022.00
+dow_ly3w_1_mean: 2010.67
+promo_7: 1919.72
+promo_11: 1807.39
+mean_ly_30: 1721.38
+s_f_dow_26_1_mean: 1640.53
+promo_2: 1420.58
+s_f_dow_13_1_mean: 1332.23
+mean_ly_21: 1315.85
+s_f_dow_52_1_mean: 1302.69
+mean_ly_7: 1280.61
+s_f_mean_91_2017: 1223.51
+s_f_mean_7_2017: 1216.55
+s_f_mean_364_2017: 1078.88
+s_f_mean_182_2017: 869.44
+promo_6: 838.12
+promo_4: 806.89
+promo_3: 377.66
+promo_5: 222.51 
+2018-01-11 17:56:02,299 __main__ 382 [INFO]    [<module>] validate accuracy ... 
+Index         22345216
+store_nbr     22345216
+item_nbr      22345216
+level_3       22345216
+unit_sales    22345216
+pred_sales    22345216
+date          22345216
+dtype: int64
+test dataset uses  149.17041015625  MB after changes
+Index         22345216
+unit_sales    22345216
+pred_sales    22345216
+date          22345216
+perishable    22345216
+dtype: int64
+test dataset uses  106.55029296875  MB after changes
+Eval All, Number of rows in test is 2793152
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 872860
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-30 00:00:00
+Eval P2, Number of rows in test is 1920292
+Eval P2, Forecast Period From: 2017-07-31 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5836200823951289
+Eval P1  Weighted NWRMSLE =  0.5598671812688208
+Eval P2  Weighted NWRMSLE =  0.5941030078083276
+All Bias = -0.01966484832036998
+P1 Bias = 0.009752741742461657
+P2 Bias = -0.03296773096609404
+WMAPE = 0.6883671860088791
+SUM = 2784836.3047448257
+MEAN = 0.9970228275241826
+0.341463214254
+0.5836200823951289
+0.5598671812688208
+0.5941030078083276
+-0.01966484832036998
+0.009752741742461657
+-0.03296773096609404
+0.6883671860088791
+2784836.3047448257
+0.9970228275241826
+zyp@zyp-MS-7850:~/kaggle/kagglegrocery/pz_script$ 
+

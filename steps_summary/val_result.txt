@@ -1242,8 +1242,153 @@ MEAN = 4.921393437365248
 ###############################################################
 ###############################################################
 ###############################################################
-## 
+##  T400
 
+2018-01-13 18:00:43,599 __main__ 253 [INFO]    [<module>] Step 16 
+======================================================================
+[LightGBM] [Info] Total Bins 20632
+[LightGBM] [Info] Number of data: 3316868, number of used features: 99
+Training until validation scores don't improve for 50 rounds.
+[100]	training's l2: 0.293751	valid_1's l2: 0.359806
+[200]	training's l2: 0.288608	valid_1's l2: 0.357764
+[300]	training's l2: 0.285637	valid_1's l2: 0.356968
+[400]	training's l2: 0.28333	valid_1's l2: 0.356354
+[500]	training's l2: 0.28159	valid_1's l2: 0.355839
+Did not meet early stopping. Best iteration is:
+[500]	training's l2: 0.28159	valid_1's l2: 0.355839
+[LightGBM] [Info] Finished loading 500 models
+2018-01-13 18:07:03,216 __main__ 329 [INFO]    [<module>] mean_60: 4670919.63
+mean_7: 1473567.24
+mean_14: 1440441.25
+mean_42: 843870.06
+mean_21: 419830.03
+dow_8_1_mean: 304259.51
+promo_15: 212861.60
+dow_13_1_mean: 109579.94
+item_mean_21: 99439.27
+item_day_01: 88971.62
+day_1: 82852.39
+dow_52_1_mean: 77165.96
+mean_30: 64165.57
+mean_91: 45609.19
+dow_26_1_mean: 44676.16
+ratio_ty_p_60d: 42021.51
+store_day_1_2017: 29584.17
+mean_3: 29145.99
+promo_sum_14: 25214.18
+item_mean_07: 23658.81
+ratio_ty_p_7d: 23234.92
+mean_140: 18215.14
+ratio_ty_p_30d: 15216.01
+ly_1d_d15: 14103.36
+promo_sum_60: 13321.00
+item_dow_04_1_mean: 13003.59
+store_mean_21_2017: 11928.42
+item_mean_91: 10773.76
+item_dow_52_1_mean: 10672.23
+s_f_day_1: 10370.07
+dow_4_1_mean: 9889.62
+ratio_ty_p_14d: 9641.92
+item_dow_13_1_mean: 9634.67
+store_mean_7_2017: 9485.51
+item_mean_364: 9346.47
+store_mean_364_2017: 9142.98
+store_dow_13_1_mean: 8795.90
+promo_sum_140: 8730.57
+item_mean_42: 8458.53
+store_dow_4_1_mean: 8037.87
+mean_182: 7342.48
+item_mean_182: 7321.25
+store_mean_182_2017: 7278.65
+store_mean_42_2017: 7238.62
+____s_f_ratio_ty_p_14d: 7208.35
+s_f_dow_4_1_mean: 6869.23
+item_dow_26_1_mean: 6720.71
+store_mean_91_2017: 6455.73
+____s_f_ratio_ty_p_60d: 6300.82
+____s_f_ratio_ty_p_7d: 5970.68
+store_dow_26_1_mean: 5047.06
+____s_f_ratio_ty_p_30d: 5041.96
+promo_8: 4589.23
+store_dow_52_1_mean: 4572.79
+dow_1_1_mean: 4399.39
+mean_364: 4019.80
+promo_13: 3868.65
+ratio_tyly_30d: 3864.25
+____ratio_dow_8_1_mean: 3669.41
+promo_9: 3170.10
+____s_f_ratio_tyly_60d: 2975.53
+____s_f_ratio_tyly_30d: 2810.82
+ratio_tyly_7d: 2438.80
+promo_14: 2269.28
+____s_f_ratio_tyly_7d: 2230.03
+ratio_tyly_14d: 2182.43
+ratio_ly_p_7d: 2115.56
+____s_f_ratio_tyly_14d: 2099.95
+dow_ly3w_1_mean: 2053.27
+ratio_tyly_60d: 2025.90
+promo_10: 1893.44
+ratio_ly_p_16d: 1881.32
+promo_12: 1824.12
+promo_1: 1795.96
+dow_ly8w_1_mean: 1637.89
+promo_0: 1612.01
+s_f_dow_52_1_mean: 1605.00
+mean_ly_30: 1496.61
+s_f_mean_30: 1494.91
+mean_ly_14: 1489.49
+____ratio_dow_4_1_mean: 1483.25
+s_f_dow_13_1_mean: 1361.57
+mean_ly_n16d: 1298.20
+s_f_dow_26_1_mean: 1289.54
+promo_11: 1169.15
+mean_ly_21: 1160.90
+s_f_mean_7: 1121.40
+promo_7: 991.14
+promo_6: 986.45
+s_f_mean_182: 948.59
+mean_ly_7: 909.07
+s_f_mean_91: 805.11
+s_f_mean_364: 795.55
+promo_2: 770.72
+s_f_mean_14: 743.10
+promo_4: 640.70
+s_f_mean_60: 589.75
+promo_3: 290.17
+promo_5: 117.26 
+2018-01-13 18:07:08,988 __main__ 349 [INFO]    [<module>] validate accuracy ..
+
+test dataset uses  95.895263671875  MB after changes
+Eval All, Number of rows in test is 2793152
+Eval all, Forecast Period From: 2017-07-26 00:00:00  To:  2017-08-10 00:00:00
+Eval P1, Number of rows in test is 872860
+Eval P1, Forecast Period From: 2017-07-26 00:00:00  To:  2017-07-30 00:00:00
+Eval P2, Number of rows in test is 1920292
+Eval P2, Forecast Period From: 2017-07-31 00:00:00  To:  2017-08-10 00:00:00
+Eval All Weighted NWRMSLE =  0.5870912506813695
+Eval P1  Weighted NWRMSLE =  0.5636212529582403
+Eval P2  Weighted NWRMSLE =  0.5974547268224725
+All Bias = -0.0109091827642
+P1 Bias = 0.00995845331109
+P2 Bias = -0.0203461444188
+WMAPE = 0.688025066567
+SUM = 2809708.306339983
+MEAN = 1.0059274634319875
+0.344633639112
+0.5870912506813695
+0.5636212529582403
+0.5974547268224725
+-0.0109091827642
+0.00995845331109
+-0.0203461444188
+0.688025066567
+2809708.306339983
+1.0059274634319875
+2018-01-13 18:07:42,314 __main__ 399 [INFO]    [<module>] 
+0.344633639112
+0.5870912506813695
+0.5636212529582403
+0.5974547268224725
 
 
 ###############################################################
