@@ -29,7 +29,7 @@ ctrl + alt + up/down arrow to switch workspace
 
 ### Git bitbusket
 git clone https://PZ11@bitbucket.org/PZ11/safedriver.git
-password: DPz1
+word: DPz1
 
 
 
@@ -169,7 +169,7 @@ git add *py
 git commit -m "first commit"
 ## push to bitbuster master copy
 git push origin master
-## Ask to enter password: DCMPzhang01
+## Ask to enter pass: 
 
 ## Get latest copy 
 git pull origin master 
@@ -180,7 +180,7 @@ zyp@ubuntu:~/kaggle/FavoritaGrocery/script$ git remote -v
 
 ## On bitbucket, it is different 
 zyp@ubuntu:~/kaggle/FavoritaGrocery/script$ 
-git remote set-url origin https://PZ11:DCMPzhang01@bitbucket.org/PZ11/favoritagrocery.git
+git remote set-url origin https://PZ11:XXXX@bitbucket.org/PZ11/favoritagrocery.git
 
 #######################################
 ## Download gitk to check the git tree
@@ -204,7 +204,7 @@ zyp@zyp-MS-7850:~/kaggle/kagglegrocery/input$ 7z x train.csv.7z
 
 
 zyp@ubuntu:~/kaggle$ git clone https://PZ11@bitbucket.org/PZ11/kagglegrocery.git
-Password for 'https://PZ11@bitbucket.org': DCMPzhang01
+word for 'https://PZ11@bitbucket.org': 
 
 zyp@ubuntu:~/kaggle$ cp -r tmp/* kagglegrocery/
 
